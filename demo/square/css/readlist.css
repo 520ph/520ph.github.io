@@ -1,0 +1,161 @@
+.container {
+	margin-top: 50px;
+	padding: 0 8px;
+}
+
+.banner {
+	border: 1px solid #b4b4b4;
+	border-radius: 3px;
+	padding: 20px 8px 5px 8px;
+	margin-bottom: 32px;
+}
+
+.banner .bannimg {
+	width: 45%;
+	height: 50%;
+}
+
+.banner .banncon {
+	width: 50%;
+	margin-left: 12px;
+}
+
+.banner .banncon h2 {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	margin: 0 0 8px 0;
+}
+@media only screen and (min-width: 480px) {
+	p.coninfo {
+		-webkit-line-clamp:6 !important;
+	}
+	
+}
+.banner .banncon .coninfo {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+	color: #565656;
+}
+
+.banner .auth {
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+}
+
+.banner .auth img {
+	border-radius: 10px;
+	margin: 12px 4px 12px 0;
+}
+
+.banner .auth .authname {
+	color: #b4b4b4;
+	display: block;
+	line-height: 40px;
+}
+
+.swiper-slide a {
+	display: inline-block;
+}
+
+.swiper-pagination-bullet {
+	background: #FFF;
+	opacity: 1;
+	border: 1px solid #000;
+	width: 16px;
+	height: 16px;
+	display: inline-block;
+	border-radius: 100%;
+	-webkit-transform: scale(0.5);
+	-moz-transform: scale(0.5);
+	-ms-transform: scale(0.5);
+	-o-transform: scale(0.5);
+	transform: scale(0.5);
+}
+
+.swiper-container-horizontal>.swiper-pagination .swiper-pagination-bullet {
+	margin: 0;
+}
+
+.swiper-pagination-bullet-active {
+	opacity: 1;
+	background: #303030;
+}
+
+.swiper-container-horizontal>.swiper-pagination {
+	bottom:-5px;
+}
+
+.container .squarecon {
+	padding: 0 8px;
+}
+
+.container .squli .squimg {
+	border-radius: 20px;
+}
+
+.container .squli .squauth {
+	height: 35px;
+	line-height: 35px;
+	text-align: center;
+	margin-left: 8px;
+}
+
+.container .squli {
+	margin-top: 32px;
+}
+
+.container .squli a {
+	display:block;
+}
+.container .squli .reposi{
+	margin-top: 12px;
+}
+.container .squli .reposi img {
+	width: 100%;
+}
+
+.container .squli .yc {
+	top: -5px;
+	right: 16px;
+	color: #fff;
+	background: url(img/item_yc.png) no-repeat;
+	width: 50px;
+	background-size: 50px 30px;
+	text-align: center;
+	height: 25px;
+	font-size: 12px;
+	line-height: 25px;
+	padding-left: 6px;
+}
+
+.container .squli .squtype {
+	margin: 20px 0;
+	color: #b4b4b4;
+}
+
+.container .squli .squtype .typecon,
+.typenum {
+	padding: 3px 5px;
+	background: #fff;
+	border: 1px solid #b4b4b4;
+	border-radius: 3px;
+	text-align: center;
+}
+
+.container .squli .squtype .typenum {
+	border: none;
+	background: url(img/xin_hui.png) no-repeat 3px 1px;
+	background-size: 17px;
+	padding-left: 23px;
+}
+
+.line {
+	margin: 0;
+}

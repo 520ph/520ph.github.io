@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>飞线动画</title>
+		<style type="text/css">
+			body{
+				margin: 0;
+				overflow: hidden;
+				background: #000;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="canvas" width="" height=""></canvas>
+		<script type="text/javascript">
+			/**
+ * easing equations from http://gizma.com/easing/
+ * t = current time
+ * b = start value
+ * c = delta value
+ * d = duration
+ */
+var Ease = {
+    inCubic: function(t, b, c, d) {
+        t /= d;
+        return c * t * t * t + b;
+    },
+    outCubic: function(t, b, c, d) {
+        t /= d;
+        t--;
+        return c * (t * t * t + 1) + b;
+    },
+    inQuad: function(t, b, c, d) {
+        return c * (t /= d) * t + b;
+    },
+    outQuad: function(t, b, c, d) {
+        return -c * (t /= d) * (t - 2) + b;
+    },
+    inOutCubic: function(t, b, c, d) {
+        t /= d / 2;
+        if (t < 1) return c / 2 * t * t * t + b;
+        t -= 2;
+        return c / 2 * (t * t * t + 2) + b;
+    }
+};
+function lerp(n1, n2, t, p) {
+    p = p || {
+        x: 0,
+        y: 0
+    };
+	//起始点的 x 加  t乘以，结束点减去起始点的距离
+    p.x = n1.x + t * (n2.x - n1.x);
+    p.y = n1.y + t * (n2.y - n1.y);
+
+    return p;
+}
+			class Line{
+		    	constructor({
+		    		start,
+		    		end,
+		    		lineWidth = 1,
+		    		color = 'red',
+		    		ctx,
+		    		timeStep = 1 / 60,
+		    		duration =2
+		    	}){
+		    		this.start = start;
+				    this.end = end;
+				    this.lineWidth = lineWidth;
+				    this.color = color;
+				    this._time = 0;
+				    this._timeStep = timeStep;
+				    this.prevTime = 0;
+				    this.duration = duration;
+				    this.complete = false;
+			        ctx.lineWidth = this.lineWidth;
+			        ctx.lineCap = 'round';
+				    this.p0 = {
+				        x: 0,
+				        y: 0
+				    };
+				    this.p1 = {
+				        x: 0,
+				        y: 0
+				    };
+		    	}
+			    update(){
+			    	this._time += this._timeStep;
+			    	this._time = this._time >= this.duration ? this.duration : this._time;
+			    	/*if(this._time > this.duration){
+			    		this._time = 0;
+			    	}*/
+			    	this.prevTime = this._time;
+			    	this.complete = this._time === this.duration;
+			    	this.draw();
+			    }
+			    draw() {
+			        var t0 = Ease.inOutCubic(this.prevTime, 0, 1, this.duration);
+			        var t1 = Ease.inQuad(this._time, 0, 1, this.duration);
+			        lerp(this.start, this.end, t0, this.p0);
+			        lerp(this.start, this.end, t1, this.p1);
+			        ctx.beginPath();
+					ctx.arc(this.start.x,this.start.y,5,0,Math.PI*2);
+					ctx.arc(this.end.x,this.end.y,5,0,Math.PI*2);
+					ctx.fillStyle = this.color;
+					ctx.fill();
+			        ctx.beginPath();
+			        ctx.moveTo(this.p0.x, this.p0.y);
+			        ctx.lineTo(this.p1.x, this.p1.y);
+					ctx.strokeStyle = this.color;
+			        ctx.stroke();
+			    }
+		    }
+			var can = document.querySelector('#canvas');
+			res()
+			
+			window.onresize = res
+			function res(){
+				can.width = window.innerWidth;
+				can.height = window.innerHeight;
+			}
+			var ctx = can.getContext('2d');
+		    function createNodes() {
+		        var q = Math.random() * (Math.PI * 2);
+		        var r = Math.sqrt(Math.random());
+		        var x = ((can.width * 0.5 - 10) * r) * Math.cos(q) + can.width * 0.5;
+		        var y = ((can.height * 0.5 - 10) * r) * Math.sin(q) + can.height * 0.5;
+		        return {x,y}
+			}
+		    var lines = [];
+		    var count = 30;
+		    for (var i = 0; i < count; i++) {
+		    	var start = createNodes();
+			    var end = createNodes();
+			    lines.push(new Line({
+			    	start,
+			    	end,
+			    	ctx,
+			    	color:`hsl(${Math.round((i * 360) / count)},100%,50%)`
+			    }));
+		    }
+		    
+		    function loop() {
+		    	ctx.clearRect(0, 0, can.width, can.height);
+		    	for (var i = 0; i < lines.length; i++) {
+		    		lines[i].update();
+		    		if(lines[i].complete){
+		    			var start = createNodes();
+			    		var end = createNodes();
+		    			lines.splice(i,1,new Line({
+					    	start,
+					    	end,
+					    	ctx,
+					    	color:`hsl(${Math.round((i * 360) / count)},100%,50%)`
+					    }))
+		    		}
+		    	}
+			    requestAnimationFrame(loop);
+			}
+		    loop();
+
+		</script>
+	</body>
+</html>

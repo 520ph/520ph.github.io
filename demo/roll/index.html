@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			.warp,.warp1,.warp2{
+				margin:20px auto;
+				width: 500px;
+				height: 180px;
+				border:1px solid #000;
+				overflow-x:hidden;
+				overflow-y: scroll;
+				overflow: hidden;
+			}
+			::-webkit-scrollbar {
+				width: 6px;
+				height: 6px;
+			}
+			/*滚动条里面可以拖动的那部分*/
+			::-webkit-scrollbar-thumb {
+				border-radius: 10px;
+				background:#f90;
+			}
+			ul,li{
+				margin: 0;	
+				list-style: none;
+				padding: 0;
+			}
+			ul{
+				counter-reset: section; 
+			}
+			li{
+				margin:0 5px 5px 5px;
+				counter-increment: section;
+			}
+			li:before { content: counter(section, c jk-ideographic) "、";}
+			ul li:first-child{
+			}
+		</style>
+	</head>
+	<body>
+		<div class="warp">
+			<ul>
+				<li>1111测试内容测试内容测试内容测试内容测试内容测试内容</li>
+				<li>2222测试内容测试内容测试内容测试内容测试内容测试内容</li>
+				<li>3333测试内容测试内容测试内容测试内容测试内容测试内容</li>
+				<li>4444测试内容测试内容测试内容测试内容测试内容测试内容</li>
+				<li>5555测试内容测试内容测试内容测试内容测试内容测试内容</li>
+				<li>6666测试内容测试内容测试内容测试内容测试内容测试内容</li>
+				<li>7777测试内容测试内容测试内容测试内容测试内容测试内容</li>
+				<li>1111测试内容测试内容测试内容测试内容测试内容测试内容</li>
+			</ul>
+		</div>
+		<div class="warp1">
+			<ul>
+				<li>1111测试内容测试内容测试内容测试内容测试内容测试内容</li>
+				<li>2222测试内容测试内容测试内容测试内容测试内容测试内容</li>
+				<li>3333测试内容测试内容测试内容测试内容测试内容测试内容</li>
+				<li>4444测试内容测试内容测试内容测试内容测试内容测试内容</li>
+				<li>5555测试内容测试内容测试内容测试内容测试内容测试内容</li>
+				<li>6666测试内容测试内容测试内容测试内容测试内容测试内容</li>
+				<li>7777测试内容测试内容测试内容测试内容测试内容测试内容</li>
+				<li>1111测试内容测试内容测试内容测试内容测试内容测试内容</li>
+			</ul>
+		</div>
+		<div class="warp2">
+			<ul>
+				<li>1111测试内容测试内容测试内容测试内容测试内容测试内容</li>
+				<li>2222测试内容测试内容测试内容测试内容测试内容测试内容</li>
+				<li>3333测试内容测试内容测试内容测试内容测试内容测试内容</li>
+				<li>4444测试内容测试内容测试内容测试内容测试内容测试内容</li>
+				<li>5555测试内容测试内容测试内容测试内容测试内容测试内容</li>
+				<li>6666测试内容测试内容测试内容测试内容测试内容测试内容</li>
+				<li>7777测试内容测试内容测试内容测试内容测试内容测试内容</li>
+				<li>1111测试内容测试内容测试内容测试内容测试内容测试内容</li>
+			</ul>
+		</div>
+		<script src="js/roll.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var roll = new Widget.roll(".warp ul");
+			roll.setConfig({
+				warp:".warp",
+				dir:"down",
+				time:1000,
+			});
+			roll.init();
+			var roll2 = new Widget.roll(".warp1 ul");
+			roll2.setConfig({
+				warp:".warp1",
+				dir:"up",
+				time:1000,
+			});
+			roll2.init();
+			var roll3 = new Widget.roll(".warp2 ul");
+			roll3.setConfig({
+				warp:".warp1",
+				dir:"up",
+				time:1000,
+			});
+			roll3.init();
+		</script>
+	</body>
+</html>

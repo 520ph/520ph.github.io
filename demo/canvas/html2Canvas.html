@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+	<script src="http://wechatfe.github.io/vconsole/lib/vconsole.min.js?v=3.2.0"></script>
+	<script>
+		window.vConsole = new window.VConsole();
+	</script>
+	<style>
+		#capture{
+			margin-bottom: 30px;
+			content: "赵鑫焱";
+		}
+	</style>
+</head>
+<body>
+	<div id="capture" style="padding: 10px; background: #f5da55;content: '赵鑫焱'">
+		<h4 style="color: #000; content: '赵鑫焱'">Hello world!</h4>
+	</div>
+	<script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+	<script>
+		html2canvas(document.querySelector("#capture")).then(canvas => {
+			document.body.appendChild(canvas)
+		});
+	</script>
+</body>
+</html>

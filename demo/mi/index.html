@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>蜜</title>
+		<link rel="stylesheet" type="text/css" href="css/index.css" />
+	</head>
+
+	<body>
+		<div class="app">
+			<mi-entry></mi-entry>
+		</div>
+		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			var Event = new Vue();
+			Vue.component('mi-progress', {
+				props: ["progress"],
+				template: `<div v-html="divEl">
+				  			</div>`,
+				data() {
+					return {
+						"progre": this.progress,
+						"styl": {},
+						"divEl": (function(progress) {
+							var elHtml = "";
+							for(var i = 0; i < progress.count; i++) {
+								elHtml += `<div style="transform: rotate(${360/progress.count * i}deg);"></div>`;
+							}
+							return elHtml;
+						})(this.progress)
+					}
+				},
+				mounted() {
+					this.styl = document.createElement("style");
+					document.head.appendChild(this.styl);
+					this.styl.innerHTML = `
+			.progress_box div > div:nth-of-type(n):nth-of-type(-n+${Math.floor(this.progress.count * this.progress.per /100)}){	opacity:1;}
+		`;
+					Event.$on("progress", function() {
+						this.styl.innerHTML = `
+			.progress_box div > div:nth-of-type(n):nth-of-type(-n+${Math.floor(this.progress.count * this.progress.per /100)}){	opacity:1;}
+		`;
+					}.bind(this));
+				}
+			});
+			Vue.component('mi-entry', {
+				template: `<div class="main_warp animated">
+					<div class="center outerRing">
+						<div class="center inRing">
+							<div class="data_warp">
+								<a class="data_link items" href="javascript:;">
+									<span class="items_title">数据展示</span>
+									<div class="items_icon">
+										<img src="img/index/data_icon.png" width="50" />
+									</div>
+								</a>
+							</div>
+							<div class="back_warp">
+								<a class="back_link items" href="javascript:;">
+									<div class="items_icon">
+										<img src="img/index/back_icon.png" width="50" />
+									</div>
+									<span class="items_title">后台管理</span>
+								</a>
+							</div>
+							<div class="user_warp">
+								<div class="user_icon"></div>
+								<a class="user_link" href="javascript:;">用户管理</a>
+							</div>
+							<div class="center animate_warp">
+								<div class="an_items an_1"></div>
+								<div class="an_items an_2"></div>
+								<div class="an_items an_3"></div>
+							</div>
+							<div class="center progress_warp">
+								<div class="center progress_box">
+									<mi-progress :progress="progress"></mi-progress>
+								</div>
+								<div class="center progress_content">
+									<p>{{progress.per}}%</p>
+									<span>loading······</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>`,
+				data() {
+					return {
+						progress: {
+							per: 0,
+							count: "50",
+							element: "div"
+						}
+					}
+				},
+				mounted() {
+					var timer = setInterval(function() {
+						this.progress.per++;
+						if(this.progress.per > 100) {
+							this.progress.per = 0;
+							//clearInterval(timer);
+							//return false;
+						}
+						Event.$emit("progress");
+					}.bind(this), 50);
+				}
+			});
+			new Vue({
+				el: ".app"
+			});
+		</script>
+	</body>
+
+</html>

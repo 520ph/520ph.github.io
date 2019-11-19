@@ -1,0 +1,26 @@
+@font-size:30px;
+@color:#fff;
+@var:#565656;
+@height:100px;
+
+
+.pre(@style,@value){
+    -webkit-@{style}:@value;
+       -moz-@{style}:@value;
+        -ms-@{style}:@value;
+            @{style}:@value;
+}
+.name{
+    .pre(transition,all 1s);
+    color:@color;
+    font-size: @font-size;
+    height:@height;
+    line-height:@height;
+    background:@var;
+    text-align: center;
+    cursor: pointer;
+}
+.name:hover{
+    color:#000;
+    background: #E2E2E2;
+}

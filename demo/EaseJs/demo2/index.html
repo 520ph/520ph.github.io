@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>画布</title>
+		<style type="text/css">
+			html,body{
+				margin: 0;
+				padding: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="myCanvas" width="320" height="400"></canvas>
+		<br />
+		<input type="text" class="valText" />
+		<button class="btn">运行</button>
+		<script src="../js/easeljs-0.8.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var canvas = document.querySelector("#myCanvas");
+			var btn = document.querySelector(".btn");
+			var valText = document.querySelector(".valText");
+			var stage = new createjs.Stage(canvas);
+			btn.addEventListener("click",function(){
+				if(!valText.value){
+					alert("请输入文字！");
+				}else{
+					stage.autoPlay = false;
+					stage.removeAllChildren();
+					creatText(valText.value);
+				}
+			},false);
+			function creatText(valText){
+				stage.clear();
+				for (var i = 0; i < 10; i++) {
+					var theText = new createjs.Text(valText,"normal 32px microsoft yahei","#222");
+					theText.x = Math.floor(Math.random()*canvas.width);
+					theText.y = Math.floor(Math.random()*canvas.height);
+					theText.rotation = Math.floor(Math.random()*360);
+					theText.alpha = Math.random() *1;
+					theText.color = "#"+Math.floor(Math.random()*16777215).toString(16);
+					stage.addChild(theText);
+				}
+				createjs.Ticker.addEventListener("tick",stage);
+			}
+		</script>	
+	</body>
+</html>

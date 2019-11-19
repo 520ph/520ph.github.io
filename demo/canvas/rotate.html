@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>旋转角度</title>
+		<style type="text/css">
+			body{
+				background:#2ec3a9;
+				overflow: hidden;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="myCanvas"></canvas>
+		<script type="text/javascript">
+			window.onload = function(){
+				var canvas = document.querySelector("#myCanvas");
+				canvas.width = window.innerWidth;
+				canvas.height = window.innerHeight;
+				var context = canvas.getContext("2d");
+				var con = canvas.getContext("2d");
+				var r = 0;
+				canvas.addEventListener("mousemove",move,false);
+				canvas.addEventListener("touchmove",move,false);
+				function move(ev){
+					var ev = ev || window.event;
+					var x = ev.clientX || ev.changedTouches[0].clientX - canvas.offsetLeft;
+					var y = ev.clientY || ev.changedTouches[0].clientY - canvas.offsetTop;
+					var a = x - canvas.width / 2;
+					var b = y - canvas.height / 2;
+					var c = Math.sqrt(a * a + b * b);
+					if(a > 0){
+						r = Math.asin(a/c);
+					}
+					if(a > 0 && b > 0){
+						r = Math.asin(b/c) + Math.PI*0.5;
+					}
+					if(a < 0){
+						r = Math.asin(a/c);
+					}
+					if(a < 0 && b > 0){
+						r = -Math.asin(a/c) + Math.PI;
+					}
+					drawLine(r)
+				}
+				function drawLine(r){
+					context.clearRect(0,0,canvas.width,canvas.height);
+					context.save();
+					context.beginPath();
+					context.translate(canvas.width / 2,canvas.height / 2);
+					context.rotate(r);
+					context.lineWidth = 10;
+					/*var col = context.createLinearGradient(0,0,0,10);
+					col.addColorStop(0,"red");
+					col.addColorStop(0.2,"yellow");
+					col.addColorStop(0.4,"blue");
+					col.addColorStop(0.6,"green");
+					col.addColorStop(0.8,"#2ec3a9");
+					col.addColorStop(1,"#8104d0");*/
+					context.strokeStyle = "#000";
+					context.moveTo(0,0);
+					context.lineTo(0,-canvas.height);
+					context.stroke();
+					context.closePath();
+					con.fillStyle = "#00A67C";
+					con.arc(0,0,50,0,Math.PI*2);
+					con.fill();
+					context.restore();
+					
+				}
+				/*window.onresize = function(){
+					canvas.width = window.innerWidth;
+					canvas.height = window.innerHeight;
+					context.translate(canvas.width/2,canvas.height/2);
+				}*/
+			}
+		</script>
+	</body>
+</html>

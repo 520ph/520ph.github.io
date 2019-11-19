@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>柱线图</title>
+		<style type="text/css">
+			body,
+			html {
+				height: 100%;
+				width: 100%;
+				margin: 0;
+				background: rgb(56, 56, 56);
+				overflow: hidden;
+				-webkit-tap-highlight-color: transparent;
+			}
+			
+			#main {
+				height: 100%;
+				width: 100%;
+				box-shadow: 0 0 20px 0px #00ced1;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="main">
+			<canvas id="barline"></canvas>
+		</div>
+		<script src="js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/easeljs-0.8.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/viewport.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/TweenMax.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/barline.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var data = [{
+				"left": 200,
+				"right": 200
+			}, {
+				"left": 300,
+				"right": 300
+			}, {
+				"left": 240,
+				"right": 240
+			}, {
+				"left": 480,
+				"right": 380
+			}, {
+				"left": 180,
+				"right": 640
+			}, {
+				"left": 350,
+				"right": 450
+			}, {
+				"left": 420,
+				"right": 420
+			}, {
+				"left": 350,
+				"right": 450
+			}, {
+				"left": 280,
+				"right": 280
+			}, {
+				"left": 380,
+				"right": 380
+			}, {
+				"left": 420,
+				"right": 420
+			}, {
+				"left": 220,
+				"right": 220
+			}]
+			window.onload = function(){
+				new Widget.barline({
+					data: data,
+					left: 6,
+					right: 6,
+					title: "图例"
+				});
+			}
+		</script>
+	</body>
+
+</html>

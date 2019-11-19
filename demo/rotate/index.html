@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<title>炫酷旋转</title>
+		<style type="text/css">
+			html,body{
+				height: 100%;
+				width: 100%;
+				margin: 0;
+			}
+			body{
+				background: url(images/bg.jpg) center;
+				background-size:contain;
+				background-color: #000;
+			}
+			.box{
+				min-width: 1200px;
+				width: 100%;
+				min-height: 525px;
+				position:absolute;
+				top: 50%;
+				left: 50%;
+				-webkit-transform: translate(-50%, -50%);
+				-moz-transform: translate(-50%, -50%);
+				-ms-transform: translate(-50%, -50%);
+				-o-transform: translate(-50%, -50%);
+				transform: translate(-50%, -50%);
+			}
+			.bgbox{
+				min-width:1069px;
+				height:525px;
+				position: relative;
+				background: url(images/ball.png) no-repeat center;
+				background-size: cover;
+				margin: 0 auto;
+			}
+			.bgball{
+				width:167.5px;
+				height:168.5px;
+				background: url(images/ball1.png) no-repeat center;
+				background-size: contain;
+				position:absolute;
+				top: 50%;
+				left: 50%;
+				-webkit-transform: translate(-50%, -50%);
+				-moz-transform: translate(-50%, -50%);
+				-ms-transform: translate(-50%, -50%);
+				-o-transform: translate(-50%, -50%);
+				transform: translate(-50%, -50%);
+				-webkit-animation: rotateZ 10s linear infinite;
+				-o-animation: rotateZ 10s linear infinite;
+				animation: rotateZ 10s linear infinite;
+			}
+			.light{
+				min-width:1069px;
+				width: 100%;
+				min-height:525px;
+				height: 100%;
+				background: url(images/light.png) no-repeat center;
+				background-size: contain;
+				position:absolute;
+				z-index:-1;
+				top: 50%;
+				left: 50%;
+				-webkit-transform: translate(-50%, -50%);
+				-moz-transform: translate(-50%, -50%);
+				-ms-transform: translate(-50%, -50%);
+				-o-transform: translate(-50%, -50%);
+				transform: translate(-50%, -50%);
+				-webkit-animation: opacitys 2s linear infinite;
+				-o-animation: opacitys 2s linear infinite;
+				animation: opacitys 2s linear infinite;
+			}
+			.smoke1{
+				min-width:700px;
+				height:525px;
+				background: url(images/smoke1.png) no-repeat center;
+				background-size: contain;
+				position:absolute;
+				top: 50%;
+				left: 50%;
+				-webkit-transform: translate(-50%, -50%);
+				-moz-transform: translate(-50%, -50%);
+				-ms-transform: translate(-50%, -50%);
+				-o-transform: translate(-50%, -50%);
+				transform: translate(-50%, -50%);
+				-webkit-animation: rotateZs 10s linear infinite;
+				-o-animation: rotateZs 10s linear infinite;
+				animation: rotateZs 10s linear infinite; 
+			}
+			@-webkit-keyframes rotateZ{
+				0%{-webkit-transform: translate(-50%, -50%) rotate(0);
+				-moz-transform: translate(-50%, -50%) rotate(0);
+				-ms-transform: translate(-50%, -50%) rotate(0);
+				-o-transform: translate(-50%, -50%) rotate(0);
+				transform: translate(-50%, -50%) rotate(0);}
+				100%{-webkit-transform: translate(-50%, -50%) rotate(360deg);
+				-moz-transform: translate(-50%, -50%) rotate(360deg);
+				-ms-transform: translate(-50%, -50%) rotate(360deg);
+				-o-transform: translate(-50%, -50%) rotate(360deg);
+				transform: translate(-50%, -50%) rotate(360deg);}
+			}
+			@keyframes rotateZ{
+				0%{-webkit-transform: translate(-50%, -50%) rotate(0);
+				-moz-transform: translate(-50%, -50%) rotate(0);
+				-ms-transform: translate(-50%, -50%) rotate(0);
+				-o-transform: translate(-50%, -50%) rotate(0);
+				transform: translate(-50%, -50%) rotate(0);}
+				100%{-webkit-transform: translate(-50%, -50%) rotate(360deg);
+				-moz-transform: translate(-50%, -50%) rotate(360deg);
+				-ms-transform: translate(-50%, -50%) rotate(360deg);
+				-o-transform: translate(-50%, -50%) rotate(360deg);
+				transform: translate(-50%, -50%) rotate(360deg);}
+			}
+			@-webkit-keyframes rotateZs{
+				0%{-webkit-transform: translate(-50%, -50%) rotate(360deg);
+				-moz-transform: translate(-50%, -50%) rotate(360deg);
+				-ms-transform: translate(-50%, -50%) rotate(360deg);
+				-o-transform: translate(-50%, -50%) rotate(360deg);
+				transform: translate(-50%, -50%) rotate(360deg);}
+				100%{-webkit-transform: translate(-50%, -50%) rotate(0);
+				-moz-transform: translate(-50%, -50%) rotate(0);
+				-ms-transform: translate(-50%, -50%) rotate(0);
+				-o-transform: translate(-50%, -50%) rotate(0);
+				transform: translate(-50%, -50%) rotate(0);}
+			}
+			@keyframes rotateZs{
+				0%{-webkit-transform: translate(-50%, -50%) rotate(360deg);
+				-moz-transform: translate(-50%, -50%) rotate(360deg);
+				-ms-transform: translate(-50%, -50%) rotate(360deg);
+				-o-transform: translate(-50%, -50%) rotate(360deg);
+				transform: translate(-50%, -50%) rotate(360deg);}
+				100%{-webkit-transform: translate(-50%, -50%) rotate(0);
+				-moz-transform: translate(-50%, -50%) rotate(0);
+				-ms-transform: translate(-50%, -50%) rotate(0);
+				-o-transform: translate(-50%, -50%) rotate(0);
+				transform: translate(-50%, -50%) rotate(0);}
+			}
+			@-webkit-keyframes opacitys{
+				0%{opacity:1;}
+				50%{opacity:0;}
+				100%{opacity:1;}
+			}
+			@keyframes opacitys{
+				0%{opacity:1;}
+				50%{opacity:0;}
+				100%{opacity:1;}
+			}
+			@media only screen and (max-height:800px) {
+				body{
+					overflow-y: hidden;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<div class="bgbox">
+				<div class="bgball"></div>
+				<div class="light"></div>
+				<div class="smoke1"></div>
+			</div>
+		</div>
+		
+	</body>
+</html>

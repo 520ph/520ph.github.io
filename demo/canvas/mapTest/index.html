@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>地图</title>
+    <style>
+        body,html{
+            width: 100%;
+            height: 100%;
+            margin:0;
+            padding: 0;
+            background: #000;
+        }
+        #canvas{
+            position: absolute;
+            left:0;
+            top:0;
+        }
+    </style>
+</head>
+<body>
+    <canvas width="1000" height="600" id="canvas"></canvas>
+    <script src="lib/jquery-3.1.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="lib/easeljs-0.8.2.min.js" charset="utf-8"></script>
+    <script src="js/map.js" charset="utf-8"></script>
+    <script type="text/javascript">
+    	let canvas = document.querySelector('#canvas');
+//		canvas.width = window.innerWidth;
+//		canvas.height = window.innerHeight;
+        let stage = new createjs.Stage(canvas);
+        stage.enableMouseOver(10);
+        createjs.Ticker.on('tick', stage);
+        let itemBase = new createjs.Container();
+        stage.addChild(itemBase);
+        let parentInfo = {
+        	id: '', 
+        	name: '', 
+        	children: [],
+        	polygon: {
+        		parts: [],
+        		boundingBox: {}
+        	}
+        };
+        let boundingBox = {};
+        let projector = new defaultProjector();
+        $.get('lib/china.geo.json',mapData => {
+        	let numPoint = 0;
+        	let minX = Number.MAX_VALUE,
+        		minY = Number.MAX_VALUE, 
+        		maxX = Number.MIN_VALUE, 
+        		maxY = Number.MIN_VALUE;
+        	mapData.features.forEach(data => {
+        		let cp = data.properties.cp;
+				let namePosition = {x: cp[0], y: cp[1]};
+				let polygon = {
+					parts: [],
+					boundingBox: {}
+				};
+				let childInfo = {
+					id: data.id, 
+					name: data.properties.name,
+					namePosition: namePosition, 
+					polygon: polygon
+				};
+				let arr1 = data.geometry.coordinates;
+				let type = data.geometry.type;
+				arr1.forEach((item, index) => {
+					let pointXs = [];
+					let pointYs = [];
+					let part = {
+						pointXs: pointXs, 
+						pointYs: pointYs
+					};
+					let arr2 = item;
+					if (type == 'MultiPolygon') {
+						arr2 = item[0];
+					}
+					arr2.forEach((item, index) => {
+						let arr3 = item;
+						let x = arr3[0];
+						let y = arr3[1];
+						minX = Math.min(x, minX);
+						minY = Math.min(y, minY);
+						maxX = Math.max(x, maxX);
+						maxY = Math.max(y, maxY);
+
+						pointXs.push(arr3[0]);
+						pointYs.push(arr3[1]);
+
+						numPoint++;
+					});
+					polygon.parts.push(part);
+				});
+				parentInfo.children.push(childInfo);
+        	});
+        	parentInfo.polygon.boundingBox.minX = minX;
+			parentInfo.polygon.boundingBox.minY = minY;
+			parentInfo.polygon.boundingBox.maxX = maxX;
+			parentInfo.polygon.boundingBox.maxY = maxY;
+			webstudioChinaMapInfo(parentInfo);
+        });
+        function webstudioChinaMapInfo(info){
+        	for (let i = 0; i < info.children.length; i++) {
+				var item = new addMapItem(info.children[i]);
+				itemBase.addChild(item.shapes);
+			}
+        	console.log(info);
+        	boundingBox.minX = info.polygon.boundingBox.minX;
+			boundingBox.minY = info.polygon.boundingBox.minY;
+			boundingBox.maxX = info.polygon.boundingBox.maxX;
+			boundingBox.maxY = info.polygon.boundingBox.maxY;
+			resize();
+       }
+        function addMapItem(info){
+			this.shapes = new createjs.Shape();
+			this.g = this.shapes.graphics;
+			this.g.clear();
+			this.polygon = info.polygon;
+			for (let i = 0; i < this.polygon.parts.length; i++)
+			{
+				this.g.beginFill('rgba(4, 161, 252, 0.5)').setStrokeStyle(1).beginStroke('#16a2b5');
+				let part = this.polygon.parts[i];
+				for (let j = 0; j < part.pointXs.length; j++) {
+					let p = projector.lngLatToXY(part.pointXs[j], part.pointYs[j]);
+					if (j == 0) {
+						this.g.moveTo(p.x, p.y);
+					} else {
+						this.g.lineTo(p.x, p.y);
+					}
+				}
+				this.g.endFill();
+			}
+        }
+        addMapItem.prototype.redraw = function(){
+        	for (let i = 0; i < this.polygon.parts.length; i++)
+			{
+				this.g.beginFill('rgba(4, 161, 252, 0.5)').setStrokeStyle(1).beginStroke('#16a2b5');
+				let part = this.polygon.parts[i];
+				for (let j = 0; j < part.pointXs.length; j++) {
+					let p = projector.lngLatToXY(part.pointXs[j], part.pointYs[j]);
+					if (j == 0) {
+						this.g.moveTo(p.x, p.y);
+					} else {
+						this.g.lineTo(p.x, p.y);
+					}
+				}
+				this.g.endFill();
+			}
+        }
+		   function defaultProjector(){
+		   		this._scale = 12.485222178898503;
+		   }
+		   defaultProjector.prototype.lngLatToXY = function(lng, lat)
+			{
+				let p = {x: lng, y: -lat};
+				p.x *= this._scale;
+				p.y *= this._scale * 1.3;
+				return p;
+			}
+       function resize() {
+	       	let boxWidth = boundingBox.maxX - boundingBox.minX;
+			let boxHeight = boundingBox.maxY - boundingBox.minY;
+			let _width = 1000;
+			let _height = 600;
+			let scaleW = _width / boxWidth;
+			let scaleH = _height / boxHeight;
+			let _scale = Math.min(scaleW, scaleH);
+			_scale /= 1.3;
+			projector._scale = _scale;
+			for (var i = 0; i < itemBase.children.length; i++) {
+				var item = itemBase.getChildAt(i);
+				console.log(_scale);
+				//item.redraw();
+			}
+			// center it
+			let center = projector.lngLatToXY(boundingBox.minX + boxWidth / 2, boundingBox.minY + boxHeight / 2);
+			itemBase.x = boxWidth * _scale / 2 + (_width - boxWidth * _scale) / 2 - center.x;
+			itemBase.y = boxHeight * _scale / 2 + (_height - boxHeight * _scale) / 2 - center.y;
+			stage.update();
+       }
+    </script>
+</body>
+</html>

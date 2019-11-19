@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .tooltip{
+            position: absolute;
+        } 
+    </style>
+</head>
+<body>
+    <div class="tooltip"></div>
+    <script src="lib/d3v3.min.js"></script>
+    <script>
+        var body = d3.selectAll("body");
+        var tooltip = d3.selectAll(".tooltip");
+        var width = 500;  //画布的宽度
+        var height = 500;   //画布的高度
+        var svg = body     //选择文档中的body元素
+                    .append("svg")          //添加一个svg元素
+                    .attr("width", width)       //设定宽度
+                    .attr("height", height);    //设定高度
+        var dataset = {
+            name:'2015-11-18 10:31:00',
+            value:100,
+            children:[
+    {name:'2015-11-18 10:31:00', category: 'A', type:'up', value:100},
+    {name:'2015-11-19 10:31:00', category: 'A', type:'up', value:90},
+    {name:'2015-11-20 10:31:00', category: 'A', type:'up', value:50},
+    {name:'2015-11-21 10:31:00', category: 'A', type:'up', value:20},
+    {name:'2015-11-22 10:31:00', category: 'A', type:'up', value:30},
+    {name:'2015-11-23 10:31:00', category: 'A', type:'up', value:50},
+    {name:'2015-11-24 10:31:00', category: 'A', type:'up', value:80},
+    {name:'2015-11-18 10:31:00', category: 'B', type:'down', value:100},
+    {name:'2015-11-19 10:31:00', category: 'B', type:'down', value:90},
+    {name:'2015-11-20 10:31:00', category: 'B', type:'down', value:50},
+    {name:'2015-11-21 10:31:00', category: 'B', type:'down', value:20},
+    {name:'2015-11-22 10:31:00', category: 'B', type:'down', value:30},
+    {name:'2015-11-23 10:31:00', category: 'B', type:'down', value:50},
+    {name:'2015-11-24 10:31:00', category: 'B', type:'down', value:80},
+    {name:'2015-11-18 10:31:00', category: 'B', type:'downstack', value:'150'},
+    {name:'2015-11-19 10:31:00', category: 'B', type:'downstack', value:'145'},
+    {name:'2015-11-20 10:31:00', category: 'B', type:'downstack', value:'125'},
+    {name:'2015-11-21 10:31:00', category: 'B', type:'downstack', value:'120'},
+    {name:'2015-11-22 10:31:00', category: 'B', type:'downstack', value:'115'},
+    {name:'2015-11-23 10:31:00', category: 'B', type:'downstack', value:'125'},
+    {name:'2015-11-24 10:31:00', category: 'B', type:'downstack', value:'140'},
+    {name:'2015-11-18 10:31:00', category: 'A', type:'upstack', value:'150'},
+    {name:'2015-11-19 10:31:00', category: 'A', type:'upstack', value:'145'},
+    {name:'2015-11-20 10:31:00', category: 'A', type:'upstack', value:'125'},
+    {name:'2015-11-21 10:31:00', category: 'A', type:'upstack', value:'120'},
+    {name:'2015-11-22 10:31:00', category: 'A', type:'upstack', value:'115'},
+    {name:'2015-11-23 10:31:00', category: 'A', type:'upstack', value:'125'},
+    {name:'2015-11-24 10:31:00', category: 'A', type:'upstack', value:'140'}
+    ]
+}
+            
+        ;  //数据（表示矩形的宽度）
+        var pack = d3.layout.pack()
+	    			.size([ width, height ])
+	    			.radius(20).padding(5);
+                    var nodes = pack.nodes(dataset);
+		
+        svg.selectAll("circle")
+			.data(nodes.filter(function(d) { 
+                return !d.children;  // 过滤掉根节点
+            }))
+			.enter()
+			.append("circle")
+			.attr("fill",function(d,i){
+                return d.category === 'A' ? 'red' : 'rgb(31, 119, 180)'
+            })
+			//.attr("fill-opacity","0.4")
+			.attr("cx",function(d){
+				return d.x;
+			})
+			.attr("cy",function(d){
+				return d.y;
+			})
+			.attr("r",function(d){
+				return d.r;
+			})
+			.on("mouseover",function(d,i){
+                console.log(d)
+                tooltip.transition()
+                .text(d.name)
+                .style('left',`${d.x + 10}px`)
+                .style('top',`${d.y - 10}px`)
+				d3.select(this)
+					.attr("fill","yellow");
+			})
+			.on("mouseout",function(d,i){
+                tooltip.text('');
+                
+				d3.select(this)
+					.attr("fill",function(d){
+                        return d.category === 'A' ? 'red' : 'rgb(31, 119, 180)'
+                    });
+			});
+    </script>
+</body>
+</html>

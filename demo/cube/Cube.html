@@ -1,0 +1,194 @@
+<!doctype html>
+<html>
+
+	<head>
+		<!--声明当前页面的编码集：charset=GBK,GB2312(中文编),UTF-8(国际编码)-->
+		<meta http-equiv="Content-Type" content="text/heml;charset=UTF-8">
+		<!--当前页面的三要素-->
+		<title>3D立方体</title>
+		<meta name="Keywords" content="3D立方体 完美">
+		<meta name="description" content="">
+		<link rel="shortcut icon" href="/images/cc.ico" />
+		<!--css.js-->
+		<style type="text/css">
+			*{margin:0;padding:0;}
+			body{background:#000;color:#fff;transform-style: preserve-3d;perspective: 700px;}
+			html,body{height:100%;overflow:hidden;}
+			.ani{
+			width:100px;
+			height:100px;
+			margin: -666px auto;
+			position: relative;
+			transform-style: preserve-3d;
+			-webkit-transition:all 1s ease;
+			-moz-transition:all 1s ease;
+			-ms-transition:all 1s ease;
+			-o-transition:all 1s ease;
+			transition:all 1s ease;
+			}
+		
+			.ani .face{
+			font-size:80px;
+			font-family:"微软雅黑";
+			text-shadow:0 0 0 20px #6600FF;
+			line-height:100px;
+			text-align:center;
+			border-radius:5px;
+			width:100%;
+			height:100%;
+			position:absolute;
+			border:3px solid #60F;
+			box-sizing:border-box;
+			box-shadow: 0 0 80px 0px red;
+			
+			}
+			.ani > .face:nth-child(1){
+			-webkit-transform:translateZ(47px);
+			transform:translateZ(47px);
+			}
+		
+			.ani > .face:nth-child(2){
+			-webkit-transform:rotateY(90deg) translateZ(47px);
+			transform:rotateY(90deg) translateZ(47px);
+			}
+		
+			.ani > .face:nth-child(3){
+			-webkit-transform:rotateY(180deg) translateZ(47px);
+			transform:rotateY(180deg) translateZ(47px);
+			}
+		
+			.ani > .face:nth-child(4){
+			-webkit-transform:rotateY(270deg) translateZ(47px);
+			transform:rotateY(270deg) translateZ(47px);
+			}
+		
+			.ani > .face:nth-child(5){
+			-webkit-transform:rotateX(90deg) translateZ(47px);
+			transform:rotateX(90deg) translateZ(47px);
+			}
+		
+			.ani > .face:nth-child(6){
+			-webkit-transform:rotateX(-90deg) translateZ(47px);
+			transform:rotateX(-90deg) translateZ(47px);
+			}
+		
+			.asd{
+			width:300px;
+			height:300px;
+			margin:200px auto;
+			position:relative;
+			-webkit-transform-style:preserve-3d;
+			-moz-transform-style:preserve-3d;
+			-ms-transform-style:preserve-3d;
+			transform-style:preserve-3d;
+			-webkit-transition:all 1s ease;
+			-moz-transition:all 1s ease;
+			-ms-transition:all 1s ease;
+			-o-transition:all 1s ease;
+			transition:all 1s ease;
+			}
+		
+			.asd .face{
+			font-size:100px;
+			font-family:"微软雅黑";
+			text-shadow:0 0 0 20px #6600FF;
+			line-height:300px;
+			text-align:center;
+			border-radius:5px;
+			width:100%;
+			height:100%;
+			position:absolute;
+			border:3px solid #60F;
+			box-sizing:border-box;
+			box-shadow: 0 0 80px 0px #FFF;
+			background:rgba(0, 0, 0, 0.6);
+			}
+		
+			.asd > .face:nth-child(1){
+			-webkit-transform:translateZ(150px);
+			transform:translateZ(150px);
+			}
+		
+			.asd > .face:nth-child(2){
+			-webkit-transform:rotateY(90deg) translateZ(150px);
+			transform:rotateY(90deg) translateZ(150px);
+			}
+		
+			.asd > .face:nth-child(3){
+			-webkit-transform:rotateY(180deg) translateZ(150px);
+			transform:rotateY(180deg) translateZ(150px);
+			}
+		
+			.asd > .face:nth-child(4){
+			-webkit-transform:rotateY(270deg) translateZ(150px);
+			transform:rotateY(270deg) translateZ(150px);
+			}
+		
+			.asd > .face:nth-child(5){
+			-webkit-transform:rotateX(90deg) translateZ(150px);
+			transform:rotateX(90deg) translateZ(150px);
+			}
+		
+			.asd > .face:nth-child(6){
+			-webkit-transform:rotateX(-90deg) translateZ(150px);
+			transform:rotateX(-90deg) translateZ(150px);
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="asd" id="box1">
+			<div class="face">1</div>
+			<div class="face">2</div>
+			<div class="face">3</div>
+			<div class="face">4</div>
+			<div class="face">5</div>
+			<div class="face">6</div>
+		</div>
+
+		<div class="ani" id="box2">
+			<div class="face">1</div>
+			<div class="face">2</div>
+			<div class="face">3</div>
+			<div class="face">4</div>
+			<div class="face">5</div>
+			<div class="face">6</div>
+		</div>
+		<script type="text/javascript">
+			var props = 'transform WebkitTransform MozTransform OTransform msTransform'.split(' '),
+				prop,
+				el = document.createElement('div');
+			for (var i = 0, l = props.length; i < l; i++) {
+				if (typeof el.style[props[i]] !== "undefined") {
+					prop = props[i];
+					break;
+				}
+			}
+			var xAngle = 0,
+				yAngle = 0;
+			document.body.onkeydown = function(evt) {
+				switch (evt.keyCode) {
+					case 37: // left
+						yAngle -= 90;
+						break;
+					case 38: // up
+						xAngle += 90;
+						evt.preventDefault();
+						break;
+					case 39: // right
+						yAngle += 90;
+						break;
+					case 40: // down
+						xAngle -= 90;
+						evt.preventDefault();
+						break;
+				};
+				document.getElementById('box1').style[prop] = "rotateX(" + xAngle + "deg) rotateY(" + yAngle + "deg)";
+				document.getElementById('box2').style[prop] = "rotateX(" + xAngle + "deg) rotateY(" + yAngle + "deg)";
+							console.log([prop]);
+
+			}
+		</script>
+	</body>
+
+</html>

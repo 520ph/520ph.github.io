@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>脉冲</title>
+		<style type="text/css">
+			body {
+				overflow: hidden;
+				background: #000;
+			}
+		</style>
+	</head>
+
+	<body>
+		<canvas id="myCanvas" width="1300" height="500"></canvas>
+		<script type="text/javascript">
+			window.onload = function() {
+				var canvas = document.querySelector("#myCanvas");
+				var context = canvas.getContext("2d");
+				canvas.height = window.innerHeight;
+				canvas.width = window.innerWidth;
+				window.onresize = function() {
+					canvas.height = window.innerHeight;
+					canvas.width = window.innerWidth;
+				}
+				var radius = 20;
+				var angle = 0;
+				var centerScale = 1;
+				var angleX = angleY = 0;
+
+				function mai() {
+					window.requestAnimationFrame(mai);
+					context.clearRect(0, 0, canvas.width, canvas.height);
+					context.beginPath();
+					context.arc(canvas.width/2 + Math.sin(angleX) * canvas.width/2, canvas.height/2 + Math.sin(angleY) * canvas.height/2, radius, 0, 2 * Math.PI);
+					context.strokeStyle = "#00bfff";
+					context.fillStyle = "#00bfff";
+					context.lineWidth = 1;
+					context.stroke();
+					context.fill();
+					context.closePath();
+					angleX += 0.07;
+					angleY += 0.11;
+				}
+				window.requestAnimFrame = (function() {
+					return window.requestAnimationFrame ||
+						window.webkitRequestAnimationFrame ||
+						window.mozRequestAnimationFrame ||
+						function(callback) {
+							window.setTimeout(callback, 1000 / 60);
+						};
+				})();
+				mai();
+			}
+		</script>
+	</body>
+
+</html>

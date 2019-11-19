@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>轨迹</title>
+    <style>
+        body{
+            margin: 0;
+            overflow: hidden;
+            background: #000;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        let canvas = document.querySelector('#canvas');
+        let context = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height =window.innerHeight;
+        let angle = 0,
+            centerX = canvas.width / 2,
+            centerY = canvas.height / 2,
+            radiusX = 200,
+            radiusY = 100,
+            speed = 0.04;
+            var backCanvas = document.createElement('canvas'),
+            backCtx = backCanvas.getContext('2d');
+            backCanvas.width = canvas.width;
+            backCanvas.height = canvas.height;
+            //设置主canvas的绘制透明度
+            //显示即将绘制的图像，忽略临时canvas中已存在的图像
+            backCtx.globalCompositeOperation = 'copy';
+            context.globalAlpha = 0.90;
+            //context.globalCompositeOperation = 'destination-in';
+        function drawFrame () {
+            window.requestAnimationFrame(drawFrame);
+            //backCtx.drawImage(canvas, 0, 0, canvas.width, canvas.height);
+            //默认值为source-over
+            var prev = context.globalCompositeOperation;
+            //只显示canvas上原图像的重叠部分
+            context.globalCompositeOperation = 'destination-in';
+            //设置主canvas的绘制透明度
+            context.fillRect(0, 0, canvas.width, canvas.height);
+            context.globalCompositeOperation = prev;
+            context.beginPath();
+            angle += speed;
+            context.fillStyle = 'red';
+            context.arc(centerX + Math.sin(angle) * radiusX,centerY + Math.cos(angle) * radiusY,10,0,Math.PI*2);
+            //context.lineTo(centerX + Math.sin(angle) * radiusX, centerY + Math.cos(angle) * radiusY);
+            
+            context.fill();
+            //context.drawImage(backCanvas, 0, 0, canvas.width, canvas.height);
+        }
+        drawFrame();
+    </script>
+</body>
+</html>

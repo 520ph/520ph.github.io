@@ -1,0 +1,143 @@
+/*重置样式*/
+
+* {
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 10px;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	-webkit-tap-highlight-color: transparent;
+	height: 100%;
+	min-width: 320px;
+	overflow-x: hidden;
+}
+
+body {
+	max-width: 620px;
+	margin: 0 auto;
+	padding: 0;
+	font-family: Helvetica;
+}
+
+.container {
+	max-width: 640px;
+	margin: 0 auto;
+	padding: 0;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:link {
+	color: #303030;
+}
+
+a:visited {
+	color: #303030;
+}
+
+a:hover {
+	color: #303030;
+}
+
+a:active {
+	color: #303030;
+}
+
+p,
+ul,
+li {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+/* clearfix */
+
+.cl:after {
+	content: ".";
+	/* Older browser do not support empty content */
+	visibility: hidden;
+	display: block;
+	height: 0;
+	clear: both;
+}
+
+.cl {
+	zoom: 1;
+}
+
+
+/* 针对 IE 不支持 :after */
+
+.header,
+.container {
+	max-width: 620px;
+	overflow-x: hidden;
+}
+.header{padding-top: 50px;}
+
+/*重置样式*/
+/*0.5px的线*/
+
+.line {
+	height: 1px;
+	margin: 0 16px;
+	background: #b4b4b4;
+	-webkit-transform: scaleY(0.5);
+	-moz-transform: scaleY(0.5);
+	-ms-transform: scaleY(0.5);
+	-o-transform: scaleY(0.5);
+	transform: scaleY(0.5);
+}
+
+
+/*0.5px的线*/
+/*头部立刻分享*/
+
+.like {
+	height: 50px;
+	background: #fff;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	max-width: 620px;
+	z-index: 10;
+}
+
+.like .line {
+	margin: 50px 0 0 0;
+}
+
+.like .logo {
+	margin: 9px 10px 9px 15px;
+	float: left;
+}
+
+.like .litxt {
+	display: block;
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+	font-size: 14px;
+}
+
+.like .litxt {
+	float: left;
+}
+.like .likesh{
+	float: right;
+    margin: 21px 15px 0 0;
+}
+.like .poenapp {
+	float: right;
+	margin: 16px 16px 12px 0;
+}
+.fleft{float:left;}
+.fright{float: right;}
+.reposi{position: relative;}
+.abposi{position: absolute;}
+
+/*头部立刻分享*/

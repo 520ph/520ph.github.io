@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>模拟滚动条</title>
+		<link rel="shortcut icon" href="/images/cc.ico" />
+		<style type="text/css">
+			body{
+				margin: 0;
+				overflow: hidden;
+			}
+			.con{
+				line-height: 100px;
+				width:50px;
+				position: absolute;
+			}
+			.srcoll_bar{
+				width: 10px;
+				min-height: 100px;
+				background: red;
+				position: fixed;
+				right: 0;
+				top: 0;
+			}
+			.blue{
+				background: blue;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="con">
+			随便写随便写随便写随便写随便写随便写随便写随便写随便写随便写随便写随便写随便写随便写随便写随便写随便写随便写随便写随便写
+		</div>
+		<div class="srcoll_bar"></div>
+		<script type="text/javascript">
+			/*
+			 首先获取元素，srcoll_bar是滚动条的那个滑块
+			 con就是内容了
+			 * */
+			var srcoll_bar = document.querySelector(".srcoll_bar");
+			var con = document.querySelector(".con");
+			//滚动条鼠标按下事件
+			srcoll_bar.onmousedown = function(ev){
+				//类名加blue，添加一个选中状态
+				srcoll_bar.className += " blue";
+				//ev是当前的鼠标对象
+				var ev = ev || event;
+				//这部分是拖拽的原理
+				var disY = ev.clientY - this.offsetTop;
+				//鼠标移动事件
+				//绑定在document上是因为，如果你鼠标移出滚动条，就不起作用了，这和原生的不一样
+				//绑定在document的话，移出去也可以控制，可以算是事件委托吧。
+				document.onmousemove = function(ev){
+					var disentY = ev.clientY - disY;
+					//限制拖拽的范围，不能小于0和大于滚动区域
+					if(disentY<0){
+						disentY = 0;
+					}else if(disentY>document.documentElement.clientHeight - srcoll_bar.offsetHeight){
+						disentY = document.documentElement.clientHeight - srcoll_bar.offsetHeight;
+					}
+					srcoll_bar.style.top = disentY + "px";
+					//可视区，也就是滚动区域
+					var iMax = document.documentElement.clientHeight;
+					//因为是在滚动区域内滚动，而内容也是在滚动区域内查看，那么他们移动的距离之间就存在一个比例
+					//滚动条的移动距离和整个滚动区域的比例
+					var isCale = disentY / (iMax - srcoll_bar.offsetHeight);
+					//那么内容移动的话，是移动可视区之外的内容，这个算出来是个负数。
+					//滚动条往下移动，内容往上移动，这样的话top就是负值，正好，算出来这段差值*这个比例=该移动的距离；
+					con.style.top = (iMax - con.offsetHeight) * isCale + "px";
+					//阻止浏览器默认行为，比如选中文字；
+					return false;
+				}
+				//鼠标抬起事件
+				document.onmouseup = function(){
+					//样式变回原样
+					srcoll_bar.className = "srcoll_bar";
+					//清空事件函数
+					document.onmousemove = document.onmouseup = null;
+				}
+				//阻止浏览器默认行为，比如选中文字；
+				return false;
+			}
+		</script>
+	</body>
+</html>

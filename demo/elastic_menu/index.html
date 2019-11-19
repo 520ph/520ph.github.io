@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="shortcut icon" href="/images/cc.ico" />
+		<title>弹性菜单</title>
+		<style type="text/css">
+			body{
+				background: url(img/bodyBg.jpg) center top no-repeat #000;
+			}
+			#box{
+				background: url(img/navbg.png) no-repeat;
+				width: 735px;
+				height: 80px;
+				margin: 100px auto;
+				position: relative;
+			}
+			li{
+				width:96px;
+				height: 50px;
+				line-height: 50px;
+				text-align: center;
+				list-style: none;
+				float: left;
+				color: #fff;
+				position: relative;
+    			z-index: 2;
+    			cursor: pointer;
+    			margin-top:7px;
+			}
+			#hove{
+				position: absolute;
+				height: 76px;
+				background: url(img/navA_hover.png) no-repeat;
+				z-index:1;
+				top: -4px;
+				left: 40px;
+				margin-top: 0;
+			}
+			
+			#he{
+				width: 100px;
+				height: 50px;
+				background: rgba(191, 165, 165, 0.41);
+				margin: 10px auto;
+				border-radius: 50px;
+			}
+		</style>
+	</head>
+	<body>
+		<ul id="box">
+			<li id="hove"></li>
+			<li>路人甲</li>
+			<li>路人乙</li>
+			<li>路人丙</li>
+			<li>路人丁</li>
+			<li>路人戊</li>
+			<li>路人己</li>
+			<li>路人庚</li>
+		</ul>
+		<div id="he"></div>
+		<script type="text/javascript">
+			window.onload = function(){
+				var lis = document.getElementsByTagName("li");
+				var he = document.getElementById("he");
+				he.onmouseover = function(){
+					starHe(this,300);
+				}
+				he.onmouseout = function(){
+					starHe(this,50);
+				}
+				function starHe(obj,height){
+					clearInterval(obj.timer);
+					var iSpeed = 0;
+					obj.timer = setInterval(function(){
+						iSpeed += (height - obj.offsetHeight)/6;
+						iSpeed *= 0.75;
+						if(Math.abs(iSpeed) <=1 && Math.abs(height - obj.offsetHeight) <=1){
+							clearInterval(obj.timer);
+							obj.style.height = height + "px";
+						}else{
+							var h = obj.offsetHeight + iSpeed;
+							if(h<0){
+								h = 0;
+							}
+							obj.style.height = h + "px";
+						}
+					},30);
+				}
+				for (var i = 1; i < lis.length; i++) {
+					lis[i].onmouseover = function(){
+						starMove(lis[0],this.offsetLeft);
+					}
+					lis[i].onmouseout = function(){
+						starMove(lis[0],40);
+					}
+				}
+			}
+			function starMove(obj,offsetLeft){
+				clearInterval(obj.timer);
+				var iSpeed = 0;
+				obj.timer = setInterval(function(){
+					iSpeed += (offsetLeft - obj.offsetLeft)/6;
+					iSpeed *= 0.75;
+					if(Math.abs(iSpeed) <=1 && Math.abs(offsetLeft - obj.offsetLeft) <=1){
+						clearInterval(obj.timer);
+						obj.style.left = offsetLeft + "px";
+					}else{
+						obj.style.left = obj.offsetLeft + iSpeed +"px";
+					}
+				},20);
+			}
+		</script>
+	</body>
+</html>

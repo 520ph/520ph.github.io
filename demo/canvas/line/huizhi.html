@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>曲线绘制动画</title>
+    <style>
+        body{
+            margin: 0;
+            overflow: hidden;
+        }
+        div{
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <div>点击页面任意2点</div>
+    <canvas id="canvas"></canvas>
+    <script>
+        let canvas = document.querySelector('#canvas');
+        let context = canvas.getContext('2d');
+        var maxPrecision = 500, currentPrecision = 1;
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        var index = 0;
+        var pointArr = [];
+        canvas.addEventListener('click',(e) => {
+            index++;
+            pointArr.push({
+                x:e.offsetX,
+                y:e.offsetY
+            });
+            if(index == 2){
+                pointArr.push(getControlPoint(pointArr[0],pointArr[1],0.5));
+                init(pointArr[0],pointArr[1],pointArr[2]);
+            }
+        })
+        //计算控制点
+        function getControlPoint(start,end,curveness) {
+            var inv = 1;
+            return {
+                'x': (start.x + end.x) / 2 - inv * (start.y - end.y) * curveness,
+                'y': (start.y + end.y) / 2 - inv * (start.x - end.x) * curveness
+            };
+        }
+        function init(start,end,middle){
+            animate();
+        }
+        //计算曲线上的点
+        function quadraticBezierFunction(p0, p1, p2, t) {
+            if (t > 1 || t < 0) {
+                return false;
+            }
+            return (1 - t) * (1 - t) * p0 + 2 * t * (1 - t) * p1 + t * t * p2;
+        }
+        //动画
+        function animate(){
+            currentPrecision++;
+            if (currentPrecision <= maxPrecision) {
+                for (var i = 0; i < currentPrecision; i++) {
+                    var t = i / maxPrecision;
+                    var point = {
+                        x: quadraticBezierFunction(pointArr[0].x,pointArr[2].x,pointArr[1].x,t),
+                        y: quadraticBezierFunction(pointArr[0].y,pointArr[2].y,pointArr[1].y,t)
+                    }
+                    context.beginPath();
+                    //画点
+                    context.arc(point.x, point.y, 2, 0, 2 * Math.PI, true);
+                    context.fill();
+                }
+                window.requestAnimationFrame(animate);
+            }
+        }
+        
+    </script>
+</body>
+</html>

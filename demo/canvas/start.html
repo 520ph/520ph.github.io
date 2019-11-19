@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>五角星</title>
+		<style type="text/css">
+			body{
+				margin: 0;
+				overflow: hidden;
+			}
+		</style>
+	</head>
+
+	<body>
+		<canvas id="cvs" width="" height=""></canvas>
+		<script>
+			window.onload = function() {
+				var canvas = document.getElementById("cvs");
+				canvas.width = window.innerWidth;
+				canvas.height = window.innerHeight;
+				var context = cvs.getContext("2d");
+				window.onresize = function(){
+					canvas.width = window.innerWidth;
+					canvas.height = window.innerHeight;
+					init();
+				}
+				init();
+				function init(){
+					var linearStyle = context.createLinearGradient(0,0,0,canvas.height);
+						linearStyle.addColorStop(0.0,"#000");
+						linearStyle.addColorStop(1.0,"#035");
+						context.fillStyle = linearStyle;
+						context.fillRect(0,0,canvas.width,canvas.height);
+					for (var i = 0; i < 200; i++) {
+						var x = Math.random() * canvas.width;
+						var y = Math.random() * canvas.height * 0.65;
+						var R = Math.random() * 15 + 5;
+						var a = Math.random() * 360;
+						drawStart(context,x,y,R,a);
+					}
+				}
+				function drawStart(context,x,y,R,a){
+					context.save();
+					context.translate(x,y);
+					context.rotate(a / 180 * Math.PI);
+					context.scale(R,R);
+					starPath(context);
+					context.fillStyle = "#f90";
+					context.fill();
+					context.restore();
+				}
+				function starPath(context){
+					context.beginPath();
+					for (var i = 0; i < 5; i++) {
+						context.lineTo(
+							Math.cos((18 + i * 72) / 180 * Math.PI),
+							-Math.sin((18 + i * 72) / 180 * Math.PI)
+						);
+						context.lineTo(
+							Math.cos((54 + i * 72) / 180 * Math.PI) * 0.5,
+							-Math.sin((54 + i * 72) / 180 * Math.PI) * 0.5
+						);
+					};
+					context.closePath();
+				};
+			}
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			:root{
+				--红色:red;
+				--绿色:green;
+				--黄色:yellow;
+				--橙色:#f90;
+				--蓝色:blue;
+			}
+			p:nth-of-type(1){color:var(--红色)}
+			p:nth-of-type(2){color:var(--绿色)}
+			p:nth-of-type(3){color:var(--黄色)}
+			p:nth-of-type(4){color:var(--橙色)}
+			p:nth-of-type(5){color:var(--蓝色)}
+			div{color:var(--动态)}
+		</style>
+	</head>
+	<body>
+		<p>1111111</p>
+		<p>2222222</p>
+		<p>3333333</p>
+		<p>4444444</p>
+		<p>5555555</p>
+		<div>我是由JS动态设置颜色的</div>
+		<script type="text/javascript">
+			var colros = ["red","green","yellow","#f90","blue"];
+			if(window.CSS && window.CSS.supports && window.CSS.supports('--size', 0)) {
+			  /* 支持 */
+			 	//获取css自定义变量
+			 	var rootStyles = getComputedStyle(document.documentElement);
+				var value = rootStyles.getPropertyValue('--红色');
+				console.log(value);
+			 	var index = 0;
+				setInterval(function(){
+					document.documentElement.style.setProperty("--动态",colros[index%colros.length]);
+					index++;
+				},500);
+			}else{
+			  /* 不支持 */
+			 	alert("你的浏览器不支持css自定义变量！")
+			}
+		</script>
+	</body>
+</html>

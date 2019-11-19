@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>Canvas宽高的问题</title>
+		<style type="text/css">
+			body{
+				background: #000;
+				color:#fff;
+			}
+			canvas{
+				background: #fff;
+				display: block;
+				margin-top: 20px;
+			}
+			#myCanvas2{
+				width: 600px;
+				height: 300px;
+			}
+			#myCanvas3{
+				width: 400px;
+				height: 300px;
+			}
+		</style>
+	</head>
+	<body>
+		<p>
+			这3个canvas，默认是300*150。<br />
+			我分别在里面各画了一个100px大小的矩形。<br />
+			第一个是正常的。<br />
+			然后在第二个样式里面设置600*300。可以看到整个画布被等比例放大到了2倍。<br />
+			然后第三个样式里面设置400*300，可以看到整个画布变形了，不是等比例的了。矩形也变成了长方形。<br />
+			<br />
+		</p>
+		<canvas id="myCanvas1"></canvas>
+		<canvas id="myCanvas2"></canvas>
+		<canvas id="myCanvas3"></canvas>
+		<script type="text/javascript">
+			var canvas1 = document.querySelector("#myCanvas1");
+			var context1 = canvas1.getContext("2d");
+			context1.fillRect(10,10,100,100);
+			var canvas2 = document.querySelector("#myCanvas2");
+			var context2 = canvas2.getContext("2d");
+			context2.fillRect(10,10,100,100);
+			var canvas3 = document.querySelector("#myCanvas3");
+			var context3 = canvas3.getContext("2d");
+			context3.fillRect(10,10,100,100);
+		</script>
+	</body>
+</html>

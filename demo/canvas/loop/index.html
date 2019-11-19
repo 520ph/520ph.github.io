@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>圆环</title>
+    <style>
+        body{
+            margin: 0;
+            overflow: hidden;
+        }
+        .box{
+            width: 100vw;
+            height: 100vh;
+            background: #000;
+            border: 1px solid red;
+        }
+    </style>
+</head>
+<body>
+    <div class="box"></div>
+    <script src="createjs/easeljs-1.0.0.min.js"></script>
+    <script src="createjs/TweenMax.js"></script>
+    <script src="createjs/loop.js"></script>
+    <script>
+        let box = document.querySelector('.box');
+        let loops = new loop({
+            dom: box,
+            childSize: [0.5, 0.5],
+            data: [
+                {
+                    name: '新增IP',
+                    value: random()
+                },
+                {
+                    name: 'IP总量',
+                    value: random()
+                },
+                {
+                    name: 'IP资产',
+                    value: random()
+                },
+                {
+                    name: 'IP资产',
+                    value: random()
+                }
+            ]
+        });
+        window.addEventListener('resize', () => {
+            loops.resize();
+        });
+        setInterval(() => {
+            loops.update([
+                {
+                    name: '新增IP',
+                    value: random()
+                },
+                {
+                    name: 'IP总量',
+                    value: random()
+                },
+                {
+                    name: 'IP资产',
+                    value: random()
+                },
+                {
+                    name: 'IP资产',
+                    value: random()
+                }
+            ]);
+        },5000)
+        function random (min = 22222, max = 99999) {
+            return Math.round((max - min) * Math.random()) + min;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<link rel="shortcut icon" href="/images/cc.ico" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+		<title>文字</title>
+		<style type="text/css">
+			body{
+				min-width: 320px;
+				margin:0;
+			}
+			.box {
+				width: 864px;
+				height: 300px;
+				margin: 50px auto;
+				border: 5px solid #FF9A00;
+				padding: 10px 20px;
+			}
+			
+			.left,
+			.right {
+				width: 280px;
+				height: 280px;
+				border: 1px solid #000;
+				border-radius: 6px;
+				padding: 10px;
+			}
+			
+			.left {
+				float: left;
+				outline: none;
+				background: #FF9A00;
+				resize: none;
+			}
+			
+			.left:disabled {
+				cursor: not-allowed;
+			}
+			
+			.b_btn {
+				float: left;
+				width: 200px;
+				height: 300px;
+				margin: 0 30px;
+			}
+			
+			.right {
+				float: left;
+				background: #00a5e0;
+				word-wrap: break-word;
+				overflow: auto;
+			}
+			
+			.right::selection {
+				background: #50FF70;
+			}
+			
+			.btn {
+				width: 150px;
+				height: 60px;
+				line-height: 60px;
+				text-align: center;
+				margin: 20px auto;
+				background-color: #00a5e0;
+				border-radius: 6px;
+				border: none;
+				display: block;
+				outline: none;
+				color: #fff;
+				font-size: 20px;
+				-webkit-transition: background-color .5s;
+				-moz-transition: background-color .5s;
+				-ms-transition: background-color .5s;
+				-o-transition: background-color .5s;
+				transition: background-color .5s;
+			}
+			
+			.btn:disabled {
+				background: #BFBFBF;
+				cursor: not-allowed;
+			}
+			
+			.btn:disabled:hover {
+				background: #BFBFBF;
+			}
+			
+			.btn:hover {
+				background-color: #00b4f5;
+			}
+			
+			.btn:active {
+				background-color: #0092c7;
+			}
+			
+			.progress {
+				width: 140px;
+				height: 12px;
+				margin: 0 auto;
+			}
+			
+			.progress div {
+				width: 10px;
+				height: 10px;
+				border: 1px solid #000;
+				background: #FF9A00;
+				float: left;
+				margin: 0 1px;
+			}
+			
+			.info {
+				font-size: 20px;
+				text-align: center;
+			}
+			
+			.spl {
+				margin: 0 2px;
+			}
+			
+			.speed {
+				margin: 0 auto;
+				display: block;
+			}
+			@media only screen and (max-width: 640px) {
+				body{overflow-x: hidden;}
+				.box{
+					width:auto;
+					height: auto;
+					margin: 0;
+					border: none;
+					padding-bottom: 50px;
+				}
+				.left,.right{
+					float: none;
+					width: 90%;
+					height:150px;
+					margin: 0 auto;
+					
+				}
+				.left{
+					display: block;
+				}
+				.b_btn{
+					float: none;
+					width: auto;
+					height: 170px;
+					margin: 0;
+				}
+				.info{
+					margin: 0;
+				}
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="box">
+			<textarea class="left"></textarea>
+			<div class="b_btn">
+				<button class="btn">文字转移</button>
+				<p class="info">转移速度</p>
+				<input type="range" class="speed" min="10" max="1000" value="10" />
+				<p class="info"><span class="num"></span><span class="spl"></span><span class="sum"></span></p>
+				<div class="progress">
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+				</div>
+			</div>
+			<div class="right"></div>
+		</div>
+		<script type="text/javascript">
+			function $(s) {
+				return document.querySelector(s);
+			}
+			var time = null;
+			var left = $(".left");
+			var right = $(".right");
+			var divs = document.querySelectorAll(".progress div");
+			var sp = "";
+			var leftcon = "";
+			var speed = $(".speed");
+			$(".btn").flag = true;
+			$(".btn").addEventListener("click", function() {
+				if (!left.value) {
+					alert("请先输入内容!");
+					return;
+				}
+				if ($(".right").innerText) {
+					$(".right").innerText = "";
+				}
+				this.disabled = true;
+				left.disabled = true;
+				$(".btn").flag = !$(".btn").flag;
+				leftcon = left.value.split("");
+				var num = 0;
+				var odiv = 0;
+				$(".num").innerText = 0;
+				$(".sum").innerText = leftcon.length;
+				$(".spl").innerText = "/";
+				time = setInterval(function() {
+					for (var i = 0; i < divs.length; i++) {
+						divs[i].style.backgroundColor = "#FF9A00";
+					}
+					if (odiv == divs.length) {
+						odiv = 0;
+					}
+					divs[odiv].style.backgroundColor = "red";
+					if (!left.value) {
+						clearInterval(time);
+						divs[odiv].style.backgroundColor = "#FF9A00";
+						$(".btn").disabled = false;
+						left.disabled = false;
+						return;
+					}
+					odiv++;
+					left.value = left.value.substring(1);
+					right.innerText += leftcon[num];
+					num++;
+					$(".num").innerText = num;
+				}, speed.value);
+			}, false);
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1" />
+		<meta name="viewport" content="user-scalable=no,target-densitydpi=medium-dpi" />
+		<link rel="shortcut icon" href="/images/cc.ico" />
+		<title>相册</title>
+		<style type="text/css">
+			body{
+				margin: 0;
+				background: #000;
+				overflow-x: hidden;
+			}
+			.picList{
+				margin: 0;
+				padding: 0;
+				position: relative;
+			}
+			.picList li{
+				list-style: none;
+			    width: 3.3rem;
+			    height: 3.3rem;
+			    position: absolute;
+			    -webkit-transition: top 0.5s,left 0.5s;
+			    -moz-transition: top 0.5s,left 0.5s;
+			    -ms-transition: top 0.5s,left 0.5s;
+			    -o-transition: top 0.5s,left 0.5s;
+			    transition: top 0.5s,left 0.5s;
+			    top: 0;
+			    left: 0;
+			}
+			.header{
+				height: 1rem;
+				text-align: center;
+			    color: #666;
+			    font-size: 0.7em;
+			    line-height: 1rem;
+			    padding: 0.3rem 0.4rem;
+			    margin: 0;			    background: -webkit-linear-gradient(#292929, #1e1e1e);
+			    background: -moz-linear-gradient(#292929, #1e1e1e);
+			    background: -o-linear-gradient(#292929, #1e1e1e);
+			    background: linear-gradient(#292929, #1e1e1e);
+			}
+			.header a{
+			    text-decoration: none;
+			    font-size: 0.5rem;
+			    height: 1rem;
+			    line-height: 1rem;
+			    text-align: center;
+			    margin: 0;
+			    display: block;
+			    padding: 0 0.3rem;
+			    border: 2px solid #0d0d0d;
+			    color: #fff;
+			    border-radius:0.1rem;
+			    box-shadow: 0 0 3px #0d0d0d,inset 0 0 2px #232323;
+			}
+			.delete{
+				float: left;
+				visibility:hidden;
+			}
+			.s_btn{
+				float: right;
+			}
+			.boxpage{
+				width: 3.3rem;
+			    height: 3.3rem;
+			    position: absolute;
+			    background-repeat: no-repeat;
+			    background-position: -1000px 0;
+			    background-size: cover;
+			    -webkit-perspective: 800px;
+			    -moz-perspective: 800px;
+			    -ms-perspective: 800px;
+			    perspective: 800px;
+    			overflow: hidden;
+			}
+			.boxpage div{
+				width: 0.33rem;
+			    height: 3.3rem;
+			    position: absolute;
+			    left: 0.33rem;
+				background-image:inherit;
+				background-size: cover;
+    			-webkit-transform-style: preserve-3d;
+    			-moz-transform-style: preserve-3d;
+    			-ms-transform-style: preserve-3d;
+    			transform-style: preserve-3d;
+    			transition: transform .5s;
+			}
+			.show{
+				-webkit-transform: rotateY(-60deg) rotateX(5deg);
+				-moz-transform: rotateY(-60deg) rotateX(5deg);
+				-ms-transform: rotateY(-60deg) rotateX(5deg);
+				-o-transform: rotateY(-60deg) rotateX(5deg);
+				transform: rotateY(-60deg) rotateX(5deg);
+			}
+			.boxpage>div.show{
+				left: 0;
+				-webkit-transform: translateX(1.60rem) rotateY(-60deg) rotateX(5deg);
+				-moz-transform: translateX(1.60rem) rotateY(-60deg) rotateX(5deg);
+				-ms-transform: translateX(1.60rem) rotateY(-60deg) rotateX(5deg);
+				-o-transform: translateX(1.60rem) rotateY(-60deg) rotateX(5deg);
+				transform: translateX(1.60rem) rotateY(-60deg) rotateX(5deg);
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="header">
+			<a href="javascript:;" class="delete">删除</a>
+			相机相册
+			<a href="javascript:;" class="s_btn">选择</a>
+		</header>
+			<ul class="picList">
+				
+			</ul>
+		<script>
+				document.getElementsByTagName("html")[0].style.fontSize = document.documentElement.clientWidth / 10 + "px";
+				window.onresize = function() {
+						document.getElementsByTagName("html")[0].style.fontSize = document.documentElement.clientWidth / 10 + "px";
+				}
+				function $(dom){
+					return document.querySelector(dom);
+				}
+				var img_src = [];
+				for (var i = 1; i <= 16; i++) {
+					var src = "img/"+i+".jpg";
+					img_src.push(src);
+				}
+				var lis = "";
+				for (var i = 0; i < 16; i++) {
+					lis+='<li style="background: url('+img_src[i]+') no-repeat;background-size: cover;"></li>';
+				}
+				var picList = $(".picList");//li的父容器ul
+				picList.innerHTML += lis;
+				toPosition();
+				var s_btn = $(".s_btn");//选择按钮;
+				var btn_flag = true;
+				var lis = document.querySelectorAll(".picList li");
+				var delbtn = $(".delete");
+				var seli = [];//被选中的li
+				s_btn.onclick = function(){
+					if(btn_flag){
+						this.innerHTML = "取消";
+						delbtn.style.visibility = "visible";
+						for (var i = 0; i < lis.length; i++) {
+							lis[i].setAttribute("index",i);
+							lis[i].addEventListener("click",fnLiEnd,false);
+						}
+					}else{
+						delbtn.style.visibility = "hidden";
+						this.innerHTML = "选择";
+						seli.length = 0;
+						for (var i = 0; i < lis.length; i++) {
+							lis[i].removeEventListener("click",fnLiEnd,false);
+						}
+						var boxpage = document.querySelectorAll(".boxpage");
+						for (var i = 0; i < boxpage.length; i++) {
+							close3D(boxpage[i]);
+						}
+					}
+					btn_flag = !btn_flag;
+				}
+				function fnLiEnd(){
+					this.style.opacity = 0;
+					seli.push(this.getAttribute("index"));
+					creat3D(this);
+				}
+				//删除
+				delbtn.onclick = function(){
+					for (var i = 0; i < seli.length; i++) {
+						if($(".picList li[index='"+seli[i]+"']")){
+							picList.removeChild($(".picList li[index='"+seli[i]+"']"));
+							picList.removeChild($(".picList .boxpage[index='"+seli[i]+"']"));
+						}
+					}
+					seli.length = 0;
+					toPosition();
+				}
+				function toPosition(){
+					var poli = document.querySelectorAll(".picList li");
+					for (var i = 0; i < poli.length; i++) {
+						poli[i].style.left = i%3*3.3+"rem";
+						poli[i].style.top = Math.floor(i/3)*3.3+"rem";
+					}
+				}
+				function close3D(obj){
+					var pagediv = obj.getElementsByTagName("div");
+					pagediv[pagediv.length-1].addEventListener("webkitTransitionEnd",fn,false);
+					for (var i = 0; i < pagediv.length; i++) {
+						pagediv[i].className = "";
+					}
+					function fn(){
+						pagediv[pagediv.length-1].removeEventListener("webkitTransitionEnd",fn,false);
+						$(".picList li[index='"+obj.getAttribute("index")+"']").style.opacity = 1;
+						picList.removeChild(obj);
+					}
+				}
+				//创建3D效果需要的标签元素
+				function creat3D(libtn){
+					var boxpage = document.createElement("div");
+					boxpage.setAttribute("index",libtn.getAttribute("index"));
+					boxpage.style.backgroundImage = libtn.style.backgroundImage;
+					boxpage.className = "boxpage";
+					boxpage.innerHTML = '\
+						<div>\
+							<div style="background-position-x:-0.33rem;">\
+								<div style="background-position-x:-0.66rem;">\
+									<div style="background-position-x:-0.99rem;">\
+										<div style="background-position-x:-1.22rem;">\
+											<div style="background-position-x:-1.55rem;">\
+												<div style="background-position-x:-1.88rem;">\
+													<div style="background-position-x:-2.11rem;">\
+														<div style="background-position-x:-2.44rem;">\
+															<div style="background-position-x:-2.77rem;"></div>\
+														</div>\
+													</div>\
+												</div>\
+											</div>\
+										</div>\
+									</div>\
+								</div>\
+							</div>\
+					\</div>';
+					/*眼睛都花了*/
+					var a = offsetXY(libtn);
+					boxpage.style.top = a.t/100+0.13+"rem";
+					boxpage.style.left = a.l/100+"rem";
+					picList.appendChild(boxpage);
+					setTimeout(function(){
+						var pagelen = $(".boxpage[index='"+libtn.getAttribute("index")+"']").getElementsByTagName("div");
+						for (var i = 0; i < pagelen.length; i++) {
+							pagelen[i].className = "show";
+						}
+					},10);
+				}
+				function offsetXY(obj){
+					var l=obj.offsetLeft;
+					var t=obj.offsetTop;
+					return {l:l,t:t};
+				}
+				function css(obj,attr){
+					return obj.currentStyle ? obj.currentStyle[attr] : getComputedStyle(obj)[attr];
+				}
+		</script>
+	</body>
+
+</html>

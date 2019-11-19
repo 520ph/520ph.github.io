@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<link rel="shortcut icon" href="/images/cc.ico" />
+		<title>html5拖放</title>
+		<style type="text/css">
+			body{background:#000;}
+			.box{
+				width: 200px;
+				height:200px;
+				box-shadow: 0 0 30px 0 #fff;
+				margin:20px 10px;
+				float: left;
+			}
+			.padd{padding-left: 10px;padding-top: 10px;  float: left;}
+			#box1{background: #ccc;}
+			#box2{background:#FF6100;}
+			#box3{background:#FFFC00;}
+			#box4{background:#00FF8B;}
+			#box5{background:#00E2FF;}
+			#box6{background:#8A0BBE;}
+		
+		</style>
+		<script type="text/javascript">
+			var box1Div,box2Div,box3Div,box4Div,box5Div,box6Div,msgDiv,img1;
+			window.onload = function(){
+				box1Div = document.getElementById("box1");
+				box2Div = document.getElementById("box2");
+				box3Div = document.getElementById("box3");
+				box4Div = document.getElementById("box4");
+				box5Div = document.getElementById("box5");
+				box6Div = document.getElementById("box6");
+				msgDiv = document.getElementById("msg");
+				img1 = document.getElementById("img1");
+				box1Div.ondragover = function(e){e.preventDefault();e.stopPropagation();}
+				box2Div.ondragover = function(e){e.preventDefault();e.stopPropagation();}
+				box3Div.ondragover = function(e){e.preventDefault();e.stopPropagation();}
+				box4Div.ondragover = function(e){e.preventDefault();e.stopPropagation();}
+				box5Div.ondragover = function(e){e.preventDefault();e.stopPropagation();}
+				box6Div.ondragover = function(e){e.preventDefault();e.stopPropagation();}
+				img1.ondragstart = function(e){
+					e.dataTransfer.setData("imgId","img1");
+				}
+				var img1 = document.getElementById("img1");
+				img1.ondragover = function(e){e.preventDefault();}
+				img1.ondrop = function(e){e.preventDefault();}
+				img1.ondragend = function(e){e.preventDefault();}
+				box1Div.ondrop = dropImg;
+				box2Div.ondrop = dropImg;
+				box3Div.ondrop = dropImg;
+				box4Div.ondrop = dropImg;
+				box5Div.ondrop = dropImg;
+				box6Div.ondrop = dropImg;
+				function dropImg(e){
+					//showObj(e.dataTransfer);
+					e.preventDefault();
+					e.stopPropagation();
+					var img = document.getElementById(e.dataTransfer.getData("imgId"));
+					e.target.appendChild(img);
+				}
+			}
+			/*function showObj(obj){
+				var s = "";
+				for (var k in obj) {
+
+				s+=k+":"+obj[k]+"<br/>";
+				}
+				msgDiv.innerHTML = s;
+			}*/
+			</script>
+	</head>
+	<body>
+		<div class="box" id="box1"></div>
+		<div class="box" id="box2"></div>
+		<div class="box" id="box3"></div>
+		<div class="box" id="box4"></div>
+		<div class="box" id="box5"></div>
+		<div class="box" id="box6"></div>
+		
+		<p class="padd">
+			<img src="images/1.gif" alt="" id="img1" width="200px" height="200px"/>
+		</p>
+		<div id="msg"></div>
+	</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>视觉差</title>
+		<style type="text/css">
+			body{
+				margin: 0;
+			}
+			.activebg {
+				width: 100%;
+				height: 450px;
+				background-attachment: fixed;
+				background-position: center;
+				background-repeat: no-repeat;
+			}
+			.s1 {
+    			background-image: url(images/bg1.jpg);
+			}
+			.s2 {
+    			background-image: url(images/bg2.jpg);
+			}
+			.s3 {
+    			background-image: url(images/bg3.jpg);
+			}
+			.s4 {
+    			background-image: url(images/bg4.jpg);
+			}
+			.s5 {
+    			background-image: url(images/bg5.jpg);
+			}
+			.s6 {
+    			background-image: url(images/bg6.jpg);
+			}
+			.s7 {
+    			background-image: url(images/bg7.jpg);
+			}
+			.scrool-banner{
+				height: 460px;
+				line-height: 460px;
+				text-align: center;
+				font-size: 200px;
+			}
+			.box > .scrool-banner:nth-child(1) {
+				background:red;
+			}
+			.box > .scrool-banner:nth-child(3) {
+				background:yellow;
+			}
+			.box > .scrool-banner:nth-child(5) {
+				background:blue;
+			}
+			.box > .scrool-banner:nth-child(7) {
+				background:green;
+			}
+			.box > .scrool-banner:nth-child(9) {
+				background:cyan;
+			}
+			.box > .scrool-banner:nth-child(11) {
+				background:indianred;
+			}
+			.box > .scrool-banner:nth-child(13) {
+				background:purple;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="box">
+			<div class="scrool-banner">
+				1
+			</div>
+			<div class="activebg s1"></div>
+			<div class="scrool-banner">
+				2
+			</div>
+			<div class="activebg s2"></div>
+			<div class="scrool-banner">
+				3
+			</div>
+			<div class="activebg s3"></div>
+			<div class="scrool-banner">
+				4
+			</div>
+			<div class="activebg s4"></div>
+			<div class="scrool-banner">
+				5
+			</div>
+			<div class="activebg s5"></div>
+			<div class="scrool-banner">
+				6
+			</div>
+			<div class="activebg s6"></div>
+			<div class="scrool-banner">
+				7
+			</div>
+			<div class="activebg s7"></div>
+		</div>
+		<!--
+			 lte IE8的浏览器不支持本示例的选择器
+			:nth-child 基本用法
+			:nth-child
+			:nth-child(8) 选中第8个子元素
+			
+			:nth-child 范围用法
+			正方向范围 
+			:nth-child(n+6) 选中从第6个开始的子元素
+			使用 :nth-child(n+6) ，就相当于选中第6个 :nth-child(6) 和其后的所有子元素
+			负方向范围
+			:nth-child(-n+9) 选中从第1个到第9个子元素
+			使用 :nth-child(-n+9)，就相当于选中第9个和其之前的所有子元素
+			前后限制范围nth-child(n+4):nth-child(-n+8) 选中第4-8个子元素
+			使用 nth-child(n+4):nth-child(-n+8) 可以选中某一范围内子元素，上面的例子里是从第4个到第8个子元素
+			范围高级用法
+			nth-child(n+2):nth-child(odd):nth-child(-n+9) 奇数位/偶数位子元素
+			使用 nth-child(n+2):nth-child(odd):nth-child(-n+9)将会选中的子元素是从第2位到第9位，并且只包含奇数位。
+			nth-child(3n+1):nth-child(even) 间隔选择子元素
+			使用 :nth-child(3n+1)可以每隔3个选中一个，也就是第 1, 4, 7 和 10 个子元素
+			然后使用 :nth-child(even)过滤掉了奇数位子元素，也就是 1 和 7，于是，剩下的子元素只有 4 和 10。
+			
+			
+			问题：
+			在做本示例的时候，发现了一个问题，看我写的选择器nth-child()，为什么是1，3....13呢？
+			按之前的理解class名为.scrool-banner的元素，有7个，应该是：1，2.....7啊，是不是感觉这样写才对？
+			但事实却证明不是这样子的，写成1，2，3的话，不会对第5，6，7个.scrool-banner起作用。
+			why?
+			你觉得这难理解么？原来CSS选择器是从右到左查询的，如果我们之前写的:
+			.box > .scrool-banner:nth-child(2)
+			首先第二个子元素，然后这个子元素的类名为.scrool-banner，然后看看我们的元素结构，第二个元素的类名不是这个
+			现在应该明白了吧。
+		-->
+	</body>
+
+</html>

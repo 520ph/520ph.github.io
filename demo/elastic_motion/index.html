@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="shortcut icon" href="/images/cc.ico" />
+		<title>弹性运动</title>
+		<style type="text/css">
+			body{
+				margin: 0;
+			}
+			#div1{
+				width: 100px;
+				height: 100px;
+				position: absolute;
+				left:50px;
+				top: 50px;
+				background: red;
+			}
+			.div2{
+				height: 500px;
+				border: 1px solid #000;
+				position: absolute;
+				left:500px;
+			}
+		</style>
+	</head>
+	<body>
+		<input type="button" value="开始运动" id="input1">
+		<input type="button" value="停止运动" id="input2">.
+		<input type="button" value="还原" id="input3">
+		<div id="div1"></div>
+		<div class="div2"></div>
+		<script type="text/javascript">
+			var btn1 = document.getElementById("input1");
+			var btn2 = document.getElementById("input2");
+			var btn3 = document.getElementById("input3");
+			var div1 = document.getElementById("div1");
+			var timer = null;
+			var iSpeed = 0;
+			var stop = 500;
+			btn2.onclick = function(){
+				clearInterval(timer);
+			};
+			btn3.onclick = function(){
+				iSpeed = 0;
+				stop = 50;
+				starMove();
+			}
+			btn1.onclick = function(){
+				iSpeed = 0;
+				stop = 500;
+				starMove();
+			}
+			function starMove(){
+				clearInterval(timer);
+				timer = setInterval(function(){
+					iSpeed += (stop-div1.offsetLeft)/6;
+					iSpeed *= 0.75;
+					if(Math.abs(iSpeed) <=2 && Math.abs(stop-div1.offsetLeft)<=4){
+						clearInterval(timer);
+					}else{
+						div1.style.left = div1.offsetLeft + iSpeed + "px";
+					}
+					
+				},30);
+			}
+		</script>
+	</body>
+</html>

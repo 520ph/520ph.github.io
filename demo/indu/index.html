@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<title>手机立体感应测试-完美</title>
+	</head>
+	<body>
+		<h1>Z轴:<span class="numz">0</span></h1>
+		<script type="text/javascript">
+			window.onload = function(){
+				init();
+			};
+			function init(){
+				if(window.DeviceOrientationEvent){
+					window.addEventListener("deviceorientation",function(event){
+						rotationFun(event);
+					},true);
+				}else{
+					alert("你的手机不支持立体感应！");
+				};
+			};
+			var oldRZ;
+			var totalRZ = 0;
+			function rotationFun(e){
+				var curRz = e.alpha;
+				if(oldRZ == undefined){
+					oldRZ = curRz;
+				};
+				var diffRz = curRz - oldRZ;
+				//e.alpha顺时针为负值
+           		//如果z轴方向上转动的差值大于180度，则旋转过程正处于临界状态下
+           		if(Math.abs(diffRz) > 180){
+           			if(diffRz > 0){
+           				diffRz = curRz - 360 - oldRZ;
+           			}else{
+           				diffRz = curRz + 360 - oldRZ;
+           			};
+           		};
+           		oldRZ = curRz;
+           		totalRZ += diffRz;
+           		document.querySelector(".numz").innerHTML = totalRZ;
+			};
+		</script>
+	</body>
+</html>

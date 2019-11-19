@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>进度条</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+			
+			*:before,
+			*:after {
+				box-sizing: border-box;
+			}
+			
+			body,
+			html {
+				width: 100%;
+				height: 100%;
+				min-width: 1200px;
+			}
+			
+			body {
+				background: url(images/bg.png) no-repeat center center/cover;
+				font-family: "Microsoft yahei", "微软雅黑", "Tahoma", "Verdana", "Arial", "sans-serif";
+			}
+			
+			a {
+				text-decoration: none;
+				color: #fff;
+			}
+			
+			.main_warp,#main{
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				min-width: 1200px;
+				min-height: 600px;
+				max-width: 1600px;
+				max-height: 900px;
+				overflow: hidden;
+				top:0;
+			}
+			
+			/*居中*/
+			
+			.center {
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				-webkit-transform: translate(-50%, -50%);
+				transform: translate(-50%, -50%);
+			}
+			/*外环*/
+			
+			.outerRing {
+				width: 800px;
+				height: 800px;
+				background: url(images/index/outerRing.png) no-repeat center center/800px 800px;
+				z-index: 1;
+			}
+			/*线条*/
+			
+			.line {
+				width: 100%;
+				height: 100%;
+				background: url(images/index/line.png) no-repeat center center/1500px 1500px;
+			}
+			/*中环*/
+			
+			.inRing {
+				width: 70%;
+				height: 70%;
+				background: url(images/index/inRing.png) no-repeat center center/100% 100%;
+			}
+			
+			/*用户管理*/
+			
+			.user_warp {
+				position: absolute;
+				bottom: -20px;
+				left: 50%;
+				-webkit-transform: translateX(-50%);
+				transform: translateX(-50%);
+			}
+			
+			.user_icon {
+				width: 24px;
+				height: 26px;
+				margin: 0 auto 10px;
+				background: url(images/index/user_icon.png) no-repeat 0 0/cover;
+			}
+			
+			.user_link {
+				color: #fafafa;
+			}
+			/*数据展示*/
+			
+			.data_warp {
+				position: absolute;
+				left: 55px;
+				top: 50%;
+				-webkit-transform: translate(-100%, -50%);
+				transform: translate(-100%, -50%);
+			}
+			
+			.back_warp {
+				position: absolute;
+				right: 55px;
+				top: 50%;
+				-webkit-transform: translate(100%, -50%);
+				transform: translate(100%, -50%);
+			}
+			
+			.items {
+				display: flex;
+				align-items: center;
+				color: #2D648F;
+			}
+			
+			.items_title {
+				margin: 0 10px;
+			}
+			
+			.items_icon {
+				width: 100px;
+				height: 100px;
+				border: 1px solid #264C6E;
+				border-radius: 80px;
+				float: left;
+				text-align: center;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			
+			.items_icon:hover {
+				background-color: rgba(171, 192, 247, 0.1);
+			}
+			
+			.animate_warp {
+				width: 40%;
+				height: 40%;
+				border-radius: 50%;
+			}
+			
+			.an_items {
+				position: absolute;
+			}
+			
+			.an_1 {
+				width: 100%;
+				height: 100%;
+				background: url(images/index/an_1.png) no-repeat center center/cover;
+				-webkit-animation: zhuan 5s infinite ease alternate;
+				animation: zhuan 5s infinite ease alternate;
+			}
+			
+			.an_2 {
+				width: 100%;
+				height: 100%;
+				background: url(images/index/an_2.png) no-repeat center center/cover;
+				-webkit-animation: zhuan 2s infinite ease-in-out;
+				animation: zhuan 2s infinite ease-in-out;
+			}
+			
+			.an_3 {
+				width: 100%;
+				height: 100%;
+				background: url(images/index/an_3.png) no-repeat center center/cover;
+				-webkit-animation: zhuan 2s 1s infinite ease alternate;
+				animation: zhuan 2s 1s infinite ease alternate;
+			}
+			@webkit-keyframes zhuan {
+				from {
+					transform: rotate(0);
+				}
+				to {
+					transform: rotate(360deg);
+				}
+			}
+			@keyframes zhuan {
+				from {
+					transform: rotate(0);
+				}
+				to {
+					transform: rotate(360deg);
+				}
+			}
+			
+			.progress_warp {
+				width: 47%;
+				height: 47%;
+				border-radius: 50%;
+			}
+			
+			.progress_box {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.progress_box div {
+				position: absolute;
+				left: 49.55%;
+				top: 25%;
+				-webkit-transform-origin: center 650%;
+				transform-origin: center 650%;
+				width: 2px;
+				height: 10px;
+				background: #fff;
+				opacity: 0;
+			}
+			
+			.progress_content {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				color: #fff;
+			}
+			
+			.progress_content p {
+				font-size: 40px;
+			}
+			
+			.progress_content span {
+				font-size: 12px;
+			}
+			/*.progress_warp div:nth-of-type(n):nth-of-type(-n+25){	
+				opacity:1;
+			}*/
+		</style>
+	</head>
+
+	<body>
+		<!--<div id="main"></div>-->
+		<div class="main_warp animated">
+			<div class="center outerRing">
+				<div class="center inRing">
+					<div class="data_warp">
+						<a class="data_link items" href="javascript:;">
+							<span class="items_title">数据展示</span>
+							<div class="items_icon">
+								<img src="images/index/data_icon.png" width="50" />
+							</div>
+						</a>
+					</div>
+					<div class="back_warp">
+						<a class="back_link items" href="javascript:;">
+							<div class="items_icon">
+								<img src="images/index/back_icon.png" width="50" />
+							</div>
+							<span class="items_title">后台管理</span>
+						</a>
+					</div>
+					<div class="user_warp">
+						<div class="user_icon"></div>
+						<a class="user_link" href="javascript:;">用户管理</a>
+					</div>
+					<div class="center animate_warp">
+						<div class="an_items an_1"></div>
+						<div class="an_items an_2"></div>
+						<div class="an_items an_3"></div>
+					</div>
+					<div class="center progress_warp">
+						<div class="center progress_box"></div>
+						<div class="center progress_content">
+							<p>0%</p>
+							<span>loading······</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="center line"></div>
+		</div>
+		<script type="text/javascript">
+			var main_warp = document.querySelector(".main_warp");
+			var map_content = document.querySelector(".map_content");
+			var line = document.querySelector(".line");
+			var map_warp = document.querySelector(".map_warp");
+			var progress_warp = document.querySelector(".progress_warp");
+			var progress_box = document.querySelector(".progress_box");
+			var progress_per = document.querySelector(".progress_content p");
+			createEl("div", 50, function(el) {
+				progress_box.appendChild(el);
+			});
+
+			function createEl(element, count, fn) {
+				var elArr = [];
+				for(var i = 0; i < count; i++) {
+					var el = document.createElement(element);
+					el.style.transform = "rotate(" + 360 / count * i + "deg)";
+					elArr.push(el);
+					fn && fn(el);
+				}
+				return elArr;
+			};
+			var styl = document.createElement("style");
+			document.head.appendChild(styl);
+
+			function progress_Controller(progress) {
+				var per = Math.floor(progress_box.children.length * progress / 100);
+				progress_per.innerText = progress + "%";
+				styl.innerHTML = ".progress_warp div" +
+								 ":nth-of-type(n)" +
+								 ":nth-of-type(-n+" + per + "){" +
+								 "	opacity:1;" +
+								 "}";
+			}
+			var progress = 0;
+			var timer = setInterval(function() {
+				//var progress = Math.floor(Math.random() * 100-1) + 1;
+				progress++;
+				if(progress > 100) {
+					progress = 0;
+					clearInterval(timer);
+					return false;
+				}
+				progress_Controller(progress);
+			}, 50);
+		</script>
+	</body>
+
+</html>

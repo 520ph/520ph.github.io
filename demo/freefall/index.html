@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="shortcut icon" href="/images/cc.ico" />
+		<title>自由落体运动</title>
+		<style type="text/css">
+			#ziyou{
+				width: 100px;
+				height: 100px;
+				background: red;
+				position: absolute;
+				top:500px;
+			}
+			#btn{
+				margin-left: 200px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="ziyou"></div>
+		<button id="btn">开始落下</button>
+		<script type="text/javascript">
+			window.onload = function(){
+				var div = document.getElementById("ziyou");
+				var btn = document.getElementById("btn");
+				btn.onclick = function(){
+					starMove(div);
+				};
+			}
+			function starMove(obj){
+				clearInterval(obj.timer);
+				obj.style.top="500px";
+				obj.style.left = 0;
+				var iSpeedY = -40;
+				var iSpeedX = 10;
+				obj.timer = setInterval(function(){
+					iSpeedY+=3;
+					var T = iSpeedY + obj.offsetTop;
+					if(T>document.documentElement.clientHeight - obj.offsetHeight){
+						T = document.documentElement.clientHeight - obj.offsetHeight;
+						iSpeedY *= -1;
+						iSpeedY *= 0.75;
+						iSpeedX *= 0.75;
+					}else if(Math.abs(iSpeedY)<1 && (obj.offsetTop + obj.offsetHeight == document.documentElement.clientHeight)){
+						clearInterval(obj.timer);
+					}
+					obj.style.top = T + "px";
+					obj.style.left = iSpeedX + obj.offsetLeft + "px";
+				},30);
+			}
+		</script>
+	</body>
+</html>

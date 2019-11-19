@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>地图</title>
+    <style>
+        .box,body,html{
+            width: 100%;
+            height: 100%;
+            margin:0;
+            padding: 0;
+        }
+        #canvas{
+            position: absolute;
+            left:0;
+            top:0;
+        }
+    </style>
+</head>
+<body>
+    <div class="box"></div>
+    <canvas id="canvas"></canvas>
+    <script src="lib/echarts.js" charset="utf-8"></script>
+    <script src="lib/world.js" charset="utf-8"></script>
+    <script src="lib/easeljs-0.8.2.min.js" charset="utf-8"></script>
+    <script src="lib/TweenMax.min.js" charset="utf-8"></script>
+    <script src="js/mapData.js" charset="utf-8"></script>
+    <script src="js/map.js" charset="utf-8"></script>
+    <script src="js/attack4.js" charset="utf-8"></script>
+    <script type="text/javascript">
+        // var timer = setInterval(() => {
+        //     newArr = [ SHData[index % SHData.length] ];
+        //     myChart.setOption({
+        //         series: [{
+        //             // 根据名字对应到相应的系列
+        //             name: '北京',
+        //             data: convertData( newArr )
+        //         },{
+        //             // 根据名字对应到相应的系列
+        //             name: '北京',
+        //             data: scatterData( newArr )
+        //         }]
+        //     });
+        //     index++;
+        // },3000);
+        // setTimeout(function () {
+        //     clearTimeout( timer );
+        // }, SHData.length*1000 );
+    </script>
+</body>
+</html>

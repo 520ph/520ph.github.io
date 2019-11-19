@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background: url(images/bg.webp);
+            margin: 0;
+        }
+
+        .box {
+            width: 90vw;
+            height: 90vh;
+            border: 1px solid red;
+            margin: 50px auto 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box"></div>
+    <button type="button" class="btn">新增并排序</button>
+    <button type="button" class="btn2">还原</button>
+    <script src="lib/d3v3.min.js"></script>
+    <script>
+        function $(dom) {
+            return document.querySelector(dom);
+        }
+        var btn = $('.btn');
+        var btn2 = $('.btn2');
+        var body = d3.selectAll(".box");
+        var width = 0;  //画布的宽度
+        var height = 0;   //画布的高度
+        var boxwidth = $('.box').clientWidth;  //画布的宽度
+        var boxheight = $('.box').clientHeight;   //画布的高度
+        var position = 'center';
+        var padding = {
+            top:20,
+            right:50,
+            bottom:20,
+            left:30,
+            margin:10,
+        }
+        //矩形之间的空白
+        var rectPadding = 30;
+        // 定义数据
+        var dataset = [{
+                name: '北京',
+                value: 10
+            }, {
+                name: '上海',
+                value: 20
+            }, {
+                name: '大连',
+                value: 30
+            }, {
+                name: '辽宁',
+                value: 40
+            }, {
+                name: '太原',
+                value: 33
+            }, {
+                name: '武汉',
+                value: 24
+            }, {
+                name: '深圳',
+                value: 12
+            }, {
+                name: '广州',
+                value: 5
+        }];
+        var fontSize = 20;
+        var YAxis,svg, yaxis, rects, linearX, rectGrop, yScale,linearGradient,marginLeft,seriesWidth;
+        //创建SVG容器
+        function createSVG() {
+            width = boxwidth - padding.left - padding.right - (position === 'rightOut' ? 50 : 0);
+            height = boxheight - padding.top - padding.bottom;
+            svg = body     //选择文档中的body元素
+                .append("svg")          //添加一个svg元素
+                .attr("width",width)       //设定宽度
+                .attr("height", height)    //设定高度
+                //.append("g")
+                .attr('transform', `translate(${padding.left},${padding.top})`)
+            
+        }
+        //创建Y轴
+        function createYaxis() {
+            //y轴的比例尺
+            yScale = d3.scale.ordinal()
+                .domain(dataset.map((item) => item.name))
+                .rangeRoundBands([0, height], 0.1);
+            //定义y轴并设置字体颜色
+            YAxis = d3.svg.axis()
+                .scale(yScale)
+                .orient("left")
+            // .tickValues(names);
+            //生成Y轴
+            yaxis = svg.append("g")
+                .attr("class", "axis")
+                .attr('fill', '#1397FF')
+                .call(YAxis)
+
+            yaxis.selectAll('.tick')
+                .style('opacity', 0);
+            //隐藏刻度轴
+            svg.select('.axis .domain').attr('style', 'display:none')
+        }
+        function createBar() {
+            var text = dataset.map(item => item.name).sort((a,b) => b.length - a.length)[0];
+            marginLeft = (fontSize/2-2)*2*text.length + padding.left;
+            seriesWidth = width - marginLeft
+            //矩形容器
+            rectGrop = svg.append('g').attr('class', 'series')
+                .attr('transform', `translate(${marginLeft},0)`);
+            //x轴的比例尺
+            linearX = d3.scale.linear()
+                .domain([0, d3.max(dataset.map((item) => item.value))])
+                .range([0, seriesWidth]);
+
+            //创建渐变色
+            var a = d3.rgb('#2B80CF');    //红色  
+            var b = d3.rgb('#00FFCC');    //绿色  
+            //能重复使用的标签容器
+            var defs = rectGrop.append("defs");
+            //定义一个线性渐变
+            linearGradient = defs.append("linearGradient")
+                .attr("id", "BarlinearColor")
+                .attr("x1", "0%")
+                .attr("y1", "0%")
+                .attr("x2", "100%")
+                .attr("y2", "0%");
+
+            var stop1 = linearGradient.append("stop")
+                .attr("offset", "0%")
+                .style("stop-color", a.toString());
+
+            var stop2 = linearGradient.append("stop")
+                .attr("offset", "100%")
+                .style("stop-color", b.toString());
+            //创建矩形
+            var ys = svg.selectAll('.axis .tick text');
+            var rects = rectGrop.selectAll('.series-group')
+                    .data(dataset)
+                    .enter()
+                    .append('g')
+                    .attr('class', 'series-group')
+                    .each(function(){
+                        var seriesGroup = d3.select(this);
+                        seriesGroup.append('rect').attr('class', 'serie-bg')
+                        .attr('x', 0)
+                        .attr('y',d => yScale(d.name))
+                        .attr('width', seriesWidth)
+                        .attr('height', yScale.rangeBand())
+                        .attr('fill', 'rgb(32, 38, 41)');
+                        var seriesSingle = seriesGroup.append('g').attr('class', 'serie-single');
+                    var rect = seriesSingle.append('rect')
+                        .attr('class', 'MyRect')
+                        .attr('width', 0)
+                        .attr('height', yScale.rangeBand())
+                        .attr('x', 0)
+                        .attr("y", d => yScale(d.name))
+                        .attr('fill', `url(#${linearGradient.attr('id')})`);
+
+                    seriesSingle.append('text')
+                        .attr('class', 'MyText')
+                        .attr('y', d => yScale(d.name) + yScale.rangeBand() / 2)
+                        .attr("dy", ".32em")
+                        .text(d => d.value)
+                        .attr('font-size',fontSize)
+                        .attr('fill', '#fff');
+                    })
+              
+            textStyle(position);
+        }
+        createSVG();
+        createYaxis();
+        createBar();
+        anime();
+
+        function textStyle(key) {
+            var texts = svg.selectAll('.MyText');
+            switch (key) {
+                case 'left':
+                    texts.attr('x', 0)
+                        .attr('text-anchor', 'start')
+                    break;
+                case 'center':
+                    texts.attr('x', d => {
+                        return linearX(d.value) / 2
+                    })
+                        .attr('text-anchor', 'middle')
+                    break;
+                case 'right':
+                    texts.attr('x', d => {
+                        return linearX(d.value)
+                    })
+                        .attr('text-anchor', 'end')
+                    break;
+                case 'rightOut':
+                    texts.attr('x', d => {
+                        return linearX(d.value) + 10
+                    })
+                        .attr('text-anchor', 'start')
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        btn.onclick = function(){
+            var data = dataset.concat([
+                {
+                    name: '地球',
+                    value: 50
+                }, {
+                    name: '火星',
+                    value: 60
+                }, {
+                    name: '太阳',
+                    value: 70
+                },
+                {
+                    name: '土星',
+                    value: 50
+                }, {
+                    name: '水星',
+                    value: 60
+                }, {
+                    name: '冥王星',
+                    value: 70
+                }
+            ])
+            data.sort((a,b) => b.value - a.value);
+            update(data)
+        };
+        btn2.onclick = function(){
+            update(dataset);
+        }
+        //更新
+        function updateSvg(dom){
+            dom.each(function(){
+                //每个柱图容器
+                    var seriesGroup = d3.select(this);
+                    //柱图背景
+                    var serieBg = seriesGroup.select('.serie-bg');
+                    serieBg.attr('x', 0)
+                        .transition()
+                        .delay((d, i) => {
+                            return i * 100;
+                        })
+                        .ease('easeCubicIn')
+                        .duration(300)
+                        .attr('y',d => yScale(d.name))
+                        .attr('width', seriesWidth)
+                        .attr('height', yScale.rangeBand())
+                        .attr('fill', 'rgb(32, 38, 41)');
+                        //柱图矩形
+                    var rect = seriesGroup.select('.MyRect')
+                        .attr('fill', `url(#${linearGradient.attr('id')})`)
+                        .transition()
+                        .delay((d, i) => {
+                            return i * 100;
+                        })
+                        .ease('easeCubicIn')
+                        .duration(300)
+                        .attr('height', yScale.rangeBand())
+                        .attr('x', 0)
+                        .attr("y", d => yScale(d.name))
+                        .attr('width', d => {
+                            return linearX(d.value);
+                        });
+
+                    seriesGroup.select('.MyText')
+                        .transition()
+                        .delay((d, i) => {
+                            return i * 100;
+                        })
+                        .ease('easeCubicIn')
+                        .duration(300)
+                        .attr('y', d => yScale(d.name) + yScale.rangeBand() / 2)
+                        .attr("dy", ".32em")
+                        .text(d => d.value)
+                        .attr('font-size',fontSize)
+                        .attr('fill', '#fff');
+                })
+        }
+        //创建
+        function enterSvg(dom){
+            //创建每个柱图容器
+             dom.append('g')
+                    .attr('class', 'series-group')
+                    .each(function(){
+                        //选择每个柱图容器
+                        var seriesGroup = d3.select(this);
+                        //添加背景到每个柱图容器
+                        seriesGroup.append('rect').attr('class', 'serie-bg')
+                        .attr('x', 0)
+                        .attr('y',d => yScale(d.name))
+                        .attr('width', seriesWidth)
+                        .attr('height', yScale.rangeBand())
+                        .attr('fill', 'rgb(32, 38, 41)');
+                        //创建柱图矩形容器
+                        var seriesSingle = seriesGroup.append('g').attr('class', 'serie-single');
+                        //创建柱图矩形
+                    var rect = seriesSingle.append('rect')
+                        .attr('class', 'MyRect')
+                        .attr('width', 0)
+                        .attr('fill', `url(#${linearGradient.attr('id')})`)
+                        .transition()
+                        .delay((d, i) => {
+                            return i * 100;
+                        })
+                        .ease('easeCubicIn')
+                        .duration(500)
+                        .attr('x', 0)
+                        .attr("y", d => yScale(d.name))
+                        .attr('height', yScale.rangeBand())
+                        .attr('width', d => {
+                            return linearX(d.value);
+                        });
+                        //创建文字
+                    var text = seriesSingle.append('text')
+                        .attr('class', 'MyText')
+                        .attr('y', d => yScale(d.name) + yScale.rangeBand() / 2)
+                        .attr("dy", ".32em")
+                        .text(d => d.value)
+                        .attr('font-size',fontSize)
+                        .attr('fill', '#fff');
+                    })
+        }
+        //删除
+        function exitSvg(dom){
+            dom.each(function(){
+                var grup = d3.select(this);
+                d3.select(this).select('.serie-bg').remove();
+                d3.select(this).select('.MyText').remove();
+                var rect = d3.select(this).select('.MyRect');
+                rect.transition()
+                .duration(500)
+                .attr('width',0)
+                .attr('y',boxheight)
+                //在动画结束的时候删除容器
+                .each('end',function(){
+                    grup.remove();
+                })
+            });
+        }
+        function update(data){
+            yScale.domain(data.map(function (e) {
+                return e.name;
+            }));
+            var text = data.map(item => item.name).sort((a,b) => b.length - a.length)[0];
+            marginLeft = (fontSize/2-2)*2*text.length + padding.left;
+            yaxis.transition()
+                .duration(500)
+                .attr('transform', `translate(${marginLeft},0)`)
+                .call(YAxis)
+            rectGrop.transition()
+                    .duration(500)
+                    .attr('transform', `translate(${marginLeft},0)`)
+            seriesWidth = width - marginLeft;
+            linearX.domain([0, d3.max(data.map(item => item.value))]).range([0, seriesWidth]);
+            //矩形容器
+            var update = rectGrop.selectAll('.series-group').data(data);
+            var enter = update.enter();
+            var exit = update.exit();
+            updateSvg(update);
+            enterSvg(enter);
+            exitSvg(exit);
+            textStyle(position);
+        }
+        function anime() {
+            {
+                yaxis.selectAll('.tick')
+                    .transition()
+                    .delay((d, i) => i * 100)
+                    .duration(300)
+                    .style('opacity', 1);
+                svg.select('.axis').attr("transform", `translate(${marginLeft},0)`)
+                d3.selectAll('.MyRect')
+                    .transition()
+                    .delay((d, i) => {
+                        return i * 100;
+                    })
+                    .ease('easeCubicIn')
+                    .duration(300)
+                    .attr('width', d => {
+                        return linearX(d.value);
+                    })
+            }
+        }
+    </script>
+</body>
+
+</html>

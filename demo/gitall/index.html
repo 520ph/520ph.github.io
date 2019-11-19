@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title># gitall</title>
+    <style>
+        @import url(http://fonts.googleapis.com/css?family=Inconsolata);
+        @import url(http://fonts.googleapis.com/css?family=PT+Sans);
+        @import url(http://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700);
+        article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        hgroup,
+        nav,
+        section,
+        summary {
+            display: block;
+        }
+
+        audio,
+        canvas,
+        video {
+            display: inline-block;
+        }
+
+        audio:not([controls]) {
+            display: none;
+            height: 0;
+        }
+
+        [hidden] {
+            display: none;
+        }
+
+        html {
+            font-family: sans-serif;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        a:focus {
+            outline: thin dotted;
+        }
+
+        a:active,
+        a:hover {
+            outline: 0;
+        }
+
+        h1 {
+            font-size: 2em;
+        }
+
+        abbr[title] {
+            border-bottom: 1px dotted;
+        }
+
+        b,
+        strong {
+            font-weight: bold;
+        }
+
+        dfn {
+            font-style: italic;
+        }
+
+        mark {
+            background: #ff0;
+            color: #000;
+        }
+
+        code,
+        kbd,
+        pre,
+        samp {
+            font-family: monospace, serif;
+            font-size: 1em;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        q {
+            quotes: "\201C" "\201D" "\2018" "\2019";
+        }
+
+        small {
+            font-size: 80%;
+        }
+
+        sub,
+        sup {
+            font-size: 75%;
+            line-height: 0;
+            position: relative;
+            vertical-align: baseline;
+        }
+
+        sup {
+            top: -0.5em;
+        }
+
+        sub {
+            bottom: -0.25em;
+        }
+
+        img {
+            border: 0;
+            max-width: 100%;
+            padding: 0.8em 0em;
+        }
+
+        svg:not(:root) {
+            overflow: hidden;
+        }
+
+        figure {
+            margin: 0;
+        }
+
+        fieldset {
+            border: 1px solid #c0c0c0;
+            margin: 0 2px;
+            padding: 0.35em 0.625em 0.75em;
+        }
+
+        legend {
+            border: 0;
+            padding: 0;
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            font-family: inherit;
+            font-size: 100%;
+            margin: 0;
+        }
+
+        button,
+        input {
+            line-height: normal;
+        }
+
+        button,
+        html input[type="button"],
+        input[type="reset"],
+        input[type="submit"] {
+            -webkit-appearance: button;
+            cursor: pointer;
+        }
+
+        button[disabled],
+        input[disabled] {
+            cursor: default;
+        }
+
+        input[type="checkbox"],
+        input[type="radio"] {
+            box-sizing: border-box;
+            padding: 0;
+        }
+
+        input[type="search"] {
+            -webkit-appearance: textfield;
+            -moz-box-sizing: content-box;
+            -webkit-box-sizing: content-box;
+            box-sizing: content-box;
+        }
+
+        input[type="search"]::-webkit-search-cancel-button,
+        input[type="search"]::-webkit-search-decoration {
+            -webkit-appearance: none;
+        }
+
+        button::-moz-focus-inner,
+        input::-moz-focus-inner {
+            border: 0;
+            padding: 0;
+        }
+
+        textarea {
+            overflow: auto;
+            vertical-align: top;
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        html {
+            font-family: 'PT Sans', sans-serif;
+        }
+
+        pre,
+        code {
+            font-family: 'Inconsolata', sans-serif;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'PT Sans Narrow', sans-serif;
+            font-weight: 700;
+        }
+
+        html {
+            background-color: #002b36;
+            color: #839496;
+            margin: 1em;
+        }
+
+        body {
+            background-color: #002b36;
+            color: #839496;
+            margin: 0 auto;
+            max-width: 23cm;
+            padding: 1em;
+        }
+
+        code {
+            background-color: #073642;
+            padding: 2px;
+        }
+
+        a {
+            color: #b58900;
+        }
+
+        a:visited {
+            color: #cb4b16;
+        }
+
+        a:hover {
+            color: #cb4b16;
+        }
+
+        h1 {
+            color: #d33682;
+        }
+
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            color: #859900;
+        }
+
+        pre {
+            background-color: #002b36;
+            color: #839496;
+            border: 1pt solid #586e75;
+            padding: 1em;
+            box-shadow: 5pt 5pt 8pt #073642;
+        }
+
+        pre code {
+            background-color: #002b36;
+        }
+
+        h1 {
+            font-size: 1.8em;
+        }
+
+        h2 {
+            font-size: 1.6em;
+        }
+
+        h3 {
+            font-size: 1.4em;
+        }
+
+        h4 {
+            font-size: 1.2em;
+        }
+
+        h5 {
+            font-size: 1.15em;
+        }
+
+        h6 {
+            font-size: 1.15em;
+        }
+
+        table {
+
+            overflow: auto;
+            box-shadow: 5pt 5pt 8pt #073642;
+        }
+
+        table th {
+            font-weight: bold;
+            background: #0A3641;
+        }
+
+        table th,
+        table td {
+            padding: 6px 13px;
+            border: 1px solid #30515A;
+        }
+
+        table tr {
+            border-top: 1px solid #30515A;
+        }
+
+        table tr:nth-child(2n) {}
+
+        table td {
+            word-wrap: break-word !important;
+            word-break: break-all !important;
+        }
+
+        .tag {
+            background-color: #073642;
+            color: #d33682;
+            padding: 0 0.2em;
+        }
+
+        .todo,
+        .next,
+        .done {
+            color: #002b36;
+            background-color: #dc322f;
+            padding: 0 0.2em;
+        }
+
+        .tag {
+            -webkit-border-radius: 0.35em;
+            -moz-border-radius: 0.35em;
+            border-radius: 0.35em;
+        }
+
+        .TODO {
+            -webkit-border-radius: 0.2em;
+            -moz-border-radius: 0.2em;
+            border-radius: 0.2em;
+            background-color: #2aa198;
+        }
+
+        .NEXT {
+            -webkit-border-radius: 0.2em;
+            -moz-border-radius: 0.2em;
+            border-radius: 0.2em;
+            background-color: #268bd2;
+        }
+
+        .ACTIVE {
+            -webkit-border-radius: 0.2em;
+            -moz-border-radius: 0.2em;
+            border-radius: 0.2em;
+            background-color: #268bd2;
+        }
+
+        .DONE {
+            -webkit-border-radius: 0.2em;
+            -moz-border-radius: 0.2em;
+            border-radius: 0.2em;
+            background-color: #859900;
+        }
+
+        .WAITING {
+            -webkit-border-radius: 0.2em;
+            -moz-border-radius: 0.2em;
+            border-radius: 0.2em;
+            background-color: #cb4b16;
+        }
+
+        .HOLD {
+            -webkit-border-radius: 0.2em;
+            -moz-border-radius: 0.2em;
+            border-radius: 0.2em;
+            background-color: #d33682;
+        }
+
+        .NOTE {
+            -webkit-border-radius: 0.2em;
+            -moz-border-radius: 0.2em;
+            border-radius: 0.2em;
+            background-color: #d33682;
+        }
+
+        .CANCELLED {
+            -webkit-border-radius: 0.2em;
+            -moz-border-radius: 0.2em;
+            border-radius: 0.2em;
+            background-color: #859900;
+        }
+
+
+        @media (max-width: 540px) {
+            html {
+                margin: 0 auto;
+                padding: 4px;
+            }
+        }
+
+        /*
+    
+    Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmail.com>
+    
+    */
+
+        .hljs {
+            display: block;
+            overflow-x: auto;
+            padding: 0.5em;
+            background: #002b36;
+            color: #839496;
+            -webkit-text-size-adjust: none;
+        }
+
+        .hljs-comment,
+        .diff .hljs-header,
+        .hljs-doctype,
+        .hljs-pi,
+        .lisp .hljs-string,
+        .hljs-javadoc {
+            color: #586e75;
+        }
+
+        /* Solarized Green */
+
+        .hljs-keyword,
+        .hljs-winutils,
+        .method,
+        .hljs-addition,
+        .css .hljs-tag,
+        .hljs-request,
+        .hljs-status,
+        .nginx .hljs-title {
+            color: #859900;
+        }
+
+        /* Solarized Cyan */
+
+        .hljs-number,
+        .hljs-command,
+        .hljs-string,
+        .hljs-tag .hljs-value,
+        .hljs-rules .hljs-value,
+        .hljs-phpdoc,
+        .hljs-dartdoc,
+        .tex .hljs-formula,
+        .hljs-regexp,
+        .hljs-hexcolor,
+        .hljs-link_url {
+            color: #2aa198;
+        }
+
+        /* Solarized Blue */
+
+        .hljs-title,
+        .hljs-localvars,
+        .hljs-chunk,
+        .hljs-decorator,
+        .hljs-built_in,
+        .hljs-identifier,
+        .vhdl .hljs-literal,
+        .hljs-id,
+        .css .hljs-function {
+            color: #268bd2;
+        }
+
+        /* Solarized Yellow */
+
+        .hljs-attribute,
+        .hljs-variable,
+        .lisp .hljs-body,
+        .smalltalk .hljs-number,
+        .hljs-constant,
+        .hljs-class .hljs-title,
+        .hljs-parent,
+        .hljs-type,
+        .hljs-link_reference {
+            color: #b58900;
+        }
+
+        /* Solarized Orange */
+
+        .hljs-preprocessor,
+        .hljs-preprocessor .hljs-keyword,
+        .hljs-pragma,
+        .hljs-shebang,
+        .hljs-symbol,
+        .hljs-symbol .hljs-string,
+        .diff .hljs-change,
+        .hljs-special,
+        .hljs-attr_selector,
+        .hljs-subst,
+        .hljs-cdata,
+        .css .hljs-pseudo,
+        .hljs-header {
+            color: #cb4b16;
+        }
+
+        /* Solarized Red */
+
+        .hljs-deletion,
+        .hljs-important {
+            color: #dc322f;
+        }
+
+        /* Solarized Violet */
+
+        .hljs-link_label {
+            color: #6c71c4;
+        }
+
+        .tex .hljs-formula {
+            background: #073642;
+        }
+    </style>
+
+    <style>
+        @media print {
+            .hljs {
+                overflow: visible;
+                word-wrap: break-word !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="markdown-body">
+        <h1 id="toc_0">gitall</h1>
+
+        <h3 id="toc_1">git 命令大全</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>命令</th>
+                    <th>功能</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>git init</td>
+                    <td>初始化本地git仓库（创建新仓库）</td>
+                </tr>
+                <tr>
+                    <td>git config --global user.name &quot;xxx&quot;</td>
+                    <td>配置用户名</td>
+                </tr>
+                <tr>
+                    <td>git config --global user.email &quot;
+                        <a href="mailto:xxx@xxx.com">xxx@xxx.com</a>&quot;</td>
+                    <td>配置邮件</td>
+                </tr>
+                <tr>
+                    <td>git config --global color.ui true</td>
+                    <td>git status等命令自动着色</td>
+                </tr>
+                <tr>
+                    <td>git config --global color.status auto</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>git config --global color.diff auto</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>git config --global color.branch auto</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>git config --global color.interactive auto</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>git config --global --unset http.proxy</td>
+                    <td>remove proxy configuration on git</td>
+                </tr>
+                <tr>
+                    <td>git clone git+ssh://git@192.168.53.168/VT.git</td>
+                    <td>clone远程仓库</td>
+                </tr>
+                <tr>
+                    <td>git status</td>
+                    <td>查看当前版本状态（是否修改）</td>
+                </tr>
+                <tr>
+                    <td>git add xyz</td>
+                    <td>添加xyz文件至index</td>
+                </tr>
+                <tr>
+                    <td>git add .</td>
+                    <td>增加当前子目录下所有更改过的文件至index</td>
+                </tr>
+                <tr>
+                    <td>git commit -m &#39;xxx&#39;</td>
+                    <td>提交</td>
+                </tr>
+                <tr>
+                    <td>git commit --amend -m &#39;xxx&#39;</td>
+                    <td>合并上一次提交（用于反复修改）</td>
+                </tr>
+                <tr>
+                    <td>git commit -am &#39;xxx&#39;</td>
+                    <td>将add和commit合为一步</td>
+                </tr>
+                <tr>
+                    <td>git rm xxx</td>
+                    <td>删除index中的文件</td>
+                </tr>
+                <tr>
+                    <td>git rm -r *</td>
+                    <td>递归删除</td>
+                </tr>
+                <tr>
+                    <td>git log</td>
+                    <td>显示提交日志</td>
+                </tr>
+                <tr>
+                    <td>git log -1</td>
+                    <td>显示1行日志 -n为n行</td>
+                </tr>
+                <tr>
+                    <td>git log -5</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>git log --stat</td>
+                    <td>显示提交日志及相关变动文件</td>
+                </tr>
+                <tr>
+                    <td>git log -p -m</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>git show dfb02e6e4f2f7b573337763e5c0013802e392818</td>
+                    <td>显示某个提交的详细内容</td>
+                </tr>
+                <tr>
+                    <td>git show dfb02</td>
+                    <td>可只用commitid的前几位</td>
+                </tr>
+                <tr>
+                    <td>git show HEAD</td>
+                    <td>显示HEAD提交日志</td>
+                </tr>
+                <tr>
+                    <td>git show HEAD^</td>
+                    <td>显示HEAD的父（上一个版本）的提交日志
+                        <sup>
+                            <sup>为上两个版本</sup>
+                        </sup>
+                        <sup>5为上5个版本</sup>
+                    </td>
+                </tr>
+                <tr>
+                    <td>git tag</td>
+                    <td>显示已存在的tag</td>
+                </tr>
+                <tr>
+                    <td>git tag -a v2.0 -m &#39;new tag&#39;</td>
+                    <td>增加v2.0的tag</td>
+                </tr>
+                <tr>
+                    <td>git pull origin --tags</td>
+                    <td>合并远程仓库的tag到本地</td>
+                </tr>
+                <tr>
+                    <td>git push origin --tags</td>
+                    <td>上传本地tag到远程仓库</td>
+                </tr>
+                <tr>
+                    <td>git show v2.0</td>
+                    <td>显示v2.0的日志及详细内容</td>
+                </tr>
+                <tr>
+                    <td>git log v2.0</td>
+                    <td>显示v2.0的日志</td>
+                </tr>
+                <tr>
+                    <td>git diff</td>
+                    <td>显示所有未添加至index的变更</td>
+                </tr>
+                <tr>
+                    <td>git diff --cached</td>
+                    <td>显示所有已添加index但还未commit的变更</td>
+                </tr>
+                <tr>
+                    <td>git diff HEAD^</td>
+                    <td>比较与上一个版本的差异</td>
+                </tr>
+                <tr>
+                    <td>git diff HEAD -- ./lib</td>
+                    <td>比较与HEAD版本lib目录的差异</td>
+                </tr>
+                <tr>
+                    <td>git diff origin/master..master</td>
+                    <td>比较远程分支master上有本地分支master上没有的</td>
+                </tr>
+                <tr>
+                    <td>git diff origin/master..master --stat</td>
+                    <td>只显示差异的文件，不显示具体内容</td>
+                </tr>
+                <tr>
+                    <td>git remote add origin git+ssh://git@192.168.53.168/VT.git</td>
+                    <td>增加远程定义（用于push/pull/fetch）</td>
+                </tr>
+                <tr>
+                    <td>git branch</td>
+                    <td>显示本地分支</td>
+                </tr>
+                <tr>
+                    <td>git branch --contains 50089</td>
+                    <td>显示包含提交50089的分支</td>
+                </tr>
+                <tr>
+                    <td>git branch -a</td>
+                    <td>显示所有分支</td>
+                </tr>
+                <tr>
+                    <td>git branch -r</td>
+                    <td>显示所有原创分支</td>
+                </tr>
+                <tr>
+                    <td>git branch --merged</td>
+                    <td>显示所有已合并到当前分支的分支</td>
+                </tr>
+                <tr>
+                    <td>git branch --no-merged</td>
+                    <td>显示所有未合并到当前分支的分支</td>
+                </tr>
+                <tr>
+                    <td>git branch -m master master_copy</td>
+                    <td>本地分支改名</td>
+                </tr>
+                <tr>
+                    <td>git checkout -b master_copy</td>
+                    <td>从当前分支创建新分支master_copy并检出</td>
+                </tr>
+                <tr>
+                    <td>git checkout -b master master_copy</td>
+                    <td>上面的完整版</td>
+                </tr>
+                <tr>
+                    <td>git checkout features/performance</td>
+                    <td>检出已存在的features/performance分支</td>
+                </tr>
+                <tr>
+                    <td>git checkout --track hotfixes/BJVEP933</td>
+                    <td>检出远程分支hotfixes/BJVEP933并创建本地跟踪分支</td>
+                </tr>
+                <tr>
+                    <td>git checkout v2.0</td>
+                    <td>检出版本v2.0</td>
+                </tr>
+                <tr>
+                    <td>git checkout -b devel origin/develop</td>
+                    <td>从远程分支develop创建新本地分支devel并检出</td>
+                </tr>
+                <tr>
+                    <td>git checkout -- README</td>
+                    <td>检出head版本的README文件（可用于修改错误回退）</td>
+                </tr>
+                <tr>
+                    <td>git merge origin/master</td>
+                    <td>合并远程master分支至当前分支</td>
+                </tr>
+                <tr>
+                    <td>git cherry-pick ff44785404a8e</td>
+                    <td>合并提交ff44785404a8e的修改</td>
+                </tr>
+                <tr>
+                    <td>git push origin master</td>
+                    <td>将当前分支push到远程master分支</td>
+                </tr>
+                <tr>
+                    <td>git push origin :hotfixes/BJVEP933</td>
+                    <td>删除远程仓库的hotfixes/BJVEP933分支</td>
+                </tr>
+                <tr>
+                    <td>git push --tags</td>
+                    <td>把所有tag推送到远程仓库</td>
+                </tr>
+                <tr>
+                    <td>git fetch --all</td>
+                    <td>获取所有远程分支（不更新本地分支，另需merge）</td>
+                </tr>
+                <tr>
+                    <td>git fetch --prune</td>
+                    <td>获取所有原创分支并清除服务器上已删掉的分支</td>
+                </tr>
+                <tr>
+                    <td>git fetch origin tag v1.0.0</td>
+                    <td>获取远程tag</td>
+                </tr>
+                <tr>
+                    <td>git push --tags</td>
+                    <td>把本地tag推送到远程</td>
+                </tr>
+                <tr>
+                    <td>git pull origin master</td>
+                    <td>获取远程分支master并merge到当前分支</td>
+                </tr>
+                <tr>
+                    <td>git mv README README2</td>
+                    <td>重命名文件README为README2</td>
+                </tr>
+                <tr>
+                    <td>git reset --hard HEAD</td>
+                    <td>将当前版本重置为HEAD（通常用于merge失败回退）</td>
+                </tr>
+                <tr>
+                    <td>git rebase</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>git branch -d hotfixes/BJVEP933</td>
+                    <td>删除分支hotfixes/BJVEP933（本分支修改已合并到其他分支）</td>
+                </tr>
+                <tr>
+                    <td>git branch -D hotfixes/BJVEP933</td>
+                    <td>强制删除分支hotfixes/BJVEP933</td>
+                </tr>
+                <tr>
+                    <td>git ls-files</td>
+                    <td>列出git index包含的文件</td>
+                </tr>
+                <tr>
+                    <td>git show-branch</td>
+                    <td>图示当前分支历史</td>
+                </tr>
+                <tr>
+                    <td>git show-branch --all</td>
+                    <td>图示所有分支历史</td>
+                </tr>
+                <tr>
+                    <td>git whatchanged</td>
+                    <td>显示提交历史对应的文件修改</td>
+                </tr>
+                <tr>
+                    <td>git revert dfb02e6e4f2f7b573337763e5c0013802e392818</td>
+                    <td>撤销提交dfb02e6e4f2f7b573337763e5c0013802e392818</td>
+                </tr>
+                <tr>
+                    <td>git ls-tree HEAD</td>
+                    <td>内部命令：显示某个git对象</td>
+                </tr>
+                <tr>
+                    <td>git rev-parse v2.0</td>
+                    <td>内部命令：显示某个ref对于的SHA1 HASH</td>
+                </tr>
+                <tr>
+                    <td>git reflog</td>
+                    <td>显示所有提交，包括孤立节点</td>
+                </tr>
+                <tr>
+                    <td>git show HEAD@{5}</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>git show master@{yesterday}</td>
+                    <td>显示master分支昨天的状态</td>
+                </tr>
+                <tr>
+                    <td>git log --pretty=format:&#39;%h %s&#39; --graph</td>
+                    <td>图示提交日志</td>
+                </tr>
+                <tr>
+                    <td>git show HEAD~3</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>git show -s --pretty=raw 2be7fcb476</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>git stash</td>
+                    <td>暂存当前修改，将所有至为HEAD状态</td>
+                </tr>
+                <tr>
+                    <td>git stash list</td>
+                    <td>查看所有暂存</td>
+                </tr>
+                <tr>
+                    <td>git stash show -p stash@{0}</td>
+                    <td>参考第一次暂存</td>
+                </tr>
+                <tr>
+                    <td>git stash apply stash@{0}</td>
+                    <td>应用第一次暂存</td>
+                </tr>
+                <tr>
+                    <td>git grep &quot;delete from&quot;</td>
+                    <td>文件中搜索文本“delete from”</td>
+                </tr>
+                <tr>
+                    <td>git grep -e &#39;#define&#39; --and -e SORT_DIRENT</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>git gc</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>git fsck</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</body>
+
+</html>

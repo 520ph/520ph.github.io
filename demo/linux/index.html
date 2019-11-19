@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Linux常用命令</title>
+</head>
+
+<body>
+	<pre>
+1、帮助
+      --help简单的帮助
+      help command 较详细的帮助
+      man command 最详细的帮助
+2、ls 命令
+      ls -a 显示全部的文件及文件夹，包括隐藏的文件或文件夹
+      ls -l 显示较全的文件信息，包括权限、用户、用户组等。
+      ls --color 显示文件及文件夹，并标有不同的颜色。
+3、tab键
+      tab command 用于当你的命令记不全时，输入一部再按一下进行补全，如果有多个前面部分相同命令，则
+      按两次tab键
+4、alias
+      alias ubuntu="ls" 用于为一个命令取别名。当你输入ubuntu时等价于输入了ls命令。
+ 
+(二)ubuntu 基本命令二
+ 
+1、which
+      which command 用于查找你所执行的命令文件存放的目录.
+2、env
+     当前用户的运行环境。
+3、echo
+      echo $PSTH 查看环境变量的路径有哪些，which命令使用时就是在环境变量的目录里面查找命令文件
+      所存放的目录，从前到后。
+4、cmp
+     cmp /bin/ls /bin/dir 用于比较两个文件是否是完全相同的。
+5、cp
+     cp /bin/ls /bin/a 用于复制文件的命令。这时就复制了一个命令文件，就可以运行a命令，与ls用法相同。
+6、drwxr-xr-x
+     前面的d表示是一个文件夹，若为-表示是一个文件。
+     rwx表示文件所有者拥有 读写执行 的权限
+     r-x 表示文件所有者所在组的权限 读执行
+     r-x 表示其他人所拥有的权限 读执行。
+7、chmod
+     用于改为用户对于文件的操作权限。chmod 0+r 添加读的权限。sudo chmod 0-r filename取消读的权限。
+8、lsattr
+     用于显示并设置用户文件及目录的高级属性。
+9、lsusb
+     用于列出计算机里的usb设备。
+10、lspci
+      用于列出计算机里的pci设备。
+11、lsmod
+      linux下的驱动有两种形式。一种是加载到内核中的，另一种是以模块化的形式出现的。lsmod就是用于
+      列出计算机里面的驱动模块。
+ 
+(三)ubuntu 基本命令三
+ 
+1、cat
+     cat 命令就是用于查看ubuntu中文本文件的内容的命令。
+     cat /proc/cpuinfo 用于查看计算机的cpu信息。
+     cat /proc/meminfo 用于查看计算机的内在信息。
+     cat /etc/issue 查看ubuntu的版本信息。
+2、free
+     free 命令也是用来查看ubuntu计算机中的内在信息的。
+3、grep
+     ubuntu中的grep命令是用来过滤出一个文件中对自己有用的信息的。
+     cat /proc/meminfo |grep MemTotal 用于过滤出内存中的内存大小。
+4、more
+     uubntu中的more命令是用于将结果分页显示。ls -a |more 用于分页显示。
+5、fdisk
+      ubuntu中查看硬盘信息的命令用fdisk。
+6、uname
+     ubuntu中查看内核版本的命令是uname -a ，只输入uname则会输出linux作为结果。
+ 
+(四)文件操作命令：
+1、ls
+     格式：ls 目录
+     ls命令用于显示文件下有哪些文件。
+2、touch
+     格式：touch test1 test2 test3
+     touch命令用于创建文件，可以同一时间创建多个文件。
+3、rm
+     格式：rm 文件   
+     rm命令用于删除文件，当文件不能够被删除时可以加上 -f 选项，强制将文件删除。
+4、cat
+     格式：cat /proc/cpuinfo
+     cat命令用于查看文件内的信息。如果只想查看某一项内容时，要加上grep选项。
+     例如：cat /proc/meminfo |grep MemTotal
+5、less
+     格式：less /proc/meminfo
+     less命令也是用来查看文件的内容的命令，但是他显示时是一屏一屏的显示地。
+          a、按下空格键后进入到下一屏。
+          b、还可以通过上下键来上下移动行。
+          c、按下 q 键后退出查看。
+6、more
+     格式：more /proc/meminfo
+     more命令与less命令一样用于查看文件内的内容，同样是分屏显示的。
+          a、按下空格键后进入到下一屏
+          b、按下 q 键后退出查看
+7、cp
+     格式：cp /etc/apt/sources.list /etc/aptsources.listbacker
+     cp是copy的缩写用于复制文件。
+8、mv
+     格式：mv /home/user1/桌面/ruijie/xrgsu /usr/share/local/bin/xrgsu
+     mv命令是用于移动文件的。
+9、find
+     格式：sudo find / -name ls
+     find命令是用于查找文件：
+          a、／ 表示的是查找的起始目录，
+          b、-name 有了这个选项，在显示只有找到的结果才会显示出来。
+          c、ls 为你要找的目录文件。
+ 
+(五)目录操作命令：
+1、mkdir
+      格式：mkdir home/user1/f1
+      mkdir命令是用来创建目录的。
+            a、home/user1/ 这是一个目录，既可以是一个绝对路径，也可以是一个相对路径。
+            b、如果在当前目录下也可以创建多个文件.如：mkdir f2 f3 f4
+2、rm
+      格式：rm -rf test/f2 test/f3
+      rm命令与操作文件一样是用来删除的。
+            a、-rf 有r可以将目录与其子目录一直删除，f是用来强制删除的。
+            b、test/f2 test/f3 是同时删除多个文件。
+3、pwd
+      格式：pwd
+      pwd命令是用来指出当前所在的路径。是print working directory的缩写。
+4、cd
+      格式：cd ..
+      cd命令是用来改变当前目录的。
+            a、.. 表示回到父目录，. 表示当前目录。
+            b、- 表示回到上一次所使用的目录。
+5、ls
+      格式:ls 目录名
+      ls命令是用来查看目录里面所拥有的子目录与文件有哪些。
+6、cp
+      格式：cp -r 源目录名 目标目录名
+      cp命令与操作文件一样是用来复制的，带r表示将其子目录一起复制。
+7、mv
+      格式：mv 源目录名 目标目录名
+      mv命令与操作文件一样是用来移动的，当在源目录与目标目录在同一个父目录下表示改名。
+8、find
+      格式：find 起始目录 -name 要找的目录
+      find命令与操作文件一样是用来查找的。
+	</pre>
+</body>
+
+</html>

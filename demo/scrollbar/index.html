@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>自定义滚动条</title>
+		<link rel="shortcut icon" href="/images/cc.ico" />
+		<style type="text/css">
+			/*滚动条*/
+			body{
+				width: 9000px;
+				height: 9000px;
+			}
+			.tip{
+				position: fixed;
+				top: 50px;
+				text-align: center;
+    			width: 100%;
+			}
+			/*
+			* ::-webkit-scrollbar 滚动条整体部分，其中的属性有width,height,background,border（就和一个块级元素一样）等。
+			* 这里说一下-webkit-scrollbar里面的width是指的纵向滚动条的宽度，height是指横向滚动条的高度
+			*/
+			::-webkit-scrollbar {
+				width: 6px;
+				height: 6px;
+			}
+			/*滚动条里面可以拖动的那部分*/
+			::-webkit-scrollbar-thumb {
+				border-radius: 10px;
+				background:#f90;
+			}
+			/*hover到滚动条上*/
+			/*这里vertical是滚动条的一种伪类，vertical代表纵向滚动条，horizontal代表横向滚动条*/
+			::-webkit-scrollbar-thumb:vertical:hover {
+				background: #000;
+			}
+			/*鼠标在滚动条上按下的样式*/
+			::-webkit-scrollbar-thumb:vertical:active{
+				background: red;
+			}
+			::-webkit-scrollbar-thumb:horizontal:hover{
+				background: blue;
+			}
+			::-webkit-scrollbar-thumb:horizontal:active{
+				background: green;
+			}
+		</style>
+	</head>
+	<body>
+		<h1 class="tip">文字不重要，请关注滚动条！</h1>
+	</body>
+</html>

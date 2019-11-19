@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="shortcut icon" href="/images/cc.ico" />
+		<title>图片放大镜</title>
+		<style type="text/css">
+			.box1{
+				width: 180px;
+				height: 180px;
+				position: relative;
+				overflow: hidden;
+			}
+			.btn{
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100px;
+				height: 100px;
+				background: yellow;
+				opacity: 0.5;
+				filter:alpha(opacity=50);
+				cursor: move;
+				display: none;
+			}
+			.box2{
+				position: absolute;
+				left: 300px;
+				top: 8px;
+				width: 500px;
+				height: 500px;
+				overflow: hidden;
+				display: none;
+			}
+			.big_img{
+				position: absolute;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box1">
+			<img src="img/b2.jpg"/>
+			<span class="btn"></span>
+		</div>
+		<div class="box2">
+			<img class="big_img" src="img/b1.jpg"/>
+		</div>
+		<script type="text/javascript">
+			window.onload = function(){
+				function $(s){return document.querySelector(s);}
+				var box1 = $(".box1");
+				var btn = $(".btn");
+				var box2 = $(".box2");
+				var img = $(".big_img");
+				//因为子级影响父级的BUG，所以使用onmouseenter事件
+				box1.onmouseenter = function(){
+					btn.style.display = "block";
+					box2.style.display = "block";
+				}
+				box1.onmousemove = function(ev){
+					var ev = ev || event;
+					var L = ev.clientX - box1.offsetLeft - btn.offsetWidth/2;
+					var T = ev.clientY - box1.offsetTop - btn.offsetHeight/2;
+					var setL = box1.offsetWidth - btn.offsetWidth;
+					var setT = box1.offsetHeight - btn.offsetHeight;
+					console.log(setT)
+					L = L <= 0 ? 0 : L;
+					L = L >= setL ? setL : L;
+					T = T <= 0 ? 0 :T;
+					T = T >= setT ? setT : T;
+					var scaleX = L/setL;
+					var scaleY = T/setT;
+					img.style.left = -scaleX * (img.offsetWidth - box2.offsetWidth)+"px";
+					img.style.top = -scaleY * (img.offsetHeight - box2.offsetHeight)+"px";
+					btn.style.left = L + "px";
+					btn.style.top = T + "px";
+				}
+				box1.onmouseleave = function(){
+					btn.style.display = "none";
+					box2.style.display = "none";
+}
+}
+</script>
+	</body>
+</html>

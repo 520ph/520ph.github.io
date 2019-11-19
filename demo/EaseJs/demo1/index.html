@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>画布</title>
+		<style type="text/css">
+			#myCanvas{
+				display: block;
+				margin: 50px auto;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="myCanvas" width="1200" height="600"></canvas>
+		<script src="../js/easeljs-0.8.2.min.js" type="text/javascript" charset="utf-
+
+8"></script>
+		<script type="text/javascript">
+			var canvas = document.querySelector("#myCanvas");
+			var stage = new createjs.Stage(canvas);
+			var conList = new createjs.Container();
+			conList.x = canvas.width/2;
+			conList.y = canvas.height/2;
+			stage.addChild(conList);
+			var circle = new createjs.Shape();
+			var radius = 100;
+			var j = 0;
+			var timer = setInterval(function(){
+				if(j>=49){
+					clearInterval(timer); 
+				}
+				j++;
+				circle.graphics.setStrokeStyle(1)
+			     .beginLinearGradientStroke(["#F00","#00F"], [0.9,1],0,0,100, 100)
+			     .dp(0,0, 40*j, 5*j,0.6*j,-90*j);
+			     conList.addChild(circle);
+			},100);
+		createjs.Ticker.addEventListener("tick",stage);
+		</script>
+	</body>
+</html>

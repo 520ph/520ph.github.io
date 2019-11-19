@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Canvas</title>
+		<style type="text/css">
+			#myCanvas{
+				display: block;
+				margin: 0 auto;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="myCanvas" width="" height=""></canvas>
+		<script src="js/easeljs-0.7.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/TweenMax.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			window.onload = function(){
+				var canvas = document.querySelector("#myCanvas");
+			canvas.width = 1200;
+			canvas.height = 600;
+			var stage = new createjs.Stage(canvas);
+			var line = new createjs.Shape();
+			line.width = 0;
+			stage.addChild( line );
+			TweenMax.to( line, 2, { width : 1000, onUpdate : function(){
+		            line.graphics.setStrokeStyle(1).beginStroke('red').moveTo( 80, 300 ).lineTo( line.width, 300 );
+	      			stage.update();	
+				}
+			});
+	
+	        
+	        var arr = [100,150,50,200,250,450,390,350,420,320];
+	        var arrnode = [];
+	        var colors = ["red","yellow","blue","green","#f90","#c205ff","#05ffff","#05a3ff","#05ff52","#777"];
+	        for (var i = 0; i < 10; i++) {
+	        	var node = new createjs.Shape();
+		        node.name = "小星星";
+		        node.x = 200+(85*i);
+		        node.y = 300;
+		        node.toY = arr[i];
+		        node.width = 40;
+		        node.height = 20;
+		        node.colors = colors[i];
+		        arrnode.push(node);
+		        stage.addChild(node);
+		        var txt = new createjs.Text();
+		        txt.text = "小星星";
+		        txt.width = node.width;
+		        txt.height = node.height;
+		        txt.textAlign = 'center';
+		        txt.x = node.x + node.width / 2;
+		        txt.y = 300;
+		        txt.lineWidth = 5;
+		        txt.lineHeight = 1;
+		        stage.addChild( txt );
+		        node.txt = txt;
+	        }
+	        var lines = new createjs.Shape();
+	        for (var i = 0; i < 10; i++) {
+	        		var node = arrnode[i];
+		        	
+					TweenMax.to( node, 1, { delay : i * 0.2, y : node.toY, alpha : 1, onUpdateParams : [ node ], onUpdate : function( node ){
+		               	node.graphics.beginFill( node.colors ).drawRoundRect(0, 0, node.width, node.height, 0);
+		                node.txt.y = node.y;
+		                lines.graphics.setStrokeStyle(1).beginStroke(node.colors).moveTo( node.x + node.width / 2, 300 ).lineTo( node.x + node.width / 2,node.y);
+		                stage.update();
+		            } } );
+		            
+		            
+		            
+		            
+		         }   
+		            stage.addChildAt( lines, 0 );
+			}
+		   
+		</script>
+	</body>
+</html>

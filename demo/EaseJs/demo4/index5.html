@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Demo</title>
+		<style type="text/css">
+			#myCanvas{
+				display: block;
+				margin: 50px auto;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="myCanvas"></canvas>
+		<script src="js/easeljs-0.8.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/TweenMax.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var canvas = document.querySelector("#myCanvas");
+			canvas.width = 1200;
+			canvas.height = 800;
+			var stage = new createjs.Stage(canvas);
+			var line = new createjs.Shape();
+			var texts = [500,400,300,200,100,0,100,200,300,400,500];
+			var left = [200,300,240,380,500,450,420,450,280,380,420,220];
+			var right = [200,300,240,380,500,450,420,450,280,380,420,220];
+			line.graphics.setStrokeStyle(1).beginStroke('#03446C').moveTo( 70, 50 ).lineTo( 590, 50 );
+			for (var i = 0; i < 11; i++) {
+				line.graphics.setStrokeStyle(2).beginStroke('#02A1FF').moveTo( 80+(50*i), 40 ).lineTo( 80+(50*i), 60 );
+				line.graphics.setStrokeStyle(1).beginStroke('#001C2C').moveTo( 80+(50*i), 60 ).lineTo( 80+(50*i), 550 );
+				var txt = new createjs.Text();
+		        txt.text = texts[i];
+		        txt.width = 50/2;
+		        txt.height = 30;
+		        txt.textAlign = 'center';
+		        txt.x = 80+(50*i);
+		        txt.y = 20;
+		        txt.lineWidth = 5;
+		        txt.lineHeight = 1;
+		        stage.addChild( txt );
+			}
+			stage.addChild(line);
+			
+			for (var i = 1; i <= 12; i++) {
+				var contain = new createjs.Container();
+				contain.x = 660/2;
+				contain.y = 0;
+				stage.addChild( contain );
+				
+				
+		        var rectL = new createjs.Shape();
+		        rectL.x = -(250/500*left[i-1]);
+		        rectL.y = i*40+25;
+		        rectL.width = (250/500*left[i-1]);
+		        rectL.height = 20;
+		        rectL.colors = "#d9530b";
+		        rectL.graphics.beginFill( rectL.colors ).drawRoundRect(0, 0, rectL.width, rectL.height, 0);
+				contain.addChild(rectL);
+				
+				var rectR = new createjs.Shape();
+		        rectR.x = 660/2;
+		        rectR.y = i*40+43;
+		        rectR.width = 250/500*right[i-1];
+		        rectR.height = 20;
+		        rectR.colors = "#0f86c9";
+		        rectR.graphics.beginFill( rectR.colors ).drawRoundRect(0, 0, rectR.width, rectR.height, 0);
+				stage.addChild(rectR);
+				
+				
+				var node = new createjs.Shape();
+		        node.name = i;
+		        node.x = 590/2+25;
+		        node.y = i*40+25;
+		        node.width = 20;
+		        node.height = 38;
+		        node.colors = "#02335c";
+		        node.graphics.beginFill( node.colors ).drawRoundRect(0, 0, node.width, node.height, 0);
+		        stage.addChild(node);
+		        
+		        
+		        var txt = new createjs.Text();
+		        txt.text = i;
+		        txt.width = 20;
+		        txt.height = 38;
+		        txt.textAlign = 'center';
+		        txt.color = "#fff";
+		        txt.x = node.x+10;
+		        txt.y = node.y+10;
+		        txt.lineWidth = 20;
+		        txt.lineHeight = 38;
+		        stage.addChild( txt );
+				
+			}
+			
+			
+			createjs.Ticker.addEventListener("tick",stage);
+		</script>
+	</body>
+</html>

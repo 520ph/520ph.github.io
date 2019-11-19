@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="shortcut icon" href="/images/cc.ico" />
+		<title>勾股定理之苹果菜单</title>
+		<style type="text/css">
+			body{
+				margin: 0;
+			}
+			.box{
+				position: absolute;
+				bottom: 0;
+				text-align: center;
+				width: 100%;
+			}
+			.box img{
+				width: 64px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<img src="img/1.png"/>
+			<img src="img/2.png"/>
+			<img src="img/3.png"/>
+			<img src="img/4.png"/>
+			<img src="img/5.png"/>
+		</div>
+		<script type="text/javascript">
+			window.onload = function(){
+				var oDiv = document.querySelector(".box");
+				var aImg = oDiv.getElementsByTagName("img");
+				document.onmousemove = function(ev){
+					var ev = ev || event;
+					for (var i = 0; i < aImg.length; i++) {
+						var x = aImg[i].offsetLeft + aImg[i].offsetWidth/2;
+						var y = aImg[i].offsetTop + aImg[i].offsetWidth + oDiv.offsetTop;
+						var a = ev.clientX - x;
+						var b = ev.clientY - y;
+						var c = Math.sqrt(Math.pow(a,2)+Math.pow(b,2));
+						var scale = 1 - c/300;
+						scale = scale > 0.5 ? scale : 0.5;
+						aImg[i].style.width = scale * 128 + "px";
+						aImg[i].style.height = scale * 128 + "px";
+					}
+					
+				}
+			}
+		</script>
+	</body>
+</html>

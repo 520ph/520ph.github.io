@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    html {
+      background: #000;
+    }
+
+    body:before,
+    body:after {
+      content: '';
+      width: 2px;
+      height: 2px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      border-radius: 50%;
+      -webkit-animation: figure 4s infinite;
+      -moz-animation: figure 4s infinite;
+      -o-animation: figure 4s infinite;
+      animation: figure 4s infinite;
+      mix-blend-mode: screen;
+    }
+
+    body:after {
+      -webkit-animation-delay: 2s;
+      -moz-animation-delay: 2s;
+      -o-animation-delay: 2s;
+      animation-delay: 2s;
+    }
+  </style>
+</head>
+
+<body>
+  <script>
+    //r²= f² cos 2j ± SQR( f^4 cos²( 2j) + (d^4 – f^4)) .
+    function getCassiniOvalsR(j, direction) {
+      return Math.sqrt(Math.abs(f * f * Math.cos(2 * j) + direction * Math.sqrt(Math.abs(f * f * f * f * Math.cos(2 * j) * Math.sin(2 * j)/* here cos was changed to sin */ + (d * d * d * d - f * f * f * f)))));
+    }
+
+    var counter = 1, zoom = 70, step = 0.07, stepAngle = 1.2, f = 1, dMin = 1.0, dMax = 5.0;
+    var shadows1 = [], shadows2 = [];
+    var max = Math.floor((dMax - dMin) / step);
+
+    for (var d = dMin; d < dMax; d += step, counter++) {
+
+      for (var i = 0; i < 360; i += counter == 1 ? 0.5 : stepAngle) {
+        var j = i / 180 * Math.PI;
+        var r = getCassiniOvalsR(j, 1);
+        var y = Math.sin(j) * r * zoom;
+        var x = Math.cos(j) * r * zoom;
+        var R = Math.round(Math.abs(255 * Math.sin(d * 4)));
+        var G = Math.round(Math.abs(200 * Math.sin(j * 5)));
+        var B = Math.round(Math.abs(200 * Math.sin(j * 6)));
+        var opacity = 1 - counter * 2 / max;
+        var color = `rgba(${R}, ${G}, ${B}, ${opacity})`;
+        shadows1.push(`${x}px ${y}px 0 0 ${color}`);
+
+        r = getCassiniOvalsR(j, -1);
+        x = Math.cos(j) * r * zoom;
+        y = Math.sin(j) * r * zoom;
+        B = Math.round(Math.abs(255 * Math.sin(j * 6)));
+        color = `rgba(${R}, ${G}, ${B}, ${opacity})`;
+        shadows2.push(`${x}px ${y}px 0 0 ${color}`);
+
+      }
+      stepAngle *= 1.2;
+      step += 0.01;
+    }
+
+    var style1 = shadows1.join();
+    var style2 = shadows2.join();
+    document.styleSheets[0].addRule('body:before, body:after', `box-shadow: ${style1}`);
+
+    var animation = [/*'-webkit-', '-moz-', '-o-', */''].reduce(function (sum, current) {
+      return sum + `@${current}keyframes figure{
+      50% { box-shadow: ${style2} }
+    }`;
+    }, '');
+    console.log(animation);
+    document.styleSheets[0].insertRule(animation, 0);
+
+  </script>
+</body>
+
+</html>

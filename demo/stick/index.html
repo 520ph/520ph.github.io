@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>a'ゞ『完美』制作 - 棍子英雄</title>
+		<style type="text/css">
+			*{
+				box-sizing: border-box;
+			}
+			body,html{
+				height: 100%;
+				margin: 0;
+				-webkit-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+			}
+			body{
+				color: #fff;
+			}
+			.warp{
+				margin:0 auto;
+				width:100%;
+				height:100%;
+				position: relative;
+				overflow: hidden;
+				background: url(p3.jpg) no-repeat 0 0/cover;
+			}
+			.gameContent{
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				width:600px;
+				height:90%;
+				height:-webkit-calc(100% - 70px);
+				height:calc(100% -70px);
+			}
+			.leftdiv,.middlediv,.rightdiv{
+				position: absolute;
+				bottom: 0;
+				height: 200px;
+				background: #000;
+			}
+			.leftdiv{
+				width: 40px;
+			}
+			.middlediv{
+				width: 40px;
+				left:200px;
+			}
+			.rightdiv{
+				width: 40px;
+				left:500px;
+			}
+			.hero{
+				position: absolute;
+				left: 0;
+				bottom:200px;
+				width:20px;
+				height: 30px;
+				background:url(bg.png) no-repeat 0 bottom/contain;
+			}
+			.stick{
+				position: absolute;
+				left: 20px;
+				bottom:200px;
+				-webkit-transform-origin: 0 4px;
+				-moz-transform-origin: 0 4px;
+				-ms-transform-origin: 0 4px;
+				-o-transform-origin: 0 4px;
+				transform-origin: 0 4px;
+				-webkit-transform: rotate(-90deg);
+				-moz-transform: rotate(-90deg);
+				-ms-transform: rotate(-90deg);
+				-o-transform: rotate(-90deg);
+				transform: rotate(-90deg);
+				width:0;
+				height:4px;
+				background:#000;
+			}
+			.mask{
+				width: 100%;
+				height:40%;
+				position: absolute;
+				bottom: 0;
+				z-index: 2;
+			}
+			.sum{
+				color: red;
+			}
+			.info{
+				text-align: center;
+			}
+			@media only screen and (min-width: 600px){
+				.warp{
+					width:400px;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="warp">
+			<input type="checkbox" id="cheat" value=""/><label for="cheat">作弊</label>
+			<input type="button"  id="restart" value="重新开始" />
+			<span>得分：<span class="sum">0</span></span>
+			<h1 class="info"></h1>
+			<div class="gameContent">
+				<div class="mask"></div>
+				<div class="leftdiv"></div>
+				<div class="middlediv"></div>
+				<div class="rightdiv"></div>
+				<div class="hero"></div>
+				<div class="stick"></div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			//盒子
+			var warp = document.querySelector(".warp");
+			//游戏主体容器
+			var gameContent = document.querySelector(".gameContent");
+			//棍子
+			var stick = document.querySelector(".stick");
+			//英雄
+			var hero = document.querySelector(".hero");
+			//左边的块
+			var leftdiv = document.querySelector(".leftdiv");
+			//中间的块
+			var middlediv = document.querySelector(".middlediv");
+			//右边的块
+			var rightdiv = document.querySelector(".rightdiv");
+			//游戏点击区域
+			var mask = document.querySelector(".mask");
+			//作弊按钮
+			var cheat = document.querySelector("#cheat");
+			//提示信息元素
+			var info = document.querySelector(".info");
+			//重新开始
+			var restart = document.querySelector("#restart");
+			//分数
+			var sumNode = document.querySelector(".sum");
+			//随机大小范围
+			var ranges = [20,50];
+			//定时器
+			var timer = null;
+			//英雄在前进的时候不可点击
+			var isPlaying = false;
+			//游戏成功与失败
+			var onoff = true;
+			//高度
+			var numHeight = 0;
+			rangMiddle();
+			var eventType = ["mousedown","mouseup"];
+			if(window.navigator.userAgent.indexOf("Mobile")!=-1){
+				eventType = ["touchstart","touchend"];
+			}
+			var transform = hero.style["transform"]!=="undefined" ? "transform" : "webkitTransform";
+			var transition = hero.style["transition"]!=="undefined" ? "transition" : "webkitTransition";
+			function rangMiddle(){
+				middlediv.style.width = creatNum(ranges[0],ranges[1]) + "px";
+				middlediv.style.left = creatNum(80,220) + "px";
+			}
+			//重新开始
+			restart.addEventListener(eventType[0],function(){
+				restartFn();
+				rangMiddle();
+				onoff = true;
+				hero.style.bottom = 200 + "px";
+				sumNode.innerText = 0;
+				info.innerText = "";
+			});
+			//鼠标按下，棍子开始变长
+			mask.addEventListener(eventType[0],function(e){
+				e.preventDefault();
+				clearInterval(timer);
+				//如果是英雄正在前进中或者游戏结束了
+				if(isPlaying || !onoff){
+		    		return false;
+		    	}
+				//棍子增长
+				timer = setInterval(function(){
+					stick.style.width = (numHeight++)+"px";
+					if(cheat.checked){
+						info.innerText = (stick.offsetWidth) + "=====" + (middlediv.offsetLeft - hero.offsetWidth);
+					}else{
+						info.innerText = "";
+					}
+				},20)
+			});
+			//鼠标抬起棍子旋转下来
+			mask.addEventListener(eventType[1],function(){
+				//如果游戏结束了
+				if(!onoff){
+					return false;
+				}
+				//设置正在前进的状态中
+				isPlaying = true;
+				//清空棍子增长的定时器
+				clearInterval(timer);
+				//设置棍子的一系列样式
+				stick.style[transition] = "0.5s";
+	    		stick.style[transform] = "rotate(0deg)";
+	    		//下一个块
+	    		var nextDiv = creatNext();
+	    		//设置下一个块的一系列样式
+	    		rightdiv.style.left = nextDiv[0] + "px";
+	    		rightdiv.style.width = nextDiv[1] + "px";
+	    		//游戏结束(留了3px的误差)，设置结束状态
+				if(stick.offsetWidth < middlediv.offsetLeft - hero.offsetWidth || stick.offsetWidth > middlediv.offsetLeft + middlediv.offsetWidth - hero.offsetWidth){
+					info.innerText = "GameOver";
+					onoff = false;
+				}
+			});
+			//等棍子落下来，英雄就开始前进
+			stick.addEventListener("transitionend",function(e){
+				//阻止事件冒泡
+				e.stopPropagation();
+				if(onoff){
+					hero.style[transition] = "left 1s";
+					hero.style.left = middlediv.offsetLeft + "px";
+				}else{
+					hero.style[transition] = "left 1s,bottom 1s 0.9s";
+					hero.style.left = stick.offsetLeft + stick.offsetWidth + "px";
+					hero.style.bottom = -50 + "px";
+				}
+			});
+			//英雄前进完毕，游戏主体左移动
+			hero.addEventListener("transitionend",function(e){
+				e.stopPropagation();
+				if(!onoff){
+					return false;
+				}
+				//移动游戏整体容器
+				gameContent.style[transition] = "left 1s";
+				gameContent.style.left = - middlediv.offsetLeft + "px";
+				sumNode.innerText = Number(sumNode.innerText) + 1;
+			});
+			//等移动完毕，为了让游戏整体循环起来，需要重新回到原来的位置，并且改变相关样式
+			gameContent.addEventListener("transitionend",restartFn);
+			//归0
+			function restartFn(){
+				//样式归0
+				gameContent.style[transition] = hero.style[transition] = stick.style[transition] = "none";
+				gameContent.style.left = hero.style.left = stick.style.width = numHeight = 0;
+				stick.style.left = hero.offsetWidth + "px";
+				stick.style[transform] = "rotate(-90deg)";
+				//左边的div要当做中间的div来
+				leftdiv.style.width = middlediv.offsetWidth + "px";
+				//中间的div要当做右边的div来
+				middlediv.style.left = rightdiv.offsetLeft - middlediv.offsetLeft + "px";
+				middlediv.style.width = rightdiv.offsetWidth + "px";
+				//游戏继续状态
+				isPlaying = false;
+			}
+			//范围随机数
+			function creatNum(start,end){
+				return parseInt(Math.random()*(end-start)+start)
+			}
+			//随机生成下一个方块的位置和宽度
+		    function creatNext(){
+		    	var iWidth = creatNum(ranges[0],ranges[1]);
+		    	//下一个方块的最小位置就是整个容器宽，最大位置就是中间块的位置+容器宽-80
+		    	var iLeft = creatNum(warp.offsetWidth,middlediv.offsetLeft + warp.offsetWidth - ranges[1]);
+		    	return [iLeft,iWidth];
+		    }
+		</script>
+	</body>
+</html>

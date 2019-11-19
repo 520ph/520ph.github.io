@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>Canvas变幻线</title>
+		<style type="text/css">
+			body {
+				overflow: hidden;
+				background: #000;
+				margin: 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<canvas id="myCanvas" width="" height=""></canvas>
+		<script type="text/javascript">
+			window.onload = function() {
+				function rnd(n, m) {
+					return Math.floor(Math.random() * (m - n) + n)
+				};
+					var canvas = document.querySelector("#myCanvas");
+					var context = canvas.getContext("2d");
+					var winW = window.innerWidth;
+					var winH = window.innerHeight;
+					var longs = 85;
+					canvas.width = winW;
+					canvas.height = winH;
+					/*
+					这里有个需要注意的地方，Canavs的宽高属性一定要直接点出来width,height来赋值。
+					canvas是一张画布，就像一张图片那样，默认的图片大小事300*150。
+					但是我们在css样式中设置了canvas，就是把图片给拉伸变换了。
+					于是我们不一样的图片。就像我们打开平时一张图片，然后进行拉伸般，于是图片就变形。
+					所以，画布的宽跟高，最好还是直接在canvas标签里面设置了，这样一来，就直接改变了默认的画布宽跟高的值。*/
+				window.onresize = function() {
+					winW = window.innerWidth;
+					winH = window.innerHeight;
+					canvas.width = winW;
+					canvas.height = winH;
+				}
+				var r = 255;
+				var g = 0;
+				var b = 144;
+				var line = []; //点的信息
+				var num = 100; //点的个数
+				if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
+				    num = 30;
+				};
+				var oldPoint = [];
+				for(var i = 0; i < num; i++) {
+					line[i] = {
+						w: 10, //点的宽
+						h: 10, //点的高
+						x: rnd(0, winW), //点的X坐标
+						y: rnd(0, winH), //点的Y坐标
+						speedX: rnd(-5, 5), //X轴移动的速度
+						speedY: rnd(-5, 5) //Y轴移动的速度
+					};
+				}
+				drawobj();
+				window.requestAnimFrame = (function() {
+					return window.requestAnimationFrame ||
+						window.webkitRequestAnimationFrame ||
+						window.mozRequestAnimationFrame ||
+						function(callback) {
+							window.setTimeout(callback, 1000 / 60);
+						};
+				})();
+				//画线
+				function drawobj() {
+					window.requestAnimationFrame(drawobj);
+					context.clearRect(0, 0, winW, winH);
+					for(var i = 0; i < num; i++) {
+						drawPoint(line[i]);
+						//坐标累加移动
+						line[i].x += line[i].speedX;
+						line[i].y += line[i].speedY;
+						//碰撞检测
+						if(line[i].x <= 0) {
+							line[i].x = 0;
+							line[i].speedX *= -1;
+					 	}
+					 	if(line[i].x >= winW - line[i].w) {
+							line[i].x = winW - line[i].w;
+							line[i].speedX *= -1;
+						}
+						if(line[i].y <= 0) {
+							line[i].y = 0;
+							line[i].speedY *= -1;
+						}
+						if(line[i].y >= winH - line[i].h) {
+							line[i].y = winH - line[i].h;
+							line[i].speedY *= -1;
+						}
+					}
+					context.beginPath();
+					for(var ballA,j=0, len = num - 1; j<len; j++){
+	                   for(var k=0;k < num;k++){
+	                       drawLine(line[k], line[j]);
+	                   }
+	               }
+					/*context.moveTo(line[0].x, line[0].y)
+					for(var i = 1; i < num; i++) {
+						context.lineTo(line[i].x, line[i].y);
+					}
+					context.strokeStyle = 'rgba(' + r + ',' + g + ',' + b + ',1)';
+					context.closePath();
+					context.stroke();
+					var arr = [];
+					for(var i = 0; i < num; i++) {
+						arr.push({
+							x: line[i].x,
+							y: line[i].y
+						});
+					}
+					oldPoint.push(arr);
+					while(oldPoint.length > 20) {
+						oldPoint.shift();
+					}
+					for(var i = 0; i < oldPoint.length; i++) {
+						context.beginPath();
+						context.moveTo(oldPoint[i][0].x, oldPoint[i][0].y)
+						for(var j = 1; j < num; j++) {
+							context.lineTo(oldPoint[i][j].x, oldPoint[i][j].y);
+						}
+						context.closePath();
+						var opacity = i / oldPoint.length;
+						context.strokeStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + opacity + ')'
+						context.stroke();
+					}*/
+				}
+				function drawLine(ball0, ball1){
+	               var dx = ball1.x - ball0.x,
+	                   dy = ball1.y - ball0.y,
+	                   dist = Math.sqrt(dx*dx + dy*dy);
+	               if(dist < longs){
+	                   context.save();
+	                   context.strokeStyle = "rgba(255,0,144,0.3)";
+	                   context.beginPath();
+	                   context.moveTo(ball0.x, ball0.y);
+	                   context.lineTo(ball1.x, ball1.y);
+	                   context.closePath()
+	                   context.stroke()
+	                   context.restore();
+	               }
+	            }
+				//画点
+				function drawPoint(p) {
+					context.fillStyle = '#fff';
+					context.fillRect(p.x, p.y, p.w, p.h);
+					context.strokeRect(p.x, p.y, p.w, p.h);
+				}
+			}
+function rnd(n, m) {
+return Math.floor(Math.random() * (m - n) + n)
+};
+		</script>
+	</body>
+
+</html>

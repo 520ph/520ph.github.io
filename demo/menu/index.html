@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+		<link rel="shortcut icon" href="/images/cc.ico" />
+		<title>菜单效果</title>
+		<style type="text/css">
+			* {
+				-webkit-box-sizing: border-box;
+				-moz-box-sizing: border-box;
+				box-sizing: border-box
+			}
+			
+			html {
+				font-size: 16px;
+				-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+				-webkit-tap-highlight-color: transparent;
+				height: 100%;
+				min-width: 320px;
+				overflow-x: hidden;
+			}
+			
+			body {
+				max-width: 640px;
+				margin: 0 auto;
+				padding: 0;
+				font-family: Helvetica;
+				background: #f9f9f9;
+			}
+			
+			.container {
+				max-width: 640px;
+				margin: 0 auto;
+				padding: 0;
+			}
+			
+			a {
+				text-decoration: none;
+			}
+			
+			a:link {
+				color: #303030;
+			}
+			
+			a:visited {
+				color: #303030;
+			}
+			
+			a:hover {
+				color: #303030;
+			}
+			
+			a:active {
+				color: #303030;
+			}
+			
+			.box,
+			.home,
+			menu {
+				width: 49px;
+				height: 49px;
+				border-radius: 50%;
+			}
+			
+			.box {
+				position: fixed;
+				right: 20px;
+				bottom: 20px;
+			}
+			
+			.menu {
+				position: relative;
+			}
+			
+			.home {
+				position: absolute;
+				background: url(images/home.jpg);
+				-webkit-transition: 1s;
+				-moz-transition: 1s;
+				-ms-transition: 1s;
+				-o-transition: 1s;
+				transition: 1s;
+			}
+			
+			.menu img {
+				position: absolute;
+				top: 3px;
+				left: 3px;
+				transition: 0.5s;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="container">
+			<div class="box">
+				<div class="menu">
+					<img src="images/prev.jpg" width="42" height="42" />
+					<img src="images/open.jpg" width="42" height="42" />
+					<img src="images/clos.jpg" width="42" height="42" />
+					<img src="images/full.jpg" width="42" height="42" />
+					<img src="images/refresh.jpg" width="42" height="42" />
+				</div>
+				<div class="home"></div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			window.onload = function() {
+				var props = 'transform webkitTransform MozTransform OTransform msTransform'.split(' '),
+					prop,
+					el = document.createElement('div');
+				for (var i = 0, l = props.length; i < l; i++) {
+					if (typeof el.style[props[i]] !== "undefined") {
+						prop = props[i];
+						break;
+					}
+				}
+				var trans = 'transition webkitTransition MozTransition msTransition'.split(' '),
+					tran,
+					tl = document.createElement('div');
+				for (var i = 0, l = trans.length; i < l; i++) {
+					if (typeof tl.style[trans[i]] !== "undefined") {
+						tran = trans[i];
+						break;
+					}
+				}
+
+				function $(s) {
+					return document.querySelector(s);
+				}
+				var menu_flag = true;
+				var radius = -150;
+				var imgs = document.querySelectorAll(".menu img");
+				for (var i = 0; i < imgs.length; i++) {
+					imgs[i].onclick = function() {
+						this.style[tran] = "0.3s";
+						this.style[prop] = "scale(2) rotate(-720deg)";
+						this.style.opacity = 0.2;
+						addEnd(this,end);
+					}
+				}
+				function end() {
+					console.log(1)
+					this.style[tran] = "0.3s";
+					this.style[prop] = "scale(1) rotate(-720deg)";
+					this.style.opacity = 1;
+					removeEnd(this,end);
+				}
+				//菜单单击事件
+				$(".home").onclick = function() {
+					//打开效果
+					if (menu_flag) {
+						this.style[prop] = "rotate(-360deg)";
+						for (var i = 0; i < imgs.length; i++) {
+							var xy = getxy(radius, 90 / 4 * i)
+							//延迟过渡
+							imgs[i].style[tran] = "0.5s " + i * 100 + "ms";
+							imgs[i].style.left = xy.x + "px";
+							imgs[i].style.top = xy.y + "px";
+							imgs[i].style[prop] = "rotate(-720deg)";
+						}
+					} else {//关闭效果
+						this.style[prop] = "rotate(0deg)";
+						for (var i = 0; i < imgs.length; i++) {
+							imgs[i].style[tran] = "0.5s " + (imgs.length - 1 - i) * 100 + "ms";
+							imgs[i].style.left = 3 + "px";
+							imgs[i].style.top = 3 + "px";
+							imgs[i].style[prop] = "rotate(0deg)";
+						}
+					}
+					menu_flag = !menu_flag;
+				}
+
+				function getxy(ideg, line) {
+					return {
+						x: Math.round(Math.sin(line * Math.PI / 180) * ideg),
+						y: Math.round(Math.cos(line * Math.PI / 180) * ideg)
+					}
+				}
+			}
+
+			function addEnd(obj,fn) {
+				obj.addEventListener("WebkitTransitionEnd",fn,false);
+				obj.addEventListener('transitionend',fn,false);
+			}
+			function removeEnd(obj,fn){
+				obj.removeEventListener("WebkitTransitionEnd",fn,false);
+				obj.removeEventListener('transitionend',fn,false);
+			}
+		</script>
+	</body>
+
+</html>

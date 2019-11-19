@@ -1,0 +1,18 @@
+.name {
+  -webkit-transition: all 1s;
+  -moz-transition: all 1s;
+  -ms-transition: all 1s;
+  transition: all 1s;
+  color: #fff;
+  font-size: 30px;
+  height: 100px;
+  line-height: 100px;
+  background: #565656;
+  text-align: center;
+  cursor: pointer;
+}
+.name:hover {
+  color: #000;
+  background: #E2E2E2;
+}
+/*# sourceMappingURL=example.css.map */

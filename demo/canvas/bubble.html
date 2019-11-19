@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>气泡</title>
+		<style type="text/css">
+			*{margin:0;padding: 0;}
+			body,html{
+				width: 100%;
+				height: 100%;
+				overflow: hidden;
+			}
+			.box{
+				width:45vw;
+				height:45vh;
+				position: absolute;
+				border: 1px solid red;
+			}
+			.box2{
+				right:0;
+			}
+			.box3{
+				left:0;
+				bottom:0;
+			}
+			.box4{
+				bottom:0;
+				right:0;
+			}
+			.start,.destroy{
+				position: absolute;
+			}
+			.start{
+				left: 10%;
+			}
+			.destroy{
+				left:30%;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box box1">
+			<button class="start">开始</button>
+			<button class="destroy">销毁</button>
+		</div>
+		<div class="box box2">
+			<button class="start">开始</button>
+			<button class="destroy">销毁</button>
+		</div>
+		<div class="box box3">
+			<button class="start">开始</button>
+			<button class="destroy">销毁</button>
+		</div>
+		<div class="box box4">
+			<button class="start">开始</button>
+			<button class="destroy">销毁</button>
+		</div>
+		<script src="js/bubble.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			window.onload = function(){
+				var boxs = document.querySelectorAll(".box");
+				var start = document.querySelectorAll(".start");
+				var destroy = document.querySelectorAll(".destroy");
+				for (var i = 0; i < boxs.length;i++) {
+					start[i].bble = destroy[i].bble = new Widget.bubble(".box"+(i+1)).setConfig({
+						size:20,
+						borderWidth:2,
+						minRadius:10,
+						maxRadius:50,
+						speedY:-1,
+						speedX:1,
+						alpha:0.6,
+						fontStyle:"40px Arial",
+						color:"red",
+						font:"暂无数据"
+					}).start();
+					start[i].addEventListener("click",function(){
+						this.bble.start();
+					});
+					destroy[i].addEventListener("click",function(){
+						this.bble.destroy();
+					})
+				};
+			}
+		</script>
+	</body>
+</html>

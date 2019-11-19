@@ -1,0 +1,68 @@
+<style type="text/css"> * {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background: url("../images/bg.jpg") no-repeat top center;
+	font: 16px "微软雅黑";
+}
+
+ul,
+li {
+	list-style: none;
+	text-align: center;
+}
+
+#msbox {
+	width: 680px;
+	border: 1px solid red;
+	margin: 50px auto;
+	overflow: hidden;
+}
+
+#msbox img {
+	float: left;
+}
+
+#msbox .lrcbox {
+	width: 432px;
+	height: 280px;
+	float: right;
+}
+
+#msbox .lrcbox #lrclist {
+	margin-top: 150px;
+	color: #fff;
+}
+
+#msbox .lrcbox #lrclist {
+	-webkit-transition: all .3s ease;
+	-moz-transition: all .3s ease;
+	-ms-transition: all .3s ease;
+	-o-transition: all .3s ease;
+	transition: all .3s ease;
+	padding:0;
+}
+
+#msbox .lrcbox #lrclist li {
+	-webkit-transition: all .3s ease;
+	-moz-transition: all .3s ease;
+	-ms-transition: all .3s ease;
+	-o-transition: all .3s ease;
+	transition: all .3s ease;
+	height: 30px;
+	padding: 5px;
+}
+
+#msbox .lrcbox #lrclist li.hover {
+	font-size: 25px;
+	color: deeppink;
+}
+
+#audio {
+	margin: 0 auto;
+	display: block;
+}
+
+</style>

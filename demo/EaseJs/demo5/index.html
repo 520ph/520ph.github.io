@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+		<title>Canvas答题</title>
+	</head>
+
+	<body>
+		<canvas id="coverCanvas" width="760px" height="960px"></canvas>
+		<script src="js/easeljs-0.8.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/zepto.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function() {
+				var stage = new createjs.Stage("coverCanvas");
+				var tel = new createjs.Bitmap("img/answer/1_15.png");
+				//tel.x = 100;
+				//tel.y = 100;
+				//stage.addChild(tel);
+				var mcMap = new createjs.Container();
+				stage.addChild(mcMap);
+				var starAry = [];
+				for(var i = 0; i < 250; i++) {
+					var star = new createjs.Bitmap("img/star.png");
+					mcMap.addChild(star);
+					starAry.(star);
+					star.x = 300 * Math.random();
+					star["posX"] = 450 * Math.random() - 100;
+					star.y = 250 * Math.random() + 5;
+					star.regX = star.image.width / 2;
+					star.regY = star.image.height / 2;
+					star.rotation = 360 * Math.random();
+					star.scaleX = star.scaleY = Math.random() * 0.8 + 0.5;
+					star.alpha = Math.random() * 0.5 + 0.5;0
+					star["vx"] = 2 * Math.random() - 1;
+					star["vy"] = -(2 * Math.random() + 2);
+					star["angle"] = 2 * Math.PI * Math.random();
+					star["angleV"] = 0.02 * Math.random() + 0.03;
+				}
+				setInterval(starRun, 60);
+
+				function starRun() {
+					var ary = starAry;
+					for(var i in ary) {
+						var star = ary[i];
+						star["angle"] += star["angleV"];
+						if(star["posX"] <= 600) {
+							star["posX"] += 2;
+						} else {
+							star["posX"] -= 2;
+						}
+						star.x = star["posX"] + 50 * Math.sin(star["angle"] * 1.5);
+						star.y += star["vy"];
+						if(star.y < -300) {
+							star.alpha -= 0.025;
+						} else {
+							star.alpha = (Math.sin(star["angle"] * 5) + 1) * 0.5 * 0.6 + 0.1;
+							star.scaleX = (Math.sin(star["angle"] * 2 * Math.random()));
+							star.scaleY = (Math.sin(star["angle"] * 2));
+						}
+						if(star.alpha <= 0) {
+							star.alpha = 1;
+							star.x = 760 * Math.random();
+							star["posX"] = 450 * Math.random() - 100;
+							star.y = 150 * Math.random() + 5;
+							star.alpha = Math.random() * 0.5 + 0.5;
+						}
+					}
+				}
+				createjs.Ticker.on("tick", stage);
+			});
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Canvas-运动的小球</title>
+		<style type="text/css">
+			html,body{
+				margin: 0;
+				padding: 0;
+			}
+			#myCanva{
+				width: 100%;
+				height: 100%;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="myCanva">您的浏览器不支持Canvas</canvas>
+		<script type="text/javascript">
+			window.onload = function(){
+				//小球的原始对象
+				function Ball(radius){
+					this.radius = radius;//半径
+					this.x = 0;//圆心X坐标
+					this.y = 0;//圆心Y坐标
+					this.vy = 0;//Y轴运动速度
+					this.vx = 0;//X轴运动速度
+					this.color = "#000";//小球默认颜色
+				}
+				//往Canvas上画小球
+				Ball.prototype.draw = function(context){
+					context.beginPath();//Canvas画图开始
+					context.fillStyle = this.color;//设置填充颜色
+					//画圆，圆心X坐标，圆心Y坐标，圆的半径，圆的开始角度，圆的结束角度，最后一个是顺时针true或逆时针false(可省略，默认顺时针)
+					//就和用圆规画圆一样，先确定圆心，然后半径，开始转。
+					//Canvas中是弧度制，180度=π，那么1度就是π/180，程序中π的值用Math.PI表示，即：1度=Math.PI/180
+					//然后如果你想画半圆，或者其他度数，就是：每一度的弧度数*度数
+					//画圆是360度，因为：180度=π，所以360=2π
+					context.arc(this.x,this.y,this.radius,0,Math.PI*2);
+					context.fill();//Canvas画图结束
+				}
+				//获取画布对象
+				var canvas = document.querySelector("#myCanva");
+				//获取画布的上下文对象
+				var context = canvas.getContext("2d");
+				//画布的宽和高，这里有个“要点”
+				//Canvas的宽和高用行内style设置，用css属性设置，用百分比设置。是错误的！
+				//必须用属性直接控制宽度，否则画出来的图形会变形，原因在于，Canvas可以说是程序版的PS，PS只是做成软件了
+				//而Canvas需要专门的开发者用程序代码画图，所以Canvas本质上就是在作图，那么作为一张图片元素，我们改变他原本的宽高
+				//就会导致图片扭曲变形，同理解释Canvas!
+				canvas.width = window.innerWidth
+				canvas.height = window.innerHeight-10;
+				//动态改变Canvas的宽高
+				window.onresize = function(){
+					canvas.width = window.innerWidth;
+					canvas.height = window.innerHeight-10;
+				}
+				//初始化小球的数量
+				var ballNums = 360;
+				//小球数组
+				var balls = [];
+				//小球的方向
+				var r = 0.2;
+				for (var i = 0; i < ballNums; i++) {
+					//创建小球，初始化参数
+					var ball = new Ball(rangeRandom(1,10));
+					//小球的圆心位置,X轴居中/2
+					ball.x = canvas.width/2;
+					ball.y = canvas.height;
+					//初始化每个小球的速度，既然是随机的那么每个小球的开始的位置都不一样
+					ball.vy = Math.random()*-10-10;
+					//同理
+					ball.vx = Math.random()*2-1;
+					//随机颜色
+					ball.color = getRgb16();
+					//添加进数组
+					balls.push(ball);
+				}
+				function drawCanvas(ball){
+					//要运动就是改变他的坐标值
+					ball.vy += r;
+					ball.x += ball.vx;
+					ball.y += ball.vy;
+					ball.color = getRgb16();
+					ball.radius = rangeRandom(1,10);
+					//边界的控制
+					if(ball.y - ball.radius > canvas.height ||
+						ball.y + ball.radius < 0 ||
+						ball.x + ball.radius > canvas.width ||
+						ball.x + ball.radius < 0
+					){
+						//重新初始化
+						ball.x = canvas.width/2;
+						ball.y = canvas.height;
+						ball.vy = Math.random()*-10-10; 
+						ball.vx = Math.random()*2-1; 
+					}
+					//调用小球对象通过prototype扩展的绘画方法
+					ball.draw(context);
+				}
+				setInterval(function(){
+					context.clearRect(0,0,canvas.width,canvas.height);//擦黑板
+					//一次性绘制小球，并且每个小球都调用drawCanvas
+					for(var i=0;i<balls.length;i++){
+						drawCanvas(balls[i]);//同时绘制
+					}
+				},30);
+				function rangeRandom(start,end){
+					return Math.floor(Math.random()*(end-start+1)+start);
+				}
+		
+				function tRandom(start){
+					return Math.floor(Math.random()*start);
+				}
+				function getRgb(){
+					//0-255
+					var r = tRandom(256);
+					var g = tRandom(256);
+					var b = tRandom(256);
+					return "rgb("+r+","+g+","+b+")";
+				}
+				
+				function getRgb16(){
+					//0-255
+					var r = tRandom(256).toString(16);
+					var g = tRandom(256).toString(16);
+					var b = tRandom(256).toString(16);
+					if(r.length<2)r=r+""+r;
+					if(g.length<2)g=g+""+g;
+					if(b.length<2)b=b+""+b;
+					return "#"+r+""+g+""+b;
+				}
+			}
+		</script>
+	</body>
+</html>

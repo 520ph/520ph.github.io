@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>404页面</title>
+		<style type="text/css">
+			html,
+			body {
+				margin: 0;
+				padding: 0;
+				height: 100%;
+			}
+			
+			body {
+				background-color: #36B3A8;
+				text-align: center;
+			}
+			
+			.cant {
+				color: #fff;
+				font-size: 1em;
+				font-weight: bold;
+				font-family: "微软雅黑";
+			}
+			
+			.cant span {
+				display: inline-block;
+				position: relative;
+				-webkit-transform-style: preserve-3d;
+				transform-style: preserve-3d;
+				-webkit-perspective: 500;
+				perspective: 500;
+				-webkit-font-smoothing: antialiased;
+			}
+			
+			.cant span::before,
+			.cant span::after {
+				display: none;
+				position: absolute;
+				top: 0;
+				left: -1px;
+				-webkit-transform-origin: left top;
+				-ms-transform-origin: left top;
+				transform-origin: left top;
+				-webkit-transition: all ease-out 0.3s;
+				transition: all ease-out 0.3s;
+				content: attr(data-text);
+			}
+			
+			.cant span::before {
+				z-index: 1;
+				color: rgba(0, 0, 0, 0.2);
+				-webkit-transform: scale(1.1, 1) skew(0deg, 20deg);
+				-ms-transform: scale(1.1, 1) skew(0deg, 20deg);
+				transform: scale(1.1, 1) skew(0deg, 20deg);
+			}
+			
+			.cant span::after {
+				z-index: 2;
+				color: #36B3A8;
+				text-shadow: -1px 0 1px #36B3A8, 1px 0 1px rgba(0, 0, 0, 0.8);
+				-webkit-transform: rotateY(-40deg);
+				transform: rotateY(-40deg);
+			}
+			
+			.cant span:hover::before {
+				-webkit-transform: scale(1.1, 1) skew(0deg, 5deg);
+				-ms-transform: scale(1.1, 1) skew(0deg, 5deg);
+				transform: scale(1.1, 1) skew(0deg, 5deg);
+			}
+			
+			.cant span:hover::after {
+				-webkit-transform: rotateY(-10deg);
+				transform: rotateY(-10deg);
+			}
+			
+			.cant span + span {
+				margin-left: 0.1em;
+			}
+			
+			@media (min-width:20em) {
+				.cant {
+					font-size: 2em;
+				}
+				.cant span::before,
+				.cant span::after {
+					display: block;
+				}
+			}
+			
+			@media (min-width:30em) {
+				.cant {
+					font-size: 3em;
+				}
+			}
+			
+			@media (min-width:40em) {
+				.cant {
+					font-size: 5em;
+				}
+			}
+			
+			@media (min-width:60em) {
+				.cant {
+					font-size: 8em;
+				}
+			}
+		</style>
+	</head>
+
+	<body>
+		<p class="cant">
+			<span data-text="4">4</span>
+			<span data-text="0">0</span>
+			<span data-text="4">4</span>
+			<span data-text="页">页</span>
+			<span data-text="面">面</span>
+		</p>
+		<h1>可能原因： 网址有错误>请检查地址是否完整或存在多余字符</h1>
+	</body>
+
+</html>

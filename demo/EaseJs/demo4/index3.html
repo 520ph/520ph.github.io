@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Demo</title>
+		<style type="text/css">
+			#myCanvas{
+				display: block;
+				margin:0px auto;
+				width: 100%;
+				height: 100%;
+			}
+			.box{
+				min-width:230px;
+				width: 50%;
+				min-height:330px;
+				height: 30%;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<canvas id="myCanvas"></canvas>
+		</div>
+		<script src="js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/easeljs-0.8.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/TimelineLite.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/TweenMax.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var canvas = document.querySelector("#myCanvas");
+			var context = canvas.getContext("2d");
+			var box = document.querySelector(".box");
+			canvas.width = box.scrollWidth;
+			canvas.height = box.scrollHeight;
+			var stage = new createjs.Stage(canvas);
+			init();
+			window.onresize = function(){
+				canvas.width = box.scrollWidth;
+				canvas.height = box.scrollHeight;
+				init();
+			}
+			function init(){
+				stage.autoPlay = false;
+				stage.removeAllChildren();
+				var con1 = new createjs.Stage(canvas);
+			con1.x = canvas.width;
+			con1.y = canvas.height-50;
+			stage.addChild(con1);
+			var line = new createjs.Shape();
+				//canvas.fillRect(0,0,canvas.width,canvas.height);
+				//画网格
+			//因为网格坐标从右下角开始，右下角定义为0，0，左上为负数，
+			//左为-canavs.width,上为-canvas.height
+			//画横线
+			for (var i = 0; i < canvas.height/25; i++) {
+				line.graphics.setStrokeStyle(1).beginStroke("#2cd1e4").moveTo(0,-i*25).lineTo(-canvas.width,-i*25);
+			}
+			//画竖线
+			for (var i = 0; i < canvas.width/25; i++) {
+				line.graphics.setStrokeStyle(1).beginStroke("#2cd1e4").moveTo(-i*25,0).lineTo(-i*25, -canvas.height );
+			}
+			
+			var arr = [18,15,12,9,7,5,20,10,17,19];
+			arr.sort(function(b,a){
+				return a - b;
+			})
+			var linearr = [];
+			var con2 = new createjs.Container();
+			var boxwidth = canvas.width/3;
+			var barwidth = boxwidth/arr.length/2;
+			con2.x = canvas.width;
+			con2.y = canvas.height-50;
+			stage.addChild(con2);
+			var bezier = new createjs.Shape();
+			bezier.visible = false;
+			var linetext = new createjs.Shape();
+			for (var i = 0; i < arr.length; i++) {
+				var bar = new createjs.Shape();
+				
+				bar.hy = -(arr[i]/arr[0])*(canvas.height-50);
+				bar.toY = -(arr[i]/arr[0])*(canvas.height-50);
+				bar.width = barwidth;
+				bar.height = (arr[i]/arr[0])*(canvas.height-50);
+				bar.color = createjs.Graphics.getHSL(174, 100, 7*i, 1);
+				bar.graphics.beginFill(bar.color).drawRoundRect(0, 0, bar.width, bar.height, 0);
+				bar.x = -(i*barwidth)*2-barwidth-boxwidth;
+				bar.y = -50;
+				con2.addChild(bar);
+				
+				
+				var x1 = bar.x-Math.cos(Math.PI/180*5)*20;
+				var y1 = bar.hy-Math.sin(Math.PI/180*5)*15;
+				var x2 = -(boxwidth*(arr[i]/arr[0])+boxwidth*2);
+				var y2 = -bar.height*0.4;
+				
+				
+				
+					
+						var txt = new createjs.Text();
+				        txt.text = "域名:"+(i+1);
+				        txt.font = "normal 16px Arial";
+				        txt.textAlign = 'right';
+				        txt.x = -boxwidth/2+50;
+				        txt.y = bar.hy-16/2;
+				        txt.toY = bar.hy-16/2;
+				        txt.color = "#000";
+				        txt.maxWidth = 16;
+				        txt.lineHeight = 1;
+						con1.addChild(txt);
+			//	TweenMax.to( bar, 1, { delay : i * 0.2, y : bar.toY, onUpdateParams : [ bar ], onUpdate : function( bar ){
+						/*bar.graphics.beginFill(bar.color).drawRoundRect(0, 0, bar.width, bar.height);
+		               //	txt.y = bar.y;
+		              	linetext.graphics.setStrokeStyle(0.8)
+						.beginStroke("#000")
+						.moveTo(bar.x,bar.hy)
+						.lineTo(-boxwidth/2,bar.hy);
+		               
+		               //stage.removeChildAt()*/
+		               // stage.update();
+		     //}} );
+		        //#027770
+		        
+		        bezier.graphics.setStrokeStyle(0.8)
+		       .beginStroke("#000")
+		       // .beginLinearGradientStroke(["#F00","#00F"], [1,1],0,0,0,0)
+		        		.moveTo(bar.x,bar.hy)
+						.bezierCurveTo(x1,y1,x2,y2,x2,0);
+					//con1.children[i].visible = true;	
+					
+					
+					
+					
+					
+					
+			}
+			con1.addChild(linetext);
+			con1.addChild(bezier);
+			con1.addChild(line);
+			//context.clearRect(canvas.width,canvas.height-20,canvas.width,20);
+			//con1.addChild(linetext);
+			var len = { per: 0 };
+			var k = 1;
+			var lineLength = con1.children.length-1;
+					TweenMax.to(len,k*1.2,{
+					delay:k*1.2,
+					per: lineLength,
+					onUpdateScope: this,
+					onUpdate: function(){
+						console.log(len.per);
+						var i = Math.round(len.per);
+						for(var j = 0; j<=i; j++){
+							con1.children[j].visible = true;
+						}
+					}
+				});
+			}
+			//createjs.Ticker.addEventListener("tick",stage);
+		</script>
+	</body>
+</html>
