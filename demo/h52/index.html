@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>我的漂流史</title>
+		<link rel="stylesheet" type="text/css" href="css/comm.css"/>
+		<link rel="stylesheet" type="text/css" href="css/index.css"/>
+		<style type="text/css">
+			.info_box{
+				position: relative;
+				margin-top: 5%;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="result">
+			<input type="hidden" name="user_id" id="user_id" value="12345" />
+		</div>
+		<div class="pc">
+			<div class="pcbox">
+				<h1 class="title_info">从小城市到大城市</h1>
+				<div class="pc_CodeBox">
+					<img src="img/info/pc_code.png" width="170"/>
+				</div>
+				<p class="pc_info">请使用 手机/平板 扫描二维码</p>
+			</div>
+		</div>
+		<div class="vspromps">
+			<div class="vspromps-box">
+				<div class="vspromps-pic">
+					<i></i>
+				</div>
+				<span>为了更好的体验，请竖直摆放你的设备。</span>
+			</div>
+		</div>
+		<div class="container">
+			<div class="info_box">
+				<img class="top" src="img/info/top.jpg" width="100%" />
+				<span class="user_name">a'ゞ『完美』</span>
+				<img class="head_img" src="img/100.gif" />
+			</div>
+			<div class="out">
+				<input autocomplete="off" type="text" class="hometown" placeholder="请输入老家所在城市" />
+				<input autocomplete="off" type="text" class="homecur" placeholder="请输入当前所在城市" />
+				<input autocomplete="off" type="tel" class="fullyer" placeholder="请输入年数" maxlength="3" />
+				<span class="drift"></span>
+				<img class="info" src="img/info/info.jpg" width="100%" />
+				<img class="star" src="img/info/star.png" width="73.9%" />
+			</div>
+		</div>
+		<div class="audio_flag"></div>
+		<canvas id="myCanvas" width="760" height="960"></canvas>
+		<audio loop="loop" autoplay="autoplay" src="audio/1.mp3" class="audio"></audio>
+		<script src="js/easeljs-0.8.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/tweenjs-0.6.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/preloadjs-0.6.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/zepto.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/index.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/comm.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			window.onload = function() {
+				new Drift.init({
+					"canvas": document.querySelector("#myCanvas"),
+					"container": document.querySelector(".container")
+				});
+				var fullyear = document.querySelector(".fullyer");
+				fullyear.addEventListener("input",function(){
+					if(isNaN(this.value.trim()) || !this.value.trim()){
+							this.value = "";
+					}
+				},false);
+				var homecur = document.querySelector(".homecur");
+				var hometown = document.querySelector(".hometown");
+				var drift = document.querySelector(".drift");
+				var star = document.querySelector(".star");
+				var container = document.querySelector(".container");
+				var myCanvas = document.querySelector("#myCanvas");
+				//奋斗的城市X漂之旅
+				homecur.addEventListener("input",function(){
+					if(this.value){
+						drift.innerText = this.value[0];
+					}else{
+						drift.innerText = "";
+					}
+				},false);
+				star.addEventListener("touchstart",function(){
+					if(!hometown.value.trim()){
+						alert("请输入老家所在城市!");
+						hometown.focus();
+						return false;
+					}
+					if(!homecur.value.trim()){
+						alert("请输入当前所在城市!");
+						homecur.focus();
+						return false;
+					}
+					if(!fullyear.value.trim()){
+						alert("请输入年数!");
+						fullyear.focus();
+						return false;
+					}
+					container.style.opacity = 0;
+					setTimeout(function(){
+						container.style.display = "none";
+						myCanvas.style.display = "block";
+					},1000);
+				},false);
+				$(document).one("touchstart",function(){
+					var music = document.querySelector(".audio");
+			         if (music.paused) { //判读是否播放
+			            music.play(); //没有就播放
+			         }
+				})
+				$(".audio_flag").on("click",function(){
+					$(this).toggleClass("audio_flags");
+					 var music = document.querySelector(".audio");
+			         if (music.paused) { //判读是否播放
+			            music.play(); //没有就播放
+			         }else{
+			         	music.pause();
+			         }
+				})
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,125 @@
+	#myCanvas {
+		position: absolute;
+	}
+	
+	.mask {
+		position: absolute;
+		z-index: -1;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(0, 0, 0, 0.8);
+		opacity: 0;
+		-webkit-transition: .3s;
+		transition: .3s;
+	}
+	
+	.info {
+		display: none;
+	}
+	
+	.scen_8 {
+		position: absolute;
+		z-index: 1000;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		overflow:hidden;
+		background: #fff;
+		-webkit-transform: translate3d(100%, 0, 0);
+		transform: translate3d(100%, 0, 0);
+		-webkit-transition: -webkit-transform 600ms ease-out;
+		transition: -webkit-transform 600ms ease-out;
+	}
+	
+	.drift_info {
+		margin-top: 10px;
+		position: relative;
+	}
+	
+	.user_name {
+		position: absolute;
+		z-index: 2;
+		font-size: 16px;
+	    left: 28%;
+	    top: 35%;
+	}
+	
+	.head_img {
+		position: absolute;
+		z-index: 2;
+		top: 20%;
+		left: 17px;
+		width: 20%;
+		border-radius: 50%;
+	}
+	
+	.drift_address,
+	.drift_num {
+		position: absolute;
+		z-index: 2;
+		width: 100px;
+		left: 43%;
+		top: 67%;
+		text-align: center;
+		-webkit-transform: translateX(-50%);
+		transform: translateX(-50%);
+	}
+	
+	.drift_num {
+		left: 74%;
+	}
+	
+	.title_img{
+		display: block;
+		margin: 0 auto;
+	}
+	
+	.fl {
+		float: left;
+	}
+	
+	.title_btn {
+		height: 18.3%;
+	}
+	.my_btn,.other_btn{
+		text-align: center;
+		height: 100%;
+	}
+	.play {
+		margin-left: 3%;
+	}
+	
+	.view_other {
+	    display: inline-block;
+	    margin: 10px auto 0;
+	    height: 51%;
+	    width: 100%;
+	    text-align: center;
+	}
+	
+	.myplay {
+		display: inline-block;
+		height: 48%;
+	}
+	
+	.share{
+		margin-left: 2%;
+	}
+	.audio_flag {
+		position: absolute;
+		z-index: 3000;
+		width: 21px;
+		height: 23px;
+		background: url(../img/audio.png) no-repeat 1px 0/42px 23px;
+		right: 15px;
+	    top: 2%;
+		display: none;
+		transition: top 1s;
+	}
+	
+	.audio_flags {
+		background-position-x: -18px;
+	}

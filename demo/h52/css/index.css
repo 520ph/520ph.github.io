@@ -1,0 +1,91 @@
+img {
+	-webkit-touch-callout: none
+}
+#myCanvas {
+	position: absolute;
+}
+
+.container {
+	overflow: hidden;
+	display: none;
+	-webkit-transition: all 1s;
+	transition: all 1s;
+}
+
+.star {
+	display: block;
+	margin: 0 auto;
+}
+
+.out {
+	position: relative;
+}
+
+.out input {
+	position: absolute;
+	height: 20px;
+	border: none;
+	outline: none;
+	background: transparent;
+	-webkit-transform: translateY(-100%);
+	transform: translateY(-100%);
+	font-size: 15px;
+	text-align: center;
+	width: 42%;
+	font-size: 15px;
+	z-index: 3;
+	left: 52%;
+}
+
+.hometown {
+	top: 20%;
+}
+
+.homecur {
+	top: 42%;
+}
+
+input.fullyer {
+	top: 61%;
+	width: 25%;
+	left: 60%;
+}
+
+.drift {
+	position: absolute;
+	bottom: 5%;
+	margin-bottom: 1px;
+	left: 49%;
+	transform: translateX(-50%);
+	width: 45px;
+	text-align: left;
+}
+
+.user_name {
+	position: absolute;
+	z-index: 2;
+	top:20%;
+	font-size: 15px;
+	left: 17px;
+}
+
+.head_img {
+	position: absolute;
+	z-index: 2;
+	top: 35%;
+	left: 17px;
+	width: 20%;
+}
+.audio_flag{
+	position: absolute;
+	z-index: 3000;
+    width: 21px;
+    height: 23px;
+    background: url(../img/audio.png) no-repeat 1px 0/42px 23px;
+    right: 30px;
+    top: 15%;
+    display: none;
+}
+.audio_flags{
+	background-position-x:-18px;
+}

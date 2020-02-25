@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>场景页面</title>
+		<link rel="stylesheet" type="text/css" href="css/scene.css"/>
+		<link rel="stylesheet" type="text/css" href="css/comm.css"/>
+	</head>
+	<body>
+		<div class="result">
+			<span id="answers">A1,A2,A3,C4,B5,A6,A7</span>
+		</div>
+		<div class="pc">
+			<div class="pcbox">
+				<h1 class="title_info">从小城市到大城市</h1>
+				<div class="pc_CodeBox">
+					<img src="img/info/pc_code.png" width="170"/>
+				</div>
+				<p class="pc_info">请使用 手机/平板 扫描二维码</p>
+			</div>
+		</div>
+		<div class="vspromps">
+			<div class="vspromps-box">
+				<div class="vspromps-pic">
+					<i></i>
+				</div>
+				<span>为了更好的体验，请竖直摆放你的设备。</span>
+			</div>
+		</div>
+		<div class="container">
+			<div class="mask">
+				<img src="img/scene/fx.png" width="100%"/>
+			</div>
+			<div class="info">
+				<p class="user_name"></p>
+				<p class="head_img"></p>
+				<p class="flag"></p>
+			</div>
+		</div>
+		<canvas id="myCanvas" width="760" height="960"></canvas>
+		<div class="scen_8">
+			<div class="drift_info">
+				<span class="user_name">a'ゞ『完美』</span>
+				<img class="head_img" src="img/100.gif"/>
+				<span class="drift_address">北京</span>
+				<span class="drift_num">1</span>
+				<img src="img/scene/drift.png" width="100%"/>
+			</div>
+			<img class="title_img" src="img/scene/1.png" height="50%"/>
+			<div class="title_btn">
+				<!--自己进来显示的按钮-->
+				<div class="cl my_btn">
+					<img class="fl share" src="img/scene/share.jpg" height="48%"/>
+					<a href="index.html"><img class="fl play" src="img/scene/play.jpg" height="48%"/></a>
+					<a href="data.html" class="view_other"><img src="img/scene/view_other.png" height="100%"/></a>
+				</div>
+				<!--自己进来显示的按钮-->
+				
+				<!--别人进来显示的按钮-->
+				<div class="other_btn">
+					<a href="index.html" class="myplay"><img src="img/scene/myplay.png" height="100%"/></a>
+					<img class="look" src="img/scene/look.png" height="48%"/>
+				</div>
+				<!--别人进来显示的按钮-->
+			</div>
+		</div>
+		<div class="audio_flag"></div>
+		<audio loop="loop" src="audio/2.mp3" class="audio"></audio>
+		<script src="js/easeljs-0.8.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/tweenjs-0.6.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/preloadjs-0.6.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/Scene.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/zepto.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/weixin-1.0.0.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			window.onload = function() {
+				$(".share").on("click",function(){
+					mask.style.zIndex = 2000;
+					mask.style.opacity = 1;
+				})
+				var mask = document.querySelector(".mask");
+				mask.addEventListener("click",function(){
+					mask.style.opacity = 0;
+					setTimeout(function(){
+						mask.style.zIndex = -1;
+					},300)
+				})
+				new Scene.init({
+					"canvas": document.querySelector("#myCanvas"),
+					"container": document.querySelector(".container"),
+					"arr":document.querySelector("#answers").innerText.split(",")
+				});
+				var look = document.querySelector(".look");
+				look.addEventListener("click",function(){
+					window.location.reload();
+				},false);
+				$(document).one("touchstart",function(){
+					var music = document.querySelector(".audio");
+			         if (music.paused) { //判读是否播放
+			            music.play(); //没有就播放
+			         }
+				})
+				$(".audio_flag").on("click",function(){
+					$(this).toggleClass("audio_flags");
+					 var music = document.querySelector(".audio");
+			         if (music.paused) { //判读是否播放
+			            music.play(); //没有就播放
+			         }else{
+			         	music.pause();
+			         }
+				})
+			}
+		</script>
+	</body>
+
+</html>

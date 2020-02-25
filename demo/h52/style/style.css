@@ -1,0 +1,237 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*reset css*/
+/** Set default font family and font color and background color */
+html {font-family:'宋体',arial, verdana, sans-serif; color:#333; background:#fff;}
+
+/***** body *****/ 
+body{font-size:100%;  background:#fff }
+
+/*****Remove default margin and padding*****/
+body,dl,h1,h2,h3,h4,h5,h6,form,p{ margin:0; }
+input,button,textarea,td,th{padding: 0;}
+menu,ul,ol{ margin:0; padding:0}
+
+/***** Remove default vertical scrollbar in IE 8/9/10/11 and resize button*****/
+textarea{resize:none; overflow:auto}
+
+/***** Improve link behaviour*****/ 
+a{text-decoration:none; background-color: transparent;}
+a:active,a:hover { outline: 0;}
+
+/***** Prevent `sub` and `sup` affecting `line-height` in all browsers. *****/ 
+sub,sup {font-size: 75%; line-height: 0;position: relative; vertical-align: baseline;}
+sup {top: -0.5em;}
+sub {bottom: -0.25em;}
+
+/***** fix border problem *****/ 
+iframe,img{border:0;}
+
+/***** remove list style of ul and ol*****/ 
+ul,ol{list-style:none;}
+
+/***** input and button *****/ 
+button { overflow: visible;}
+button,select {text-transform: none;}
+button,html input[type="button"],input[type="reset"],input[type="submit"] { -webkit-appearance: button; cursor: pointer;}
+button[disabled],html input[disabled] { cursor: default;}
+button::-moz-focus-inner,input::-moz-focus-inner { border: 0; padding: 0;}
+button:-moz-focusring,input:-moz-focusring { outline: 1px dotted ButtonText;}
+input {line-height: normal;}
+input[type="checkbox"],input[type="radio"] { box-sizing: border-box; padding: 0;}
+input[type="number"]::-webkit-inner-spin-button,input[type="number"]::-webkit-outer-spin-button {height: auto;}
+input[type="search"] {-webkit-appearance: textfield;}
+input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration { -webkit-appearance: none;}
+
+/***** table *****/ 
+table{border-collapse:collapse;border-spacing:0}
+
+/*****display behaviour *****/
+article,aside,details,figcaption,figure,footer,header,hgroup,main,menu,nav,section,summary {display: block;}
+audio,canvas,progress,video { display: inline-block; vertical-align: baseline;}
+audio:not([controls]) { display: none; height: 0;}
+[hidden],template { display: none;}
+
+/*****common classes *****/
+.clear{ clear:both}
+.inner{ position:relative; width:100%; height:100%}
+/* 去掉点击链接时出现的半透明灰色遮罩 */
+a,button,input,textarea{-webkit-tap-highlight-color: rgba(0,0,0,0);-webkit-user-modify:read-write-plaintext-only;}
+
+
+/***** 此处需要根据具体项目修改 *****/
+html, body { position: relative; height: 100%; }
+.swiper-container { width: 100%; height: 100%; }
+.swiper-slide { text-align: center; font-size: 18px; background: #fff; /* Center slide text vertically */
+    display: -webkit-box; display: -ms-flexbox; display: -webkit-flex; display: flex; -webkit-box-pack: center; -ms-flex-pack: center; -webkit-justify-content: center; justify-content: center; -webkit-box-align: center; -ms-flex-align: center; -webkit-align-items: center; align-items: center; }
+
+/* 1 宝马 start */
+.baoma{background: url(../images/bmbg.jpg);background-size: cover;background-position: top;}
+.bmlfimg{width: 91px;height: 27px;position: absolute;left: 8%;bottom:5%; background: url(../images/bmyczq.png);background-size: 100% 100%;}
+.bmrtimg{width: 52px;height: 55px;position: absolute;right: 8%;bottom:3%; background: url(../images/bmzgaw.png);background-size: 100% 100%;}
+/* 1 宝马 end */
+
+/* 2 宝骏 start */
+.baojun{background: url(../images/bjbg.jpg);background-size: cover;background-position: top;}
+.bjlogo{width: 86px;height: 73px;position: absolute;top: 70%;left: 50%;margin-left: -43px; background: url(../images/bjlogo.png);background-size: 100% 100%;}
+/* 2 宝骏 end */
+
+/* 3 京东 start */
+.jingdong{background: url(../images/jdbg.jpg);background-size: cover;background-position: top;}
+.jdlogo{width: 153px;height: 40px;position: absolute;top: 75%;left: 50%;margin-left: -76px; background: url(../images/jdlogo.png);background-size: 100% 100%;}
+/* 3 京东 end */
+
+/* 4 公益学院 start */
+.gongyi{background: url(../images/gybg.jpg);background-size: cover;background-position: top;}
+.gylogo{width: 154px;height: 54px;position: absolute;top: 75%;left: 50%;margin-left: -77px; background: url(../images/gylogo.png);background-size: 100% 100%;}
+/* 4 公益学院 end */
+
+/* 5 vcont start */
+.vcont{background: url(../images/vcontbg.jpg);background-size: cover;background-position: top;}
+.vcontlogo{width: 81px;height: 95px;position: absolute;top: 70%;left: 50%;margin-left: -40px; background: url(../images/vcontlogo.png);background-size: 100% 100%;}
+/* 5 vcont end */
+
+/* 6 冥想大师 start */
+.mingxiang{background: url(../images/mxdsbg.jpg);background-size: cover;background-position: top;}
+.mxdslogo{width: 160px;height: 44px;position: absolute;top: 75%;left: 50%;margin-left: -80px; background: url(../images/mxdslogo.png);background-size: 100% 100%;}
+/* 6 冥想大师 end */
+
+/* 7 杜邦科技 start */
+.dubang{background: url(../images/dbkjbg.jpg);background-size: cover;background-position: top;}
+/* 7 杜邦科技 end */
+
+/* 8 蒙牛 start */
+.mengniu{background: url(../images/mnbg.jpg);background-size: cover;background-position: top;}
+.mnlogo{width: 117px;height: 64px;position: absolute;top: 50%;left: 50%;margin-top: -32px; margin-left: -58px; background: url(../images/mnlogo.png);background-size: 100% 100%;}
+/* 8 蒙牛 end */
+
+/* lastPage start */
+.lastpage{width: 100%;height: 100%;background: #282828;}
+
+.topimg{width: 200px;margin: 0 auto; margin-top: 20px;}
+.topimg img{width: 100%;}
+.word{width: 151px;margin: 0 auto; margin-top: 18px;}
+.word img{width: 100%;}
+
+.toplogo{width: 270px;height: 58px;overflow: hidden;margin: 0 auto;margin-top: 28px;}
+.toplogo ul{width: 100%;height: 100%;overflow: hidden;zoom:1;}
+.toplogo ul li{width: 90px;height: 58px;float: left;}
+.toplogo ul li div{width: 100%;height: 100%;}
+.toplogo ul li img{width: 100%;height: 100%;border: none;}
+
+.line{width: 291px;height: 1px;margin:28px auto 18px;background: url(../images/lastpg-line.png);background-size:100% 100%;}
+
+.bottomlogo{width: 283px;height: 163px;overflow: hidden;margin: 0 auto;}
+.bottomlogo ul{width: 100%;height: 100%;overflow: hidden;zoom:1;}
+.bottomlogo ul li{width: 94px;height: 81px;float: left;}
+.bottomlogo ul li div{display: block;width: 100%;height: 100%;}
+.bottomlogo ul li img{width: 100%;height: 100%;border: none;}
+
+.clicklogo{width: 163px;height: 14px;margin: 0 auto 20px;margin-top: 13px; background: url(../images/lastpg-clicklogo.png);background-size: 100% 100%;}
+/* lastPage end */
+
+/*旋屏提示 start*/
+#orientLayer {display: none;}
+.mod-orient-layer {display: none;position: fixed;height: 100%;width: 100%;left: 0;top: 0;right: 0;bottom: 0;background: #333; z-index: 9997}
+.mod-orient-layer__content {position: absolute;width: 100%;top: 45%;margin-top: -75px;text-align: center}
+.mod-orient-layer__icon-orient {background-image: url(../images/pixels.png);display: inline-block;width: 67px;height: 109px;transform: rotate(90deg);-webkit-transform: rotate(90deg);-webkit-animation: rotation infinite 1.5s ease-in-out;animation: rotation infinite 1.5s ease-in-out;-webkit-background-size: 67px;background-size: 67px;}
+.mod-orient-layer__desc {margin-top: 20px;font-size: 15px;color: #fff; }
+@media screen and (min-aspect-ratio: 13/9) { 
+	#orientLayer { display: block; } 
+}
+/*旋屏提示 end*/
+
+/*旋转动画*/
+@-webkit-keyframes rotation {
+    10% {transform: rotate(90deg);-webkit-transform: rotate(90deg)}
+    50%, 60% {transform: rotate(0deg);-webkit-transform: rotate(0deg)}
+    90% {transform: rotate(90deg);-webkit-transform: rotate(90deg)}
+    100% {transform: rotate(90deg);-webkit-transform: rotate(90deg)}
+}
+
+@keyframes rotation {
+	10% {transform: rotate(90deg);-webkit-transform: rotate(90deg)}
+    50%, 60% {transform: rotate(0deg);-webkit-transform: rotate(0deg)}
+    90% {transform: rotate(90deg);-webkit-transform: rotate(90deg)}
+    100% {transform: rotate(90deg);-webkit-transform: rotate(90deg)}
+}
+
+/* 适配 */
+@media (device-height:480px) and (-webkit-min-device-pixel-ratio:2){/* 兼容iphone4/4s */
+	/* 4 公益学院 start */
+	.gylogo{top:80%;}
+	/* 4 公益学院 end */
+
+	/* lastPage start */
+	.topimg{width: 130px;margin-top: 8px;}
+	.word{width: 80px;margin-top: 8px;}
+	.toplogo{margin-top: 12px;}
+	.line{margin:12px auto 3px;}
+	.clicklogo{margin-top: 5px;}
+	/* lastPage end */
+}
+@media (device-height:568px) and (-webkit-min-device-pixel-ratio:2){/* 兼容iphone5 */
+	/* 4 公益学院 start */
+	.gylogo{top:80%;}
+	/* 4 公益学院 end */
+
+	/* lastPage start */
+	.topimg{width: 180px;margin-top: 18px;}
+	.word{width: 130px;margin-top: 13px;}
+	.toplogo{margin-top: 18px;}
+	.line{margin:18px auto 8px;}
+	.clicklogo{margin-top: 10px;}
+	/* lastPage end */
+}
+@media screen and (min-width: 414px) and (max-width: 767px){
+	/* lastPage start */
+	.topimg{width: 230px;margin-top: 50px;}
+	.word{width: 186px;margin-top: 50px;}
+	.toplogo{margin-top: 40px;}
+	.line{margin:40px auto 30px;}
+	.clicklogo{margin-top: 25px; }
+	/* lastPage end */
+}
+
+@media screen and (min-width: 768px){
+	/* 1 宝马 start */
+	.bmlfimg{width: 183px;height: 54px;}
+	.bmrtimg{width: 105px;height: 110px;}
+	/* 1 宝马 end */
+
+	/* 2 宝骏 start */
+	.bjlogo{width: 173px;height: 147px;top: 70%;left: 50%;margin-left: -86px;}
+	/* 2 宝骏 end */
+
+	/* 3 京东 start */
+	.jdlogo{width: 306px;height: 80px;position: absolute;top: 75%;left: 50%;margin-left: -153px;}
+	/* 3 京东 end */
+
+	/* 4 公益学院 start */
+	.gylogo{width: 309px;height: 109px;position: absolute;top: 82%;left: 50%;margin-left: -154px;}
+	/* 4 公益学院 end */
+
+	/* 5 vcont start */
+	.vcontlogo{width: 163px;height: 190px;position: absolute;top: 75%;left: 50%;margin-left: -81px;}
+	/* 5 vcont end */
+
+	/* 6 冥想大师 start */
+	.mxdslogo{width: 320px;height: 89px;position: absolute;top: 80%;left: 50%;margin-left: -160px;}
+	/* 6 冥想大师 end */
+
+	/* 8 蒙牛 start */
+	.mnlogo{width: 234px;height: 129px;position: absolute;top: 50%;left: 50%;margin-top: -64.5px; margin-left: -117px;}
+	/* 8 蒙牛 end */		
+
+	/* lastPage start */
+	.topimg{width: 370px;margin-top: 30px;}
+	.word{width: 280px;margin-top: 20px;}
+	.toplogo{width: 540px;height: 116px;margin-top: 30px;}
+	.toplogo ul li{width: 180px;height: 116px;}
+	.line{width: 582px;height: 2px;margin:30px auto 15px;}
+	.bottomlogo{width: 564px;height: 324px;}
+	.bottomlogo ul li{width: 188px;height: 162px;}
+	.clicklogo{width: 217px;height: 18px;margin-top: 8px; }
+	/* lastPage end */
+}

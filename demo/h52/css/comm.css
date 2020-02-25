@@ -1,0 +1,154 @@
+html {
+	width: 100%;
+	height: 100%;
+	position: relative;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+	-webkit-tap-highlight-color: rgba(255, 0, 0, 0);
+	-webkit-tap-highlight-color: transparent;
+	overflow: hidden;
+	-webkit-user-select: none;
+	user-select: none;
+	font-family: Helvetica;
+}
+
+.vspromps {
+	width: 100%;
+	height: 100%;
+	background: #32373b;
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	z-index: 600;
+	display: none;
+	z-index: 4000;
+}
+
+.vspromps-box {
+	width: 100%;
+	height: 252px;
+	position: absolute;
+	top: 50%;
+	left: 0;
+	margin-top: -119px;
+}
+
+.vspromps-pic {
+	width: 194px;
+	height: 194px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.vspromps i {
+	width: 128px;
+	height: 194px;
+	background: url(../img/info/zhuan.png) 0 0 no-repeat;
+	background-size: 128px 194px;
+	display: block;
+	margin: 0 auto;
+	-webkit-animation: vsprompsAni 1.5s ease infinite alternate;
+	animation: vsprompsAni 1.5s ease infinite alternate;
+}
+
+.vspromps span {
+	font-size: 16px;
+	display: block;
+	color: #ffd40a;
+	text-align: center;
+	width: 100%;
+	height: 25px;
+	padding-top: 10px;
+}
+
+@-webkit-keyframes vsprompsAni {
+	0% {
+		-webkit-transform: rotate(-90deg);
+	}
+	30% {
+		-webkit-transform: rotate(-90deg);
+	}
+	70% {
+		-webkit-transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(0deg);
+	}
+}
+
+@keyframes vsprompsAni {
+	0% {
+		transform: rotate(-90deg);
+	}
+	30% {
+		transform: rotate(-90deg);
+	}
+	70% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(0deg);
+	}
+}
+
+.pc {
+	position: absolute;
+	z-index: 10;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background: rgb(61, 64, 69);
+	z-index:5000;
+	display: none;
+}
+
+.title_info {
+	color: #fff;
+	text-align: center;
+}
+
+.pcbox {
+	margin: 142px auto 50px;
+	position: relative;
+}
+
+.pc_CodeBox {
+	position: relative;
+	display: block;
+	margin: 20px auto;
+	width: 170px;
+	height: 170px;
+	padding: 15px;
+	border-radius: 5%;
+	background: rgb(255, 255, 255);
+}
+
+.pc_info {
+	height: 40px;
+	line-height: 40px;
+	background: rgba(0, 0, 0, 0.05);
+	box-shadow: 0 0 0 #555, 0 1px 1px #555, 0 0 0 #555, 0 -1px 1px #282828;
+	color: #b4b7bc;
+	font-size: 15px;
+	border-radius: 30px;
+	padding: 0 50px;
+	margin: 20px auto;
+	width: 200px;
+	text-align: center;
+}
+
+@media screen and (min-aspect-ratio: 13/9) {
+	.vspromps {
+		display: block;
+	}
+}
+.result{
+	display: none;
+}
